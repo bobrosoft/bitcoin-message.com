@@ -18,7 +18,7 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "lint": "tslint \"src/**/*.ts\" -e \"**/*.spec.ts\"",
-    "deploy": "tsc && firebase deploy --only functions"
+    "deploy": "yarn lint && tsc && firebase deploy --only functions"
   },
   "main": "build/index.js",
   "private": true

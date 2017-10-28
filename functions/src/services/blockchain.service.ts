@@ -67,7 +67,7 @@ export class BlockchainService {
    * @param {Transaction} transaction
    * @returns {Promise<TransactionId>}
    */
-  pushTransaction(transaction : bitcoin.Transaction): Promise<TransactionId> {
+  pushTransaction(transaction: bitcoin.Transaction): Promise<TransactionId> {
     return fetch(`${this.basePath}/blockchain/pushtx`, {
       method: 'POST',
       body: JSON.stringify({hex: transaction.toHex()})
