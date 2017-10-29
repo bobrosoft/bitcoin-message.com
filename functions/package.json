@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "watch": "tsc --watch",
+    "server": "tsc --watch & firebase serve --only functions",
     "lint": "tslint \"src/**/*.ts\" -e \"**/*.spec.ts\"",
     "deploy": "yarn lint && tsc && firebase deploy --only functions"
   },
