@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "bitcoin-message"
+    "prod": "bitcoin-message",
+    "dev": "bitcoin-message-dev"
   }
 }
