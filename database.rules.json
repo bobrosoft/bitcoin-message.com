@@ -1,6 +1,56 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    ".write": false,
+    
+    "messages": {
+      ".read": false,
+      
+      "$messageId": {
+        ".validate": "newData.hasChildren(['message', 'email', 'isPaid', 'isPublished', 'createdTimestamp'])",
+        
+        "message": {
+          ".validate": "newData.isString() && newData.val().length < 200"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i)"
+        },
+        "isPaid": {
+          ".validate": "newData.isBoolean()"
+        },
+        "isPublished": {
+          ".validate": "newData.isBoolean()"
+        },
+        "blockchainTxId": {
+          ".validate": "newData.isString()"
+        },
+        "createdTimestamp": {
+          ".validate": "newData.val() <= now"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    
+    "publishedMessages": {
+      ".read": true,
+      
+      "$messageId": {
+        ".validate": "root.child('messages/'+$messageId).exists() && newData.hasChildren(['message', 'blockchainTxId', 'createdTimestamp'])",
+        
+        "message": {
+          ".validate": "newData.isString()"
+        },
+        "blockchainTxId": {
+          ".validate": "newData.isString()"
+        },
+        "createdTimestamp": {
+          ".validate": "newData.val() <= now"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
   }
 }
