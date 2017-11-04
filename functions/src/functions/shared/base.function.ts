@@ -37,7 +37,7 @@ export abstract class BaseFunction {
    * @param data
    * @returns {SuccessResponse}
    */
-  protected createSuccessResponse(data?: any): SuccessResponse {
+  protected createSuccessResponse<T>(data?: T): SuccessResponse<T> {
     return {
       success: true,
       data: data

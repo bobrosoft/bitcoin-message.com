@@ -6,7 +6,11 @@
       ".read": false,
       
       "$messageId": {
-        ".validate": "newData.hasChildren(['message', 'email', 'isPaid', 'isPublished', 'createdTimestamp'])",
+        ".validate": "newData.hasChildren(['id', 'message', 'email', 'isPaid', 'isPublished', 'createdTimestamp'])",
+        
+        "id": {
+          ".validate": "newData.val() === $messageId"
+        },
         
         "message": {
           ".validate": "newData.isString() && newData.val().length < 200"

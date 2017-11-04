@@ -1,18 +1,21 @@
-import * as functions from 'firebase-functions'
 import * as functions from 'firebase-functions';
 import {ProjectConfig} from './models/project-config.model';
+import {BlockchainService} from './services/blockchain.service';
+import {MessagesService} from './services/messages.service';
+import {TestFunction} from './functions/test.function';
+import {SaveMessageFunction} from './functions/save-message.function';
 
-// if you need to use the Firebase Admin SDK, uncomment the following:
-// import * as admin from 'firebase-admin'
+// Init Firebase Admin SDK
+import * as admin from 'firebase-admin';
+admin.initializeApp(functions.config().firebase);
 
 // Create project's config
 const config = functions.config() as ProjectConfig;
 
-// Create and Deploy Cloud Function with TypeScript using script that is
-// defined in functions/package.json:
-//    cd functions
-//    npm run deploy
+// Create services (manual DI)
+const blockchainService = new BlockchainService(config);
+const messagesService = new MessagesService();
 
-export let helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!\n\n");
-});
+// Register and bootstrap functions (manual DI)
+export let helloWorld = new TestFunction(blockchainService).handler;
+export let saveMessage = new SaveMessageFunction(messagesService).handler;
