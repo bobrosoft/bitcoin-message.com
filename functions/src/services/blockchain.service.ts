@@ -107,20 +107,6 @@ export class BlockchainService {
         return data.unspent;
       });
   }
-  
-  // buildOpReturnTransaction(unspent: UnspentTransaction, message: string): bitcoin.Transaction {
-  //   const change = unspent.value_int - recommendedFee
-  //   const dataToStore = Buffer.from(message);
-  //   const opReturnScript = bitcoin.script.nullData.output.encode(dataToStore)
-  //
-  //   const tx = new bitcoin.TransactionBuilder(this.network);
-  //   tx.addInput(unspent.txid, unspent.n);
-  //   tx.sign(0, keyPair);
-  //   tx.addOutput(opReturnScript, 0);
-  //   tx.addOutput(keyPair.getAddress(), change);
-  //
-  //   return tx.build()
-  // }
 }
 
 export type TransactionId = string;
