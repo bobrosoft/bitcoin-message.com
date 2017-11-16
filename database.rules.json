@@ -6,23 +6,17 @@
       ".read": false,
       
       "$messageId": {
-        ".validate": "newData.hasChildren(['id', 'message', 'email', 'isPaid', 'isPublished', 'createdTimestamp'])",
+        ".validate": "newData.hasChildren(['id', 'message', 'email', 'createdTimestamp'])",
+        ".indexOn": ["createdTimestamp"],
         
         "id": {
           ".validate": "newData.val() === $messageId"
         },
-        
         "message": {
           ".validate": "newData.isString() && newData.val().length < 200"
         },
         "email": {
           ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i)"
-        },
-        "isPaid": {
-          ".validate": "newData.isBoolean()"
-        },
-        "isPublished": {
-          ".validate": "newData.isBoolean()"
         },
         "blockchainTxId": {
           ".validate": "newData.isString()"

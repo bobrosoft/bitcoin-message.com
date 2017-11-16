@@ -1,4 +1,3 @@
-// import fetch from 'node-fetch';
 import {BaseFunction} from './shared/base.function';
 import {Request, Response} from 'express';
 import {ApiError} from '../models/api-error.model';
@@ -29,8 +28,6 @@ export class SaveMessageFunction extends BaseFunction {
         return this.messagesService.addMessage({
           message: payload.message,
           email: payload.email,
-          isPaid: false,
-          isPublished: false,
           createdTimestamp: Date.now()
         });
       })
