@@ -1,3 +1,13 @@
+## About
+
+### Dev things I wanted to achieve in that project:
+
+ - try Firebase on backend and frontend
+ - write serverless app (I mean with backend, but without classic server)
+ - write beautiful backend implementation
+ - write beautiful frontend implementation (of course!)
+ - try to use async/await more widely
+
 ## Install
 
 `cd ./functions`
@@ -23,6 +33,10 @@ You need to set next Firebase Environment Variables:
 `firebase functions:config:set donations.imap_host="IMAP of mail provider"`
 
 `firebase functions:config:set donations.imap_mailbox_name="mailbox name if different from INBOX"`
+
+`firebase functions:config:set donations.min_donation_amount=1.20`
+
+`firebase functions:config:set donations.min_donation_currency="USD"`
 
 Then export it to .runtimeconfig.json for it can be used locally:
 

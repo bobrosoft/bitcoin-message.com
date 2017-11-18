@@ -3,6 +3,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import {ECPair} from 'bitcoinjs-lib';
 import {ProjectConfig} from '../models/project-config.model';
 import {UnspentTransaction} from '../models/unspent-transaction.model';
+import {ApiError} from '../models/api-error.model';
 
 export class BlockchainService {
   protected basePath: string;
@@ -40,14 +41,14 @@ export class BlockchainService {
     return this.getUnspentTransactions()
       .then((unspentTransactions) => {
         if (!unspentTransactions.length) {
-          throw new Error('No unspent transactions found');
+          throw new ApiError('No unspent transactions found', 'BLOCKCHAIN_NO_UNSPENT_TRANSACTIONS');
         }
       
         const unspent = unspentTransactions[0];
         const change = unspent.value_int - fee;
         
         if (change < 0) {
-          throw new Error(`Not enough funds in unspent (required ${fee} Satoshis)`);
+          throw new ApiError(`Not enough funds in unspent (required ${fee} Satoshis)`, 'BLOCKCHAIN_NOT_ENOUGH_FUNDS');
         }
         
         const opReturnScript = bitcoin.script.nullData.output.encode(Buffer.from(message) as any);
@@ -92,7 +93,7 @@ export class BlockchainService {
    * @returns {number}
    */
   getRecommendedFee(message: string): number {
-    return this.config.blockchain.fee_satoshis_per_byte * (this.baseTransactionSize + Buffer.from(message).length);
+    return Number(this.config.blockchain.fee_satoshis_per_byte) * (this.baseTransactionSize + Buffer.from(message).length);
   }
 
   /**

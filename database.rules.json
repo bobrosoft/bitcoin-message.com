@@ -6,6 +6,7 @@
       ".read": false,
       
       "$messageId": {
+        ".read": true,
         ".validate": "newData.hasChildren(['id', 'message', 'email', 'createdTimestamp'])",
         ".indexOn": ["createdTimestamp"],
         
@@ -17,6 +18,9 @@
         },
         "email": {
           ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i)"
+        },
+        "isPublished": {
+          ".validate": "newData.isBoolean()"
         },
         "blockchainTxId": {
           ".validate": "newData.isString()"
@@ -33,14 +37,14 @@
     "publishedMessages": {
       ".read": true,
       
-      "$messageId": {
-        ".validate": "root.child('messages/'+$messageId).exists() && newData.hasChildren(['message', 'blockchainTxId', 'createdTimestamp'])",
+      "$blockchainTxId": {
+        ".validate": "newData.hasChildren(['message', 'createdTimestamp', 'blockchainTxId'])",
         
         "message": {
           ".validate": "newData.isString()"
         },
         "blockchainTxId": {
-          ".validate": "newData.isString()"
+          ".validate": "newData.val() == $blockchainTxId"
         },
         "createdTimestamp": {
           ".validate": "newData.val() <= now"
@@ -49,6 +53,40 @@
           ".validate": false
         }
       }
+    },
+    
+    "processedDonations": {
+      ".read": false,
+
+      "$donationId": {
+        ".validate": "newData.hasChildren(['id', 'email', 'amount', 'currency'])",
+
+        "id": {
+          ".validate": "newData.isString()"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i)"
+        },
+        "amount": {
+          ".validate": "newData.isString()"
+        },
+        "currency": {
+          ".validate": "newData.isString()"
+        },
+        "messageId": {
+          ".validate": "newData.isString()"
+        },
+        "errorCode": {
+          ".validate": "newData.isString()"
+        },
+        "errorMessage": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+
     }
   }
 }

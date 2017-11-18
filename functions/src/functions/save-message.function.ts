@@ -28,7 +28,8 @@ export class SaveMessageFunction extends BaseFunction {
         return this.messagesService.addMessage({
           message: payload.message,
           email: payload.email,
-          createdTimestamp: Date.now()
+          isPublished: false,
+          createdTimestamp: Date.now(),
         });
       })
       .then((createdMessage) => {

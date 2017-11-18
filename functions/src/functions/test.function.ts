@@ -1,17 +1,17 @@
 // import fetch from 'node-fetch';
 import {BaseFunction} from './shared/base.function';
 import {Request, Response} from 'firebase-functions/node_modules/@types/express';
-import {BlockchainService} from '../services/blockchain.service';
+import {DonationsService} from '../services/donations.service';
 
 export class TestFunction extends BaseFunction {
   constructor(
-    protected blockchainService: BlockchainService
+    protected donationsService: DonationsService
   ) {
     super();
   }
   
   protected handleRequest(req: Request, res: Response) {
-    this.blockchainService.buildOpReturnTransaction('ttest тест 2 😇')
+    this.donationsService.getStoredDonationById('dsfds')
       // .then(t => this.blockchainService.pushTransaction(t))
       .then((data) => console.log(data));
     
