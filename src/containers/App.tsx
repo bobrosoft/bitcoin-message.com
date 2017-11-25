@@ -48,7 +48,7 @@ const About = () => (
   </div>
 );
 
-import './New.css';
+import '../New.css';
 const New = () => (
   <div className="New">Dfsdfdsfsd</div>
 );

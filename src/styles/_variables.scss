@@ -1,0 +1,60 @@
+$base-font-text: Lato, Helvetica Neue, Helvetica, Arial;
+$base-font-button: Helvetica, Helvetica Neue, Arial;
+$base-font-size: 18px;
+$base-font-size-88: 0.88rem;
+$base-font-size-66: 0.66rem;
+$base-font-size-button: 0.88rem;
+$base-font-size-disclaimer: 0.66rem;
+
+$base-font-weight-header: bold;
+$base-font-weight-button: bold;
+$base-font-weight-link: 500;
+$base-font-weight-button-selected: normal;
+
+$base-text-transform-header: none;
+$base-text-transform-button: uppercase;
+
+$base-text-decoration-link: underline;
+
+$base-letter-spacing-header: 0;
+$base-letter-spacing-button: 1px;
+
+$base-color-text-primary: #000; // used for usual text copy
+$base-color-text-secondary: #666; // used for descriptions, not important text copy
+$base-color-text-misc: #8F8F8F; // used for disclaimers and subtle hint elements
+$base-color-link: $base-color-text-primary;
+$base-color-price-highlighted: #e11f22;
+$base-color-active: white;
+$base-color-valid: #7CAE16;
+$base-color-error: #cc0000;
+$base-color-button: $base-color-text-primary;
+$base-color-button-selected: white;
+$base-color-button-primary: white;
+$base-color-button-facebook: white;
+
+$base-background-color-body: #ffffff;
+$base-background-color-button: white;
+$base-background-color-button-selected: black; // used on "active" button
+$base-background-color-button-primary: #0db955;
+$base-background-color-button-facebook: #3b5998;
+$base-background-color-input: white;
+$base-background-color-main-header: black;
+$base-background-color-main-footer: #DEDEDE;
+
+$base-border-color: #aaa;
+$base-border-width: 1px;
+$base-border-width-button: 1px;
+$base-border-color-light: #E4E4E4;
+$base-border-color-button: black;
+$base-border-color-button-selected: $base-border-color-button; // used on "active" button
+$base-border-color-button-primary: $base-background-color-button-primary;
+$base-border-color-button-facebook: $base-background-color-button-facebook;
+$base-border-radius: 0px;
+$base-border-radius-button: $base-border-radius;
+
+$base-box-shadow-button: none;
+$base-box-shadow-button-primary: inset 0 -4px 0px rgba(0,0,0,0.25);
+
+$base-margin: 15px; // used for elements like headers, sections, paragraphs and others
+
+$base-padding-button: 20px 20px;

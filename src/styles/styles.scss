@@ -1,0 +1,303 @@
+@import "variables";
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none; // for now
+}
+
+html, body {
+  padding: 0;
+  min-height: 100%;
+  font-family: $base-font-text;
+  font-size: $base-font-size;
+  color: $base-color-text-primary;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background-color: $base-background-color-body;
+}
+
+a {
+  color: $base-color-link;
+  text-decoration: $base-text-decoration-link;
+  font-weight: $base-font-weight-link;
+}
+
+p, .p {
+  margin: 0 0 $base-margin 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  -webkit-font-smoothing: auto;
+  font-smoothing: auto;
+  margin: $base-margin 0;
+  font-weight: $base-font-weight-header;
+  text-transform: $base-text-transform-header;
+  letter-spacing: $base-letter-spacing-header;
+}
+
+h1 {
+  font-size: 1.66rem;
+}
+h2 {
+  font-size: 1.22rem;
+}
+h3 {
+  font-size: 1.11rem;
+}
+h4 {
+  font-size: 1rem;
+}
+h5 {
+  font-size: 0.8rem;
+}
+
+hr {
+  margin: 0.5em 0;
+  border: none;
+  height: 1px;
+  background: $base-border-color-light;
+
+  &.dark {
+    background: $base-border-color;
+  }
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: inherit;
+  -webkit-appearance: none;
+}
+
+input:not([type=checkbox]):not([type=radio]), textarea, select, .input-style {
+  min-height: 2.8em;
+  padding: 0.4em 0.5em;
+  background: $base-background-color-input;
+  border: 1px solid $base-border-color-light;
+  border-radius: $base-border-radius;
+  box-shadow: inset 0 0 3px $base-border-color-light;
+}
+
+select {
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24' height='24' viewBox='0 0 24 24'><path fill='#444' d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'></path></svg>");
+  background-position: calc(100% - 4px) 50%;
+  background-repeat: no-repeat;
+}
+
+input, textarea, select {
+  &.ng-touched {
+    &.ng-invalid {
+      box-shadow: inset 0 0 4px 1px $base-color-error;
+      border-color: $base-color-error;
+    }
+
+    &.ng-valid {
+      box-shadow: inset 0 0 4px 1px $base-color-valid;
+      border-color: $base-color-valid;
+    }
+  }
+}
+
+select.with-placeholder {
+  &.ng-invalid { // that's kinda hack here. Change it if doesn't fit for some cases
+    color: #777;
+  }
+}
+
+button {
+  position: relative;
+  font-family: $base-font-button;
+  font-size: $base-font-size-button;
+  font-weight: $base-font-weight-button;
+  background: $base-background-color-button;
+  color: $base-color-button;
+  border: $base-border-width-button solid $base-border-color-button;
+  border-radius: $base-border-radius-button;
+  padding: $base-padding-button;
+  text-transform: $base-text-transform-button;
+  box-shadow: $base-box-shadow-button;
+  letter-spacing: $base-letter-spacing-button;
+  transition: 0.35s all;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: 0.35s background-color;
+  }
+
+  &:hover:after {
+    background-color: rgba(0,0,0,0.06);
+  }
+
+  &:active:after {
+    background-color: rgba(0,0,0,0.2);
+  }
+
+  &[disabled] {
+    opacity: .30;
+  }
+
+  &.selected {
+    color: $base-color-button-selected;
+    font-weight: $base-font-weight-button-selected;
+    border-color: $base-border-color-button-selected;
+    background-color: $base-background-color-button-selected;
+
+    &.arrow-down {
+      position: relative;
+    }
+
+    &.arrow-down:after {
+      background-color: transparent !important; // fix for some strange issue
+      outline: none !important;
+      top: 100%;
+      left: 50%;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border: 8px solid transparent;
+      border-top-color: $base-border-color-button-selected;
+      margin-left: -8px;
+    }
+  }
+
+  &.primary {
+    background: $base-background-color-button-primary;
+    color: $base-color-button-primary;
+    border-color: $base-border-color-button-primary;
+    box-shadow: $base-box-shadow-button-primary;
+  }
+
+  &.facebook {
+    background: $base-background-color-button-facebook;
+    color: $base-color-button-facebook;
+    border-color: $base-border-color-button-facebook;
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, sans-serif; // yes, FB font :facepalm:
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.icon-only {
+    padding: 5px 10px;
+    background: transparent;
+    border: none;
+  }
+
+  &.spread {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & * + * {
+      margin-left: 1ch;
+    }
+  }
+
+  // Default layout for Font Awesome icon in button
+  .fa {
+    vertical-align: sub;
+    font-size: 1.5em;
+  }
+}
+
+section {
+  .section-content {
+    padding: 10px;
+
+    *:first-child { // that rule works on any sub-containers atm, produces better results across the app
+      margin-top: 0;
+    }
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.main-content {
+  transition: opacity 0.3s ease-in-out;
+  max-width: 500px;
+  margin: auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-primary {
+  color: $base-color-text-primary;
+}
+
+.text-secondary {
+  color: $base-color-text-secondary;
+}
+
+.text-misc {
+  color: $base-color-text-misc;
+}
+
+.text-disclaimer {
+  color: $base-color-text-misc;
+  font-size: $base-font-size-disclaimer;
+
+  i { // for Font Awesome
+    vertical-align: bottom;
+  }
+}
+
+// Default style for Font Awesome
+.fa {
+  font-size: 1em;
+  vertical-align: middle;
+}
+
+.input-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 10px 0;
+
+  .label-part {
+    width: 100%;
+    margin-bottom: $base-margin / 2;
+    font-weight: bold;
+  }
+
+  .input-part {
+    width: 100%;
+
+    input:not([type=checkbox]):not([type=radio]), textarea, select {
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+  }
+}
