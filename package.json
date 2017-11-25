@@ -1,0 +1,33 @@
+{
+  "name": "bitcoin-message",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "mobx": "^3.3.1",
+    "mobx-react": "^4.3.4",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-router-dom": "^4.2.2",
+    "react-scripts-ts": "2.8.0"
+  },
+  "scripts": {
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts-ts start",
+    "build-js": "react-scripts-ts build",
+    "start": "npm-run-all -p watch-css start-js",
+    "server": "yarn start",
+    "build": "npm-run-all build-css build-js",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^21.1.6",
+    "@types/node": "^8.0.53",
+    "@types/react": "^16.0.25",
+    "@types/react-dom": "^16.0.3",
+    "@types/react-router-dom": "^4.2.1",
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.1.2"
+  }
+}

@@ -29,21 +29,12 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
 # Dependency directories
 node_modules/
 
 ## ignore generated JavaScript files
 functions/**/*.js
 functions/**/*.js.map
-
-# Typescript v1 declaration files
-typings/
-
-# Optional npm cache directory
-.npm
 
 # Optional eslint cache
 .eslintcache
@@ -61,3 +52,14 @@ typings/
 .env
 
 .runtimeconfig.json
+
+## React
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

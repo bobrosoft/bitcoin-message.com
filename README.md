@@ -2,7 +2,9 @@
 
 ### Dev things I wanted to achieve in that project:
 
- - try Firebase on backend and frontend
+ - try React for frontend (despite the fact that I prefer Angular 2/4+ and @ngrx/store)
+ - try MobX for state management (as I found it looks really cool OOP-wise, near the same as services in Angular+RxJS)
+ - try Firebase for backend (and some frontend parts)
  - write serverless app (I mean with backend, but without classic server)
  - write beautiful backend implementation
  - write beautiful frontend implementation (of course!)
