@@ -4,6 +4,7 @@ import {ApiError} from '../models/api-error.model';
 import {SaveMessageFunctionPayload} from '../models/save-message-function-payload.model';
 import {MessagesService} from '../services/messages.service';
 import {SaveMessageFunctionResponse} from '../models/save-message-function-response.model';
+import {sharedConfig} from '../shared-config';
 
 export class SaveMessageFunction extends BaseFunction {
   constructor(
@@ -59,8 +60,8 @@ export class SaveMessageFunction extends BaseFunction {
     }
 
     // TODO: extract message.length to config
-    const maxLength = 80;
-    if (payload.message.length > maxLength) {
+    const maxLength = sharedConfig.maxMessageLengthInBytes;
+    if (new Buffer(payload.message).length > maxLength) {
       return Promise.reject(new ApiError(`Message is too long (max: ${maxLength} bytes)`, 'MESSAGE_TOO_LONG'));
     }
     

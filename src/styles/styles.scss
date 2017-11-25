@@ -26,7 +26,7 @@ a {
 }
 
 p, .p {
-  margin: 0 0 $base-margin 0;
+  margin: $base-margin 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -227,12 +227,6 @@ section {
   }
 }
 
-.main-content {
-  transition: opacity 0.3s ease-in-out;
-  max-width: 500px;
-  margin: auto;
-}
-
 .text-center {
   text-align: center;
 }
@@ -257,8 +251,20 @@ section {
   color: $base-color-text-secondary;
 }
 
+.text-error {
+  color: $base-color-error;
+}
+
 .text-misc {
   color: $base-color-text-misc;
+}
+
+.text-88 {
+  font-size: $base-font-size-88;
+}
+
+.text-66 {
+  font-size: $base-font-size-66;
 }
 
 .text-disclaimer {

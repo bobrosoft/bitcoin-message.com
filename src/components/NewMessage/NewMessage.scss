@@ -1,0 +1,14 @@
+@import "../../styles/variables";
+
+.NewMessage {
+  .message {
+    textarea {
+      display: block;
+      width: 100%;
+    }
+  }
+  
+  .buttons {
+    margin-top: $base-margin / 2;
+  }
+}
