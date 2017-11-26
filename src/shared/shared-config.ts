@@ -1,4 +1,4 @@
-// That's config, shared between API and App
+// That's config, which is shared between App and API
 export const sharedConfig = {
   maxMessageLengthInBytes: 80
 };
