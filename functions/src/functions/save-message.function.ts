@@ -40,7 +40,7 @@ export class SaveMessageFunction extends BaseFunction {
       })
       .catch((err: ApiError) => {
         console.log(err);
-        res.send(this.createErrorResponse(err));
+        res.status(400).send(this.createErrorResponse(err));
       })
     ;
   }

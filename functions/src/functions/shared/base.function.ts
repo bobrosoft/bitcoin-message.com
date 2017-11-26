@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import {HttpsFunction} from 'firebase-functions';
-import {Request, Response} from '@types/express-serve-static-core';
+import * as cors from 'cors';
+import {Request, Response} from 'express-serve-static-core';
 import {ErrorResponse} from '../../models/error-response.model';
 import {SuccessResponse} from '../../models/success-response.model';
 import {ApiError} from '../../models/api-error.model';
@@ -10,7 +11,11 @@ export abstract class BaseFunction {
    * Public request handler instance
    * @type {HttpsFunction}
    */
-  handler: HttpsFunction = functions.https.onRequest(this.handleRequest.bind(this));
+  handler: HttpsFunction = functions.https.onRequest((req, res) => {
+    cors({origin: true})(req, res, () => {
+      this.handleRequest(req, res);
+    });
+  });
 
   /**
    * Actual request handler method
@@ -20,7 +25,8 @@ export abstract class BaseFunction {
   protected abstract handleRequest(req: Request, res: Response);
 
   /**
-   * Creates common error response
+   * Creates common error response.
+   * IMPORTANT! Should be strictly used with proper HTTP code (400+)
    * @param error
    * @returns {ErrorResponse}
    */
