@@ -17,8 +17,8 @@
     "typescript": "^2.3.2"
   },
   "scripts": {
-    "build": "tsc",
-    "server": "tsc --watch & firebase serve --only functions",
+    "build": "tsc -p ./tsconfig.json",
+    "server": "tsc -p ./tsconfig.json --watch & firebase serve --only functions",
     "lint": "tslint \"src/**/*.ts\" -e \"**/*.spec.ts\"",
     "deploy": "yarn lint && tsc && firebase deploy --only functions"
   },

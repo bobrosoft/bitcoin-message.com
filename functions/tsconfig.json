@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "lib": ["es6", "es2015.promise"],
+    "lib": ["es6", "es2015.promise", "dom"],
     "module": "commonjs",
     "noImplicitAny": false,
     "outDir": "build",
     "sourceMap": true,
-    "target": "es6"
+    "target": "es6",
+    "rootDir" : "src"
   },
   "typeRoots": [
     "node_modules/@types"

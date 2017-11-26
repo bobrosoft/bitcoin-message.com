@@ -1,8 +1,10 @@
-import {config} from 'firebase-functions';
-import Config = config.Config;
+// import {config} from 'firebase-functions';
+// import Config = config.Config;
 
-// Firebase allow only underscores :'(
-export interface ProjectConfig extends Config {
+// Firebase allows only underscores :'(
+export interface ProjectConfig {
+  firebase: any;
+  
   blockchain: {
     network: ('bitcoin' | 'testnet');
     wallet_wif: string;
