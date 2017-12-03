@@ -2,7 +2,7 @@ import * as admin from 'firebase-admin';
 import * as imap from 'imap-simple';
 import {ProjectConfig} from '../models/project-config.model';
 import {Donation} from '../models/donation.model';
-import {FetchOptions} from '@types/imap';
+import {FetchOptions} from 'imap';
 import {ApiError} from '../models/api-error.model';
 import {ExchangeRatesService} from './exchange-rates.service';
 import {MessagesService} from './messages.service';
@@ -150,7 +150,7 @@ export class DonationsService {
 
   /**
    * Returns donations from parsed body
-   * @param {string} body
+   * @param message
    * @returns {Donation}
    */
   parseAndExtractDonations(message: imap.Message): Donation | undefined {

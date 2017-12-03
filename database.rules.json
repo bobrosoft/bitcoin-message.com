@@ -7,7 +7,7 @@
       
       "$messageId": {
         ".read": true,
-        ".validate": "newData.hasChildren(['id', 'message', 'email', 'createdTimestamp'])",
+        ".validate": "newData.hasChildren(['id', 'message', 'createdTimestamp'])",
         ".indexOn": ["createdTimestamp"],
         
         "id": {

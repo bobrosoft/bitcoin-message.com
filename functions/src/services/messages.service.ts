@@ -2,8 +2,10 @@ import * as admin from 'firebase-admin';
 import {Message} from '../models/message.model';
 import {BlockchainService} from './blockchain.service';
 import {PublishedMessage} from '../models/published-message.model';
+import {ApiError} from '../models/api-error.model';
 
 export class MessagesService {
+  readonly ERROR_NO_ENTRY = 'MessagesService.ERROR_NO_ENTRY';
   
   constructor(
     protected blockchainService: BlockchainService,
@@ -26,6 +28,22 @@ export class MessagesService {
         return message;
       })
     ;
+  }
+
+  /**
+   * Updates email for message
+   * @param {string} messageId
+   * @param {string} email
+   * @returns {Promise<any>}
+   */
+  async updateEmailForMessageId(messageId: string, email: string): Promise<any> {
+    const currentValue: admin.database.DataSnapshot = await this.dbMessages.child(messageId).once('value');
+    
+    if (!currentValue.exists()) {
+      throw new ApiError('No entry found', this.ERROR_NO_ENTRY);
+    }
+        
+    return currentValue.ref.child('email').set(email);
   }
 
   /**
