@@ -1,0 +1,14 @@
+@import "../../styles/variables";
+
+.DonationForm {
+  .email {
+    input {
+      display: block;
+      width: 100%;
+    }
+  }
+  
+  .buttons {
+    margin-top: $base-margin / 2;
+  }
+}
