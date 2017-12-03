@@ -2,17 +2,40 @@ import * as React from 'react';
 import {NewMessage} from '../../components/NewMessage/NewMessage';
 import {sharedConfig} from '../../shared/shared-config';
 import {AppError} from '../../models/app-error.model';
+import {inject} from 'mobx-react';
+import {MessagesStore} from '../../stores/messages.store';
+import {Message} from '../../shared/api-models/message.model';
+import {Redirect} from 'react-router';
 
-export class HomePage extends React.Component {
-  constructor(props: {}) {
+interface Props {
+  messagesStore: MessagesStore;
+}
+
+interface State {
+  createdMessage?: Message;
+}
+
+@inject('messagesStore')
+export class HomePage extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
+    this.state = {};
     
     this.handleMessageSend = this.handleMessageSend.bind(this);
     this.handleMessageValidationError = this.handleMessageValidationError.bind(this);
   }
   
   handleMessageSend(message: string) {
-    console.log(message);
+    this.props.messagesStore.saveMessage({
+      message: message,
+      email: 'sddsfdsf@sdfdsfdsf.ru',
+    }).then((data) => {
+      this.setState({
+        createdMessage: data.createdMessage
+      });
+    }, (error: AppError) => {
+      alert(error.message);
+    });
   }
 
   handleMessageValidationError(error: AppError) {
@@ -20,12 +43,20 @@ export class HomePage extends React.Component {
   }
   
   render() {
+    if (this.state.createdMessage) {
+      return (
+        <Redirect to={`/message/${this.state.createdMessage && this.state.createdMessage.id}`} />
+      );
+    }
+    
     return (
-      <section>
-        <div className="section-content">
-          <NewMessage maxLengthBytes={sharedConfig.maxMessageLengthInBytes} onSend={this.handleMessageSend} onValidationError={this.handleMessageValidationError} />
-        </div>
-      </section>
+      <div>
+        <section>
+          <div className="section-content">
+            <NewMessage maxLengthBytes={sharedConfig.maxMessageLengthInBytes} onSend={this.handleMessageSend} onValidationError={this.handleMessageValidationError} />
+          </div>
+        </section>
+      </div>
     );
   }
 }
