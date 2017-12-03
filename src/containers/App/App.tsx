@@ -1,33 +1,26 @@
 import * as React from 'react';
+import * as firebase from 'firebase';
 import './App.css';
 import {Provider} from 'mobx-react';
-import {observable} from 'mobx';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Route} from 'react-router';
+import {MessagesStore} from '../../stores/messages.store';
 import {HomePage} from '../HomePage/HomePage';
+import {MessagePage} from '../MessagePage/MessagePage';
 
-const colorsStore = observable({
-  foreground: 'red',
-  background: 'blue'
+// Setup Firebase
+// TODO: config
+firebase.initializeApp({
+  apiKey: 'AIzaSyDEkqTbmC0J5ZlbcGR3Cx5wWW6ne-Ac34E',
+  authDomain: 'bitcoin-message-dev.firebaseapp.com',
+  databaseURL: 'https://bitcoin-message-dev.firebaseio.com',
+  storageBucket: 'bitcoin-message-dev.appspot.com',
 });
-
-// @inject('colors') @observer
-// class Button extends React.Component<{colors?: {[key: string]: string}, label: string; onClick?: () => void}> {
-//   render() {
-//     const { colors, label, onClick } = this.props;
-//    
-//     return (
-//       <button style={{color: colors && colors.foreground, backgroundColor: colors && colors.background}} onClick={onClick}>
-//         {label}
-//       </button>
-//     );
-//   }
-// }
 
 export class App extends React.Component {
   render() {
     return (
-      <Provider colors={colorsStore}>
+      <Provider messagesStore={new MessagesStore()}>
         <div className="App">
           <div className="App-header">
             <h2>Welcome to ReactDDD</h2>
@@ -35,7 +28,7 @@ export class App extends React.Component {
           <Router>
             <div>
               <Route exact={true} path="/" component={HomePage}/>
-              {/*<Route path="/about" component={About}/>*/}
+              <Route path="/message/:id" component={MessagePage}/>
               {/*<Route path="/topics" component={Second}/>*/}
             </div>
           </Router>
