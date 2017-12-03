@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ChangeEvent, MouseEvent} from 'react';
-import './NewMessage.css';
+import './NewMessageForm.css';
 import {AppError} from '../../models/app-error.model';
 
 interface Props {
@@ -13,7 +13,7 @@ interface State {
   message: string;
 }
 
-export class NewMessage extends React.Component<Props, State> {
+export class NewMessageForm extends React.Component<Props, State> {
 
   get messageLength(): number {
     return new Blob([this.state.message]).size;
@@ -33,7 +33,7 @@ export class NewMessage extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className="NewMessage">
+      <div className="NewMessageForm">
         <div className="message">
           <textarea value={this.state.message} onChange={this.handleChange} rows={2} />
           <div className={'indicator text-right text-88 ' + (this.isMessageTooLong ? 'text-error' : 'text-misc')}>

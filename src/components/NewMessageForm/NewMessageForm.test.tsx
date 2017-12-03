@@ -1,15 +1,15 @@
 import * as React from 'react';
-import {NewMessage} from './NewMessage';
+import {NewMessageForm} from './NewMessageForm';
 import {shallow} from 'enzyme';
 import createSpy = jasmine.createSpy;
 
 it('renders without crashing', () => {
-  shallow(<NewMessage maxLengthBytes={80} onSend={() => {}} />);
+  shallow(<NewMessageForm maxLengthBytes={80} onSend={() => {}} />);
 });
 
 it('should properly count message length in bytes', () => {
-  const component = shallow(<NewMessage maxLengthBytes={80} onSend={() => {}} />);
-  const componentInstance = component.instance() as NewMessage;
+  const component = shallow(<NewMessageForm maxLengthBytes={80} onSend={() => {}} />);
+  const componentInstance = component.instance() as NewMessageForm;
   
   component.find('textarea').simulate('change', {target: {value: 'Hello'}});
   expect(componentInstance.messageLength).toBe(5);
@@ -22,8 +22,8 @@ it('should properly count message length in bytes', () => {
 });
 
 it('should detect if message too long', () => {
-  const component = shallow(<NewMessage maxLengthBytes={8} onSend={() => {}} />);
-  const componentInstance = component.instance() as NewMessage;
+  const component = shallow(<NewMessageForm maxLengthBytes={8} onSend={() => {}} />);
+  const componentInstance = component.instance() as NewMessageForm;
 
   component.find('textarea').simulate('change', {target: {value: 'Hello'}});
   expect(componentInstance.isMessageTooLong).toBe(false);
@@ -34,7 +34,7 @@ it('should detect if message too long', () => {
 
 it('should emit onSend event with proper data', () => {
   const spy = createSpy('callback').and.stub();
-  const component = shallow(<NewMessage maxLengthBytes={8} onSend={spy} />);
+  const component = shallow(<NewMessageForm maxLengthBytes={8} onSend={spy} />);
 
   component.find('textarea').simulate('change', {target: {value: 'Hello'}});
   component.find('.spec-send').simulate('click');
@@ -44,7 +44,7 @@ it('should emit onSend event with proper data', () => {
 
 it('should emit onValidationError event with proper data', () => {
   const spy = createSpy('callback').and.stub();
-  const component = shallow(<NewMessage maxLengthBytes={8} onSend={() => {}} onValidationError={spy} />);
+  const component = shallow(<NewMessageForm maxLengthBytes={8} onSend={() => {}} onValidationError={spy} />);
 
   component.find('textarea').simulate('change', {target: {value: 'Hello'}});
   component.find('.spec-send').simulate('click');

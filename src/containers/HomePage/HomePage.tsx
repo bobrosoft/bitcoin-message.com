@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NewMessage} from '../../components/NewMessage/NewMessage';
+import {NewMessageForm} from '../../components/NewMessageForm/NewMessageForm';
 import {sharedConfig} from '../../shared/shared-config';
 import {AppError} from '../../models/app-error.model';
 import {inject} from 'mobx-react';
@@ -53,7 +53,7 @@ export class HomePage extends React.Component<Props, State> {
       <div>
         <section>
           <div className="section-content">
-            <NewMessage maxLengthBytes={sharedConfig.maxMessageLengthInBytes} onSend={this.handleMessageSend} onValidationError={this.handleMessageValidationError} />
+            <NewMessageForm maxLengthBytes={sharedConfig.maxMessageLengthInBytes} onSend={this.handleMessageSend} onValidationError={this.handleMessageValidationError} />
           </div>
         </section>
       </div>
