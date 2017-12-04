@@ -1,4 +1,30 @@
 .MessagePage {
   margin: auto;
   max-width: 500px;
+  
+  .fa-arrow-down {
+    animation: 2s infinite MessagePage-arrow;
+  }
+  
+  @keyframes MessagePage-arrow {
+    30% {
+      transform: translateY(0);
+    }
+    
+    40% {
+      transform: translateY(0.5em);
+    }
+
+    50% {
+      transform: translateY(0);
+    }
+
+    60% {
+      transform: translateY(0.5em);
+    }
+
+    70% {
+      transform: translateY(0);
+    }
+  }
 }

@@ -28,7 +28,6 @@ export class HomePage extends React.Component<Props, State> {
   handleMessageSend(message: string) {
     this.props.messagesStore.saveMessage({
       message: message,
-      email: 'sddsfdsf@sdfdsfdsf.ru',
     }).then((data) => {
       this.setState({
         createdMessage: data.createdMessage

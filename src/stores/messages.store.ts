@@ -1,37 +1,33 @@
 import {action} from 'mobx';
 import * as firebase from 'firebase';
-import {SuccessResponse} from '../shared/api-models/success-response.model';
-import {ErrorResponse} from '../shared/api-models/error-response.model';
+import {BaseApiStore} from './base-api.store';
 import {AppError} from '../models/app-error.model';
+import {Message} from '../shared/api-models/message.model';
 import {SaveMessageFunctionResponse} from '../shared/api-models/save-message-function-response.model';
 import {SaveMessageFunctionPayload} from '../shared/api-models/save-message-function-payload.model';
-import {Message} from '../shared/api-models/message.model';
+import {CheckDonationsFunctionPayload} from '../shared/api-models/check-donations-function-payload.model';
+import {CheckDonationsFunctionResponse} from '../shared/api-models/check-donations-function-response.model';
 
-export class MessagesStore {
+export class MessagesStore extends BaseApiStore {
   readonly ERROR_NO_ENTRY = 'MessagesStore.ERROR_NO_ENTRY';
   
   dbMessages: firebase.database.Reference = firebase.database().ref('messages');
-  
+
+  /**
+   * Saves new message to API
+   * @param {SaveMessageFunctionPayload} payload
+   * @returns {Promise<SaveMessageFunctionResponse>}
+   */
   @action saveMessage(payload: SaveMessageFunctionPayload): Promise<SaveMessageFunctionResponse> {
     // TODO: config
-    return fetch('http://localhost:5000/bitcoin-message-dev/us-central1/saveMessage', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload),
-    })
-      .then(r => r.json())
-      .then((response: SuccessResponse<SaveMessageFunctionResponse> | ErrorResponse) => {
-        if (!response.success) {
-          throw new AppError(response.errorMessage, response.errorCode);
-        }
-      
-        return response.data;
-      })
-    ;
+    return this.postJSON('/saveMessage', payload);
   }
 
+  /**
+   * Returns actual info about message by ID
+   * @param {string} id
+   * @returns {Promise<Message>}
+   */
   @action getMessageById(id: string): Promise<Message> {
     return this.dbMessages.child(id).once('value')
       .then((s) => {
@@ -42,5 +38,14 @@ export class MessagesStore {
         return s.val();
       })
     ;
+  }
+
+  /**
+   * 
+   * @param {CheckDonationsFunctionPayload} payload
+   * @returns {Promise<CheckDonationsFunctionResponse>}
+   */
+  @action checkMessageStatus(payload: CheckDonationsFunctionPayload): Promise<CheckDonationsFunctionResponse> {
+    return this.postJSON('/checkDonations', payload);
   }
 }
