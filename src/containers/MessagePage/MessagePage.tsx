@@ -39,6 +39,8 @@ export class MessagePage extends React.Component<Props, State> {
   
   render() {
     if (this.state.message && this.state.message.isPublished) {
+      this.props.messagesStore.rememberLastPublishedMessage(this.state.message);
+      
       return (
         <Redirect to={`/published/${this.state.message.blockchainTxId}`} />
       );

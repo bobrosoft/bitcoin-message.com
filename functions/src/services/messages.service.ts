@@ -6,6 +6,7 @@ import {ApiError} from '../models/api-error.model';
 
 export class MessagesService {
   readonly ERROR_NO_ENTRY = 'MessagesService.ERROR_NO_ENTRY';
+  readonly ERROR_ALREADY_PUBLISHED = 'MessagesService.ERROR_ALREADY_PUBLISHED';
   
   constructor(
     protected blockchainService: BlockchainService,
@@ -42,7 +43,11 @@ export class MessagesService {
     if (!currentValue.exists()) {
       throw new ApiError('No entry found', this.ERROR_NO_ENTRY);
     }
-        
+    
+    if ((currentValue.val() as Message).isPublished) {
+      throw new ApiError('Entry is already published', this.ERROR_ALREADY_PUBLISHED);
+    }
+    
     return currentValue.ref.child('email').set(email);
   }
 

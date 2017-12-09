@@ -7,6 +7,7 @@ import {Route} from 'react-router';
 import {MessagesStore} from '../../stores/messages.store';
 import {HomePage} from '../HomePage/HomePage';
 import {MessagePage} from '../MessagePage/MessagePage';
+import {PublishedMessagePage} from '../PublishedMessagePage/PublishedMessagePage';
 
 // Setup Firebase
 // TODO: config
@@ -29,6 +30,7 @@ export class App extends React.Component {
             <div>
               <Route exact={true} path="/" component={HomePage}/>
               <Route path="/message/:id" component={MessagePage}/>
+              <Route path="/published/:id" component={PublishedMessagePage}/>
               {/*<Route path="/topics" component={Second}/>*/}
             </div>
           </Router>

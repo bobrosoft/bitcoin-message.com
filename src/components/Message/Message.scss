@@ -1,0 +1,20 @@
+@import "../../styles/variables";
+
+.Message {
+  padding: $base-margin / 2;
+  border: 1px solid $base-border-color-light;
+  border-radius: $base-border-radius;
+  
+  .body {
+    margin: 5px 0 8px;
+    font-size: 1.5rem;
+  }
+  
+  .txid {
+    word-break: break-all;
+    
+    .fa {
+      margin-left: 5px;
+    }
+  }
+}

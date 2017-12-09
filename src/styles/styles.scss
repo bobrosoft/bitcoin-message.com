@@ -65,6 +65,11 @@ hr {
   }
 }
 
+abbr {
+  cursor: help;
+  text-decoration: underline dotted;
+}
+
 input, textarea, select, button {
   font-family: inherit;
   font-size: inherit;

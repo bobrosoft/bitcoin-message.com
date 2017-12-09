@@ -1,0 +1,10 @@
+@import "../../styles/variables";
+
+.PublishedMessagePage {
+  margin: auto;
+  max-width: 500px;
+  
+  .success-title {
+    color: $base-color-valid;
+  }
+}
