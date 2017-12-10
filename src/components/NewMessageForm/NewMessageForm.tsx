@@ -47,7 +47,6 @@ export class NewMessageForm extends React.Component<Props, State> {
         <div className="buttons text-center">
           <button className="primary spec-send" onClick={this.handleSubmit}>Send</button>
         </div>
-        <div>{this.state.message}</div>
       </div>
     );
   }

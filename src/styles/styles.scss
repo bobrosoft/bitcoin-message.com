@@ -114,6 +114,7 @@ select.with-placeholder {
 
 button {
   position: relative;
+  overflow: hidden; // for :after
   font-family: $base-font-button;
   font-size: $base-font-size-button;
   font-weight: $base-font-weight-button;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as firebase from 'firebase';
 import './App.css';
 import {Provider} from 'mobx-react';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, Link} from 'react-router-dom';
 import {Route} from 'react-router';
 import {MessagesStore} from '../../stores/messages.store';
 import {HomePage} from '../HomePage/HomePage';
@@ -22,19 +22,22 @@ export class App extends React.Component {
   render() {
     return (
       <Provider messagesStore={new MessagesStore()}>
-        <div className="App">
-          <div className="App-header">
-            <h2>Welcome to ReactDDD</h2>
-          </div>
-          <Router>
+        <Router>
+          <div className="App">
+            <div className="header">
+              <div className="bg-body"/>
+              <div className="content">
+                <Link to={''}><img className="logo" src="/assets/common/logo.svg"/></Link>
+              </div>
+            </div>
             <div>
               <Route exact={true} path="/" component={HomePage}/>
               <Route path="/message/:id" component={MessagePage}/>
               <Route path="/published/:id" component={PublishedMessagePage}/>
               {/*<Route path="/topics" component={Second}/>*/}
             </div>
-          </Router>
-        </div>
+          </div>
+        </Router>
       </Provider>
     );
   }

@@ -20,3 +20,15 @@ it('should display message', () => {
   expect(component.find('.date').text()).toMatch(date.getDate() + '');
   expect(component.find('.spec-txid').text()).toBe('blockchainTxId');
 });
+
+it('should not display blockchainTxId if it\'s empty', () => {
+  const date = new Date();
+
+  const component = shallow(<Message message={{
+    blockchainTxId: '',
+    message: 'message',
+    createdTimestamp: date.getTime()
+  } as PublishedMessage} />);
+
+  expect(component.find('.spec-txid').exists()).toBe(false);
+});

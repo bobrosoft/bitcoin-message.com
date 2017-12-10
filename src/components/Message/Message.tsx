@@ -25,12 +25,14 @@ export class Message extends React.Component<Props> {
       <div className="Message">
         <div className="date text-88 text-secondary">{this.date}</div>
         <div className="body">{this.props.message.message}</div>
+        {this.props.message.blockchainTxId &&
         <div className="txid text-66 text-misc">
           <abbr title="Bitcoin Transaction ID">Proof</abbr>:&nbsp;
           <a href={this.externalBlockchainUrl} className="text-misc" target="_blank">
-            <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link" />
+            <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
           </a>
         </div>
+        }
       </div>
     );
   }

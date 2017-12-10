@@ -32,7 +32,7 @@ $base-color-button-selected: white;
 $base-color-button-primary: white;
 $base-color-button-facebook: white;
 
-$base-background-color-body: #ffffff;
+$base-background-color-body: #fffdfb; //#ffffff;
 $base-background-color-button: white;
 $base-background-color-button-selected: black; // used on "active" button
 $base-background-color-button-primary: #00b964;
@@ -50,11 +50,11 @@ $base-border-color-button-selected: $base-border-color-button; // used on "activ
 $base-border-color-button-primary: $base-background-color-button-primary;
 $base-border-color-button-facebook: $base-background-color-button-facebook;
 $base-border-radius: 4px;
-$base-border-radius-button: $base-border-radius;
+$base-border-radius-button: 80px;
 
 $base-box-shadow-button: none;
-$base-box-shadow-button-primary: inset 0 -4px 0px rgba(0,0,0,0.25);
+$base-box-shadow-button-primary: none; // inset 0 -4px 0px rgba(0,0,0,0.25)
 
 $base-margin: 15px; // used for elements like headers, sections, paragraphs and others
 
-$base-padding-button: 16px 20px;
+$base-padding-button: 16px 40px;

@@ -41,7 +41,7 @@ export class PublishedMessagePage extends React.Component<Props, State> {
       <div className="PublishedMessagePage">
         <section>
           <div className="section-content">
-            <h2 className="success-title text-center">Successfully published to Bitcoin blockchain!</h2>
+            <h2 className="success-title text-center">Successfully published<br/>to Bitcoin blockchain!</h2>
             {this.state.publishedMessage &&
               <Message message={this.state.publishedMessage} />
             }

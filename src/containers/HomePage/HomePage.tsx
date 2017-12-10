@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './HomePage.css';
 import {NewMessageForm} from '../../components/NewMessageForm/NewMessageForm';
 import {sharedConfig} from '../../shared/shared-config';
 import {AppError} from '../../models/app-error.model';
@@ -49,8 +50,16 @@ export class HomePage extends React.Component<Props, State> {
     }
     
     return (
-      <div>
+      <div className="HomePage">
         <section>
+          <div className="section-content">
+            <p className="mission">
+              Join the revolution!<br/>Save your message in Bitcoin blockchain.<br/>Forever!
+            </p>
+          </div>
+        </section>
+        
+        <section className="new-message">
           <div className="section-content">
             <NewMessageForm maxLengthBytes={sharedConfig.maxMessageLengthInBytes} onSend={this.handleMessageSend} onValidationError={this.handleMessageValidationError} />
           </div>

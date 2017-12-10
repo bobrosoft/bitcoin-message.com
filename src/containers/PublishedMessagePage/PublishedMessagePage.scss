@@ -2,9 +2,11 @@
 
 .PublishedMessagePage {
   margin: auto;
-  max-width: 500px;
+  max-width: 520px;
   
   .success-title {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
     color: $base-color-valid;
   }
 }

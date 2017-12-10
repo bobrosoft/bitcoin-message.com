@@ -5,6 +5,7 @@ import {MessagesStore} from '../../stores/messages.store';
 import {match, Redirect} from 'react-router';
 import './MessagePage.css';
 import {DonationForm} from '../../components/DonationForm/DonationForm';
+import {Message as MessageComp} from '../../components/Message/Message';
 import {Message} from '../../shared/api-models/message.model';
 import {appConfig} from '../../config';
 
@@ -38,6 +39,10 @@ export class MessagePage extends React.Component<Props, State> {
   }
   
   render() {
+    if (!this.state.message) {
+      return '';
+    }
+    
     if (this.state.message && this.state.message.isPublished) {
       this.props.messagesStore.rememberLastPublishedMessage(this.state.message);
       
@@ -50,11 +55,11 @@ export class MessagePage extends React.Component<Props, State> {
       <div className="MessagePage">
         <section>
           <div className="section-content">
+            <h2>Your message:</h2>
             <div className="p">
-              <div>Your message:</div>
-              {this.state.message ? (
-              <div>{this.state.message.message}</div>
-              ) : ''}
+              {this.state.message &&
+              <MessageComp message={{message: this.state.message.message, createdTimestamp: this.state.message.createdTimestamp, blockchainTxId: ''}} />
+              }
             </div>
             <p className="text-center">
               You need to donate Bitcoin's network transaction fee with PayPal
@@ -68,14 +73,14 @@ export class MessagePage extends React.Component<Props, State> {
                 onValidationError={this.handleDonateValidationError}
               />
             </div>
-            {this.state.donorEmail ? (
-              <div>
-                <p className="text-center"><i className="fa fa-arrow-down"/></p>
+            {this.state.donorEmail &&
+              <div className="text-center">
+                <p><i className="fa fa-arrow-down"/></p>
                 <p>
-                  <button className="primary full-width" onClick={this.handleCheckDonationStatusClick}>Check Donation Status</button>
+                  <button className="primary" onClick={this.handleCheckDonationStatusClick}>Check Donation Status</button>
                 </p>
               </div>
-            ) : ''}
+            }
           </div>
         </section>
       </div>
@@ -127,7 +132,7 @@ export class MessagePage extends React.Component<Props, State> {
         }
       } else {
         if (!isSilent) {
-          alert(`Hmm, can't find your donation. Check that email is correct (should be your PayPal email used for donation).`);
+          alert(`Hmm, can't find your donation. Check if email is correct (should be your PayPal email used for donation).`);
         }
       }
     }, e => alert(e.message));

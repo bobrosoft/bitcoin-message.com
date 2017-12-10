@@ -37,14 +37,14 @@ export class DonationForm extends React.Component<Props, State> {
   render() {
     return (
       <div className="DonationForm">
-        <div className="email">
+        <div className="p email">
           <input placeholder="Donor's email (to find your donation)" value={this.state.email} onChange={this.handleChange} />
         </div>
-        <div className="buttons">
-          <button className="primary full-width spec-send" onClick={this.handleSubmit}>
+        <p className="buttons text-center">
+          <button className="primary  spec-send" onClick={this.handleSubmit}>
             Donate {this.currencyCodeToSymbol(this.props.donationCurrency)}{this.props.donationAmount.toFixed(2)}
           </button>
-        </div>
+        </p>
       </div>
     ); 
   }

@@ -1,18 +1,33 @@
 .App {
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
+  .header {
+    position: relative;
+    margin-bottom: 10px;
+    overflow: hidden; // for .bg-body
+    color: white;
+    
+    .bg-body {
+      position: absolute;
+      left: -5%;
+      width: 110%;
+      height: 100%;
+      background: #ff3c00 linear-gradient(115deg, #ff3c00 0%, #ffbb00 100%);
+      //background: #0b007d linear-gradient(115deg, #0b007d 0%, #2515ce 100%);
+      box-shadow: inset 0px -10px 20px rgba(0,0,0,0.2);
+      transform-origin: bottom left;
+      transform: skewY(-4deg);
+    }
+    
+    .content {
+      position: relative;
+      padding: 25px 25px 45px 25px;
+      
+      @media (min-width: 800px) {
+        padding-bottom: 65px;
+      }
+      
+      .logo {
+        max-width: 384px;
+      }
+    }
+  }
 }
