@@ -18,6 +18,10 @@ export class NewMessageForm extends React.Component<Props, State> {
   get messageLength(): number {
     return new Blob([this.state.message]).size;
   }
+
+  get isMessageTooShort(): boolean {
+    return this.messageLength === 0;
+  }
   
   get isMessageTooLong(): boolean {
     return this.messageLength > this.props.maxLengthBytes;
@@ -35,13 +39,13 @@ export class NewMessageForm extends React.Component<Props, State> {
     return (
       <div className="NewMessageForm">
         <div className="message">
-          <textarea value={this.state.message} onChange={this.handleChange} rows={2} />
+          <textarea placeholder="Your eternal message..." value={this.state.message} onChange={this.handleChange} rows={2} />
           <div className={'indicator text-right text-88 ' + (this.isMessageTooLong ? 'text-error' : 'text-misc')}>
             {this.messageLength} / {this.props.maxLengthBytes}
           </div>
         </div>
-        <div className="buttons">
-          <button className="primary full-width spec-send" onClick={this.handleSubmit}>Send</button>
+        <div className="buttons text-center">
+          <button className="primary spec-send" onClick={this.handleSubmit}>Send</button>
         </div>
         <div>{this.state.message}</div>
       </div>
@@ -49,6 +53,10 @@ export class NewMessageForm extends React.Component<Props, State> {
   }
 
   protected validate(): AppError | true {
+    if (this.isMessageTooShort) {
+      return new AppError(`Message is too short`, 'MESSAGE_TOO_SHORT');
+    }
+    
     if (this.isMessageTooLong) {
       return new AppError(`Message is too long (max: ${this.props.maxLengthBytes} bytes)`, 'MESSAGE_TOO_LONG');
     }
