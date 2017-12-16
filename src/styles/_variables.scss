@@ -27,13 +27,13 @@ $base-color-price-highlighted: #e11f22;
 $base-color-active: white;
 $base-color-valid: #7CAE16;
 $base-color-error: #cc0000;
-$base-color-button: $base-color-text-primary;
+$base-color-button: #00b964;
 $base-color-button-selected: white;
 $base-color-button-primary: white;
 $base-color-button-facebook: white;
 
 $base-background-color-body: #fffdfb; //#ffffff;
-$base-background-color-button: white;
+$base-background-color-button: transparent;
 $base-background-color-button-selected: black; // used on "active" button
 $base-background-color-button-primary: #00b964;
 $base-background-color-button-facebook: #3b5998;
@@ -43,9 +43,9 @@ $base-background-color-main-footer: #DEDEDE;
 
 $base-border-color: #aaa;
 $base-border-width: 1px;
-$base-border-width-button: 1px;
+$base-border-width-button: 2px;
 $base-border-color-light: #E4E4E4;
-$base-border-color-button: black;
+$base-border-color-button: $base-background-color-button-primary;
 $base-border-color-button-selected: $base-border-color-button; // used on "active" button
 $base-border-color-button-primary: $base-background-color-button-primary;
 $base-border-color-button-facebook: $base-background-color-button-facebook;

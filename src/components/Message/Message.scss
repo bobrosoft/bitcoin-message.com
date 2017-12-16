@@ -14,6 +14,10 @@
   .txid {
     word-break: break-all;
     
+    .link {
+      text-decoration: $base-text-decoration-link;
+    }
+    
     .fa {
       margin-left: 5px;
     }

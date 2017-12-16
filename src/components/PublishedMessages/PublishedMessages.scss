@@ -1,0 +1,19 @@
+@import "../../styles/variables";
+
+.PublishedMessages {
+  .item {
+    display: block;
+    margin: $base-margin 0;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .Message {
+    transition: all 0.5s; 
+    
+    &:hover {
+      box-shadow: 0 10px 40px 0 rgba(62,57,107,0.2), 0 2px 9px 0 rgba(62,57,107,0.06);
+      transform: translateY(-4px);
+    }
+  }
+}

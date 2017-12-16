@@ -4,9 +4,16 @@ import {PublishedMessage} from '../../shared/api-models/published-message.model'
 
 interface Props {
   message: PublishedMessage;
+  noATag?: boolean;
 }
 
 export class Message extends React.Component<Props> {
+  
+  constructor(props: Props) {
+    super(props);
+
+    this.handleLinkClick = this.handleLinkClick.bind(this);
+  }
   
   get date() {
     if (Date.prototype.toLocaleDateString) {
@@ -28,12 +35,22 @@ export class Message extends React.Component<Props> {
         {this.props.message.blockchainTxId &&
         <div className="txid text-66 text-misc">
           <abbr title="Bitcoin Transaction ID">Proof</abbr>:&nbsp;
-          <a href={this.externalBlockchainUrl} className="text-misc" target="_blank">
-            <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
-          </a>
+          {this.props.noATag ?
+            <span className="text-misc link" onClick={this.handleLinkClick}>
+              <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
+            </span>
+            :
+            <a href={this.externalBlockchainUrl} className="text-misc link" target="_blank">
+              <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
+            </a>
+          }
         </div>
         }
       </div>
     );
+  }
+  
+  protected handleLinkClick() {
+    window.open(this.externalBlockchainUrl, '_blank');
   }
 }

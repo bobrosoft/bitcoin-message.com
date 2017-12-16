@@ -36,6 +36,7 @@
     
     "publishedMessages": {
       ".read": true,
+      ".indexOn": ["createdTimestamp"],
       
       "$blockchainTxId": {
         ".validate": "newData.hasChildren(['message', 'createdTimestamp', 'blockchainTxId'])",

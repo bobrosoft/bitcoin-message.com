@@ -32,3 +32,23 @@ it('should not display blockchainTxId if it\'s empty', () => {
 
   expect(component.find('.spec-txid').exists()).toBe(false);
 });
+
+it(`should not display <a> tag if noATag passed`, () => {
+  const date = new Date();
+
+  const component = shallow(<Message message={{
+    blockchainTxId: 'blockchainTxId',
+    message: 'message',
+    createdTimestamp: date.getTime()
+  } as PublishedMessage} />);
+
+  expect(component.find('a.link').exists()).toBe(true);
+
+  const component2 = shallow(<Message message={{
+    blockchainTxId: 'blockchainTxId',
+    message: 'message',
+    createdTimestamp: date.getTime()
+  } as PublishedMessage} noATag={true} />);
+
+  expect(component2.find('a.link').exists()).toBe(false);
+});

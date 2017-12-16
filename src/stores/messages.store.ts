@@ -18,15 +18,6 @@ export class MessagesStore extends BaseApiStore {
   protected dbPublishedMessages: firebase.database.Reference = firebase.database().ref('publishedMessages');
 
   /**
-   * Saves new message to API
-   * @param {SaveMessageFunctionPayload} payload
-   * @returns {Promise<SaveMessageFunctionResponse>}
-   */
-  @action saveMessage(payload: SaveMessageFunctionPayload): Promise<SaveMessageFunctionResponse> {
-    return this.postJSON('/saveMessage', payload);
-  }
-
-  /**
    * Returns actual info about message by ID
    * @param {string} id
    * @returns {Promise<Message>}
@@ -44,15 +35,6 @@ export class MessagesStore extends BaseApiStore {
   }
 
   /**
-   * 
-   * @param {CheckDonationsFunctionPayload} payload
-   * @returns {Promise<CheckDonationsFunctionResponse>}
-   */
-  @action checkMessageStatus(payload: CheckDonationsFunctionPayload): Promise<CheckDonationsFunctionResponse> {
-    return this.postJSON('/checkDonations', payload);
-  }
-
-  /**
    * Returns published message by ID
    * @param {string} id
    * @returns {Promise<Message>}
@@ -67,6 +49,49 @@ export class MessagesStore extends BaseApiStore {
         return s.val();
       })
     ;
+  }
+
+  /**
+   * Returns last published messages
+   * @param {number} startFromTimestamp
+   * @param {number} limit
+   * @returns {Promise<PublishedMessage[]>}
+   */
+  @action getRecentPublishedMessages(startFromTimestamp: number = 9999999999999, limit: number = 30): Promise<PublishedMessage[]> {
+    // NOTE: executing queries with sorting in Firebase.Database is a f*cking pain! :(
+    return this.dbPublishedMessages
+      .orderByChild('createdTimestamp')
+      .endAt(startFromTimestamp)
+      .limitToLast(limit)
+      .once('value')
+      .then((s: firebase.database.DataSnapshot) => {
+        const result: PublishedMessage[] = [];
+        s.forEach((v) => {
+          result.push(v.val());
+          return false;
+        });
+        
+        return result.reverse();
+      })
+    ;
+  }
+
+  /**
+   * Saves new message to API
+   * @param {SaveMessageFunctionPayload} payload
+   * @returns {Promise<SaveMessageFunctionResponse>}
+   */
+  @action saveMessage(payload: SaveMessageFunctionPayload): Promise<SaveMessageFunctionResponse> {
+    return this.postJSON('/saveMessage', payload);
+  }
+
+  /**
+   * Checks message status
+   * @param {CheckDonationsFunctionPayload} payload
+   * @returns {Promise<CheckDonationsFunctionResponse>}
+   */
+  @action checkMessageStatus(payload: CheckDonationsFunctionPayload): Promise<CheckDonationsFunctionResponse> {
+    return this.postJSON('/checkDonations', payload);
   }
 
   /**

@@ -7,6 +7,7 @@ import {inject} from 'mobx-react';
 import {MessagesStore} from '../../stores/messages.store';
 import {Message} from '../../shared/api-models/message.model';
 import {Redirect} from 'react-router';
+import {PublishedMessages} from '../../components/PublishedMessages/PublishedMessages';
 
 interface Props {
   messagesStore: MessagesStore;
@@ -64,6 +65,14 @@ export class HomePage extends React.Component<Props, State> {
             <NewMessageForm maxLengthBytes={sharedConfig.maxMessageLengthInBytes} onSend={this.handleMessageSend} onValidationError={this.handleMessageValidationError} />
           </div>
         </section>
+
+        <section>
+          <div className="section-content">
+            <h2>Recent messages</h2>
+            <PublishedMessages messagesStore={this.props.messagesStore} itemsPerPortion={15}/>
+          </div>
+        </section>
+        
       </div>
     );
   }

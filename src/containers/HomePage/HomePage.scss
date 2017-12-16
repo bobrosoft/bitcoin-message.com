@@ -1,4 +1,9 @@
+@import "../../styles/variables";
+
 .HomePage {
+  margin: auto;
+  max-width: 520px;
+  
   .mission {
     text-align: center;
     color: #53945c;
@@ -10,7 +15,6 @@
   }
   
   .new-message {
-    margin: 10px auto auto;
-    max-width: 500px;
+    margin: 10px auto 20px auto;
   }
 }
