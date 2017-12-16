@@ -6,6 +6,7 @@ import {MessagesStore} from '../../stores/messages.store';
 import {PublishedMessage} from '../../shared/api-models/published-message.model';
 import {Message} from '../../components/Message/Message';
 import {Link} from 'react-router-dom';
+import {ShareButtons} from '../../components/ShareButtons/ShareButtons';
 
 interface Props {
   match: match<{id: string}>;
@@ -41,7 +42,7 @@ export class PublishedMessagePage extends React.Component<Props, State> {
       <div className="PublishedMessagePage">
         <section>
           <div className="section-content">
-            <h2 className="success-title text-center">Successfully published<br/>to Bitcoin blockchain!</h2>
+            <h2 className="success-title text-center">Successfully pushed<br/>to Bitcoin blockchain!</h2>
             {this.state.publishedMessage &&
               <Message message={this.state.publishedMessage} />
             }
@@ -53,12 +54,13 @@ export class PublishedMessagePage extends React.Component<Props, State> {
             {this.isJustPublished &&
             <h3>Why not share it with the world?</h3>
             }
-            <div>TODO: share options</div>
+            <ShareButtons title={'My message in Bitcoin blockchain'} description={'Bitcoin-message.com: Save your message in Bitcoin blockchain! Forever!'} />
           </div>
         </section>
 
         <section>
           <div className="section-content text-center">
+            <br/><br/>
             <Link to={''}>{this.isJustPublished ? 'Write another message' : 'Write your own message'}</Link>
           </div>
         </section>

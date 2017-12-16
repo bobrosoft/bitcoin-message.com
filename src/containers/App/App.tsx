@@ -27,14 +27,13 @@ export class App extends React.Component {
             <div className="header">
               <div className="bg-body"/>
               <div className="content">
-                <Link to={''}><img className="logo" src="/assets/common/logo.svg"/></Link>
+                <Link to={''} title="Bitcoin Message"><img className="logo" src="/assets/common/logo.svg" alt="Bitcoin Message"/></Link>
               </div>
             </div>
             <div>
               <Route exact={true} path="/" component={HomePage}/>
               <Route path="/message/:id" component={MessagePage}/>
               <Route path="/published/:id" component={PublishedMessagePage}/>
-              {/*<Route path="/topics" component={Second}/>*/}
             </div>
           </div>
         </Router>

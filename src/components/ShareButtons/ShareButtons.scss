@@ -1,0 +1,16 @@
+.ShareButtons {
+  a {
+    display: inline-block;
+    width: 70px;
+  }
+  
+  .fa {
+    font-size: 2rem;
+    transition: 0.6s opacity;
+    opacity: 0.6;
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

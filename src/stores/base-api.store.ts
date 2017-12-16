@@ -20,6 +20,13 @@ export abstract class BaseApiStore {
 
         return response.data;
       })
+      .catch((e) => {
+        if (e.message === 'Type error') {
+          e.message = 'Failed to fetch';
+        }
+        
+        throw e;
+      })
     ;
   }
 }
