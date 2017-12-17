@@ -10,6 +10,7 @@ import {MessagePage} from '../MessagePage/MessagePage';
 import {PublishedMessagePage} from '../PublishedMessagePage/PublishedMessagePage';
 import {Spinner} from '../../components/Spinner/Spinner';
 import {SpinnerStore} from '../../stores/spinner.store';
+import {TermsCondPage} from '../TermsCondPage/TermsCondPage';
 
 // Setup Firebase
 // TODO: config
@@ -36,6 +37,7 @@ export class App extends React.Component {
               <Route exact={true} path="/" component={HomePage}/>
               <Route path="/message/:id" component={MessagePage}/>
               <Route path="/published/:id" component={PublishedMessagePage}/>
+              <Route path="/terms-and-conditions" component={TermsCondPage}/>
             </div>
             <Spinner/>
           </div>

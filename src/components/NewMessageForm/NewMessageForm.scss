@@ -6,9 +6,20 @@
       display: block;
       width: 100%;
     }
+    
+    .textarea-footer {
+      display: flex;
+      justify-content: space-between;
+      
+      .tc {
+        margin-top: 3px;
+        margin-right: 10px;
+      }
+      
+      .indicator {
+        flex-shrink: 0;
+      }
+    }
   }
   
-  .buttons {
-    margin-top: $base-margin / 2;
-  }
 }

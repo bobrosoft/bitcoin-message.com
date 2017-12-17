@@ -2,6 +2,7 @@ import * as React from 'react';
 import {ChangeEvent, MouseEvent} from 'react';
 import './NewMessageForm.css';
 import {AppError} from '../../models/app-error.model';
+import {Link} from 'react-router-dom';
 
 interface Props {
   maxLengthBytes: number;
@@ -40,13 +41,18 @@ export class NewMessageForm extends React.Component<Props, State> {
       <div className="NewMessageForm">
         <div className="message">
           <textarea placeholder="Your eternal message..." value={this.state.message} onChange={this.handleChange} rows={2} />
-          <div className={'indicator text-right text-88 ' + (this.isMessageTooLong ? 'text-error' : 'text-misc')}>
-            {this.messageLength} / {this.props.maxLengthBytes}
+          <div className="textarea-footer">
+            <div className="text-disclaimer tc">
+              By clicking "Send" you agree with our <Link to={'/terms-and-conditions'}>T&C's</Link>
+            </div>
+            <div className={'indicator text-right text-88 ' + (this.isMessageTooLong ? 'text-error' : 'text-misc')}>
+              {this.messageLength} / {this.props.maxLengthBytes}
+            </div>
           </div>
         </div>
-        <div className="buttons text-center">
+        <p className="buttons text-center">
           <button className="primary spec-send" onClick={this.handleSubmit}>Send</button>
-        </div>
+        </p>
       </div>
     );
   }
