@@ -8,16 +8,18 @@ import {MessagesStore} from '../../stores/messages.store';
 import {Message} from '../../shared/api-models/message.model';
 import {Redirect} from 'react-router';
 import {PublishedMessages} from '../../components/PublishedMessages/PublishedMessages';
+import {SpinnerStore} from '../../stores/spinner.store';
 
 interface Props {
   messagesStore: MessagesStore;
+  spinnerStore: SpinnerStore;
 }
 
 interface State {
   createdMessage?: Message;
 }
 
-@inject('messagesStore')
+@inject('messagesStore', 'spinnerStore')
 export class HomePage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -28,6 +30,8 @@ export class HomePage extends React.Component<Props, State> {
   }
   
   handleMessageSend(message: string) {
+    this.props.spinnerStore.setShownState(true);
+    
     this.props.messagesStore.saveMessage({
       message: message,
     }).then((data) => {
@@ -35,6 +39,7 @@ export class HomePage extends React.Component<Props, State> {
         createdMessage: data.createdMessage
       });
     }, (error: AppError) => {
+      this.props.spinnerStore.setShownState(false);
       alert(error.message);
     });
   }

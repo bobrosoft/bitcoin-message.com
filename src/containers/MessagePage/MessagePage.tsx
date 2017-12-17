@@ -8,37 +8,51 @@ import {DonationForm} from '../../components/DonationForm/DonationForm';
 import {Message as MessageComp} from '../../components/Message/Message';
 import {Message} from '../../shared/api-models/message.model';
 import {appConfig} from '../../config';
+import {SpinnerStore} from '../../stores/spinner.store';
 
 interface Props {
   match: match<{id: string}>;
   messagesStore: MessagesStore;
+  spinnerStore: SpinnerStore;
 }
 
 interface State {
   donationAmount: number;
   donationCurrency: string;
+  isRetrieveMessageInfoInProgress: boolean;
+  isCheckDonationStatusInProgress: boolean;
   message?: Message;
   donorEmail?: string;
 }
 
-@inject('messagesStore')
+@inject('messagesStore', 'spinnerStore')
 export class MessagePage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       donationAmount: this.isUserFromRussia() ? appConfig.donations.minDonationAmountRU : appConfig.donations.minDonationAmount,
-      donationCurrency: this.isUserFromRussia() ? appConfig.donations.minDonationCurrencyRU : appConfig.donations.minDonationCurrency
+      donationCurrency: this.isUserFromRussia() ? appConfig.donations.minDonationCurrencyRU : appConfig.donations.minDonationCurrency,
+      isRetrieveMessageInfoInProgress: false,
+      isCheckDonationStatusInProgress: false
     };
-    
-    // Load info about message
-    this.retrieveMessageInfo();
     
     this.handleDonateValidationError = this.handleDonateValidationError.bind(this);
     this.handleSubmitDonate = this.handleSubmitDonate.bind(this);
     this.handleCheckDonationStatusClick = this.handleCheckDonationStatusClick.bind(this);
   }
   
+  componentDidMount() {
+    // Load info about message
+    this.retrieveMessageInfo();
+  }
+
   render() {
+    // Control spinner state
+    setTimeout(() => {
+      this.props.spinnerStore.setShownState(this.state.isRetrieveMessageInfoInProgress || this.state.isCheckDonationStatusInProgress);
+    }, 0);
+    
+    // Display nothing if no message received yet
     if (!this.state.message) {
       return '';
     }
@@ -102,11 +116,19 @@ export class MessagePage extends React.Component<Props, State> {
    * Loads info about current message from server and store it to state
    */
   protected retrieveMessageInfo() {
+    this.setState({isRetrieveMessageInfoInProgress: true});
+    
     this.props.messagesStore
       .getMessageById(this.props.match.params.id)
-      .then(
-        m => this.setState({message: m}),
-        e => alert(e.message)
+      .then((message) => {
+          this.setState({
+            message: message,
+            isRetrieveMessageInfoInProgress: false
+          });
+        }, (error) => {
+          this.setState({isRetrieveMessageInfoInProgress: false});
+          alert(error.message);
+        }
       );
   }
 
@@ -115,10 +137,14 @@ export class MessagePage extends React.Component<Props, State> {
    * @param {boolean} isSilent  If TRUE, will not show any alerts
    */
   protected checkDonationStatus(isSilent: boolean = false) {
+    this.setState({isCheckDonationStatusInProgress: true});
+    
     this.props.messagesStore.checkMessageStatus({
       messageId: this.state.message!.id!,
       email: this.state.donorEmail!,
     }).then(response => {
+      this.setState({isCheckDonationStatusInProgress: false});
+      
       // Check if we found donation
       if (response.donation) {
         // Check if donation processed with error
@@ -135,7 +161,10 @@ export class MessagePage extends React.Component<Props, State> {
           alert(`Hmm, can't find your donation. Check if email is correct (should be your PayPal email used for donation).`);
         }
       }
-    }, e => alert(e.message));
+    }, (e) => {
+      this.setState({isCheckDonationStatusInProgress: false});
+      alert(e.message);
+    });
   }
 
   /**

@@ -1,0 +1,59 @@
+@import "../../styles/variables";
+
+$spinner-width: 8em;
+$spinner-thickness: 0.7em;
+$spinner-color: #ffbb00;
+$spinner-color-2: #ff8514;
+
+.Spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255,255,255,0.4);
+
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 0.5s;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .spinner {
+    border-radius: 50%;
+    width: $spinner-width;
+    height: $spinner-width;
+    position: relative;
+    border-top: $spinner-thickness solid transparent;
+    border-right: $spinner-thickness solid transparent;
+    border-bottom: $spinner-thickness solid transparent;
+    border-left: $spinner-thickness solid $spinner-color;
+    transform: translateZ(0);
+    animation: index-load 1.8s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  @keyframes index-load {
+    0% {
+      border-left-color: $spinner-color;
+      transform: rotate(-90deg);
+    }
+    
+    50% {
+      border-left-color: $spinner-color-2;
+    }
+    
+    70% {
+      border-left-color: $spinner-color;
+    }
+
+    100% {
+      transform: rotate(630deg);
+    }
+  }
+}

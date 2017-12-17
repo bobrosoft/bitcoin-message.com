@@ -8,6 +8,8 @@ import {MessagesStore} from '../../stores/messages.store';
 import {HomePage} from '../HomePage/HomePage';
 import {MessagePage} from '../MessagePage/MessagePage';
 import {PublishedMessagePage} from '../PublishedMessagePage/PublishedMessagePage';
+import {Spinner} from '../../components/Spinner/Spinner';
+import {SpinnerStore} from '../../stores/spinner.store';
 
 // Setup Firebase
 // TODO: config
@@ -21,7 +23,7 @@ firebase.initializeApp({
 export class App extends React.Component {
   render() {
     return (
-      <Provider messagesStore={new MessagesStore()}>
+      <Provider messagesStore={new MessagesStore()} spinnerStore={new SpinnerStore()}>
         <Router>
           <div className="App">
             <div className="header">
@@ -35,6 +37,7 @@ export class App extends React.Component {
               <Route path="/message/:id" component={MessagePage}/>
               <Route path="/published/:id" component={PublishedMessagePage}/>
             </div>
+            <Spinner/>
           </div>
         </Router>
       </Provider>

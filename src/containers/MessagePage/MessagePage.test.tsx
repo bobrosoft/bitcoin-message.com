@@ -6,9 +6,10 @@ import {shallow} from 'enzyme';
 import {Message} from '../../shared/api-models/message.model';
 import {CheckDonationsFunctionResponse} from '../../shared/api-models/check-donations-function-response.model';
 import {CheckDonationsFunctionPayload} from '../../shared/api-models/check-donations-function-payload.model';
+import {SpinnerStore} from '../../stores/spinner.store';
 
 it('renders without crashing', () => {
-  shallow(<MessagePage match={{} as match<{id: string}>} messagesStore={stubMessagesStore()} />);
+  shallow(<MessagePage match={{} as match<{id: string}>} messagesStore={stubMessagesStore()} spinnerStore={new SpinnerStore()} />);
 });
 
 function stubMessagesStore(): MessagesStore {

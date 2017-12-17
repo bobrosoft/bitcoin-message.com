@@ -5,6 +5,8 @@
   border-radius: $base-border-radius;
   background: white;
   box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06); // 0 0 10px rgba(0,0,0,0.1);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 
   .body {
     margin: 5px 0 8px;
@@ -12,7 +14,6 @@
   }
   
   .txid {
-    word-break: break-all;
     
     .link {
       text-decoration: $base-text-decoration-link;
