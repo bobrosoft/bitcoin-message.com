@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as firebase from 'firebase';
 import './App.css';
 import {Provider} from 'mobx-react';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
@@ -11,15 +10,6 @@ import {PublishedMessagePage} from '../PublishedMessagePage/PublishedMessagePage
 import {Spinner} from '../../components/Spinner/Spinner';
 import {SpinnerStore} from '../../stores/spinner.store';
 import {TermsCondPage} from '../TermsCondPage/TermsCondPage';
-
-// Setup Firebase
-// TODO: config
-firebase.initializeApp({
-  apiKey: 'AIzaSyDEkqTbmC0J5ZlbcGR3Cx5wWW6ne-Ac34E',
-  authDomain: 'bitcoin-message-dev.firebaseapp.com',
-  databaseURL: 'https://bitcoin-message-dev.firebaseio.com',
-  storageBucket: 'bitcoin-message-dev.appspot.com',
-});
 
 export class App extends React.Component {
   render() {

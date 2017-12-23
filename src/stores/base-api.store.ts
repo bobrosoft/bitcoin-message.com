@@ -1,11 +1,11 @@
 import {SuccessResponse} from '../shared/api-models/success-response.model';
 import {ErrorResponse} from '../shared/api-models/error-response.model';
 import {AppError} from '../models/app-error.model';
+import {appConfig} from '../config';
 
 export abstract class BaseApiStore {
   postJSON(path: string, payload: any): Promise<any> {
-    // TODO: config
-    return fetch('http://localhost:5000/bitcoin-message-dev/us-central1' + path, {
+    return fetch(appConfig.api.baseUrl + path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

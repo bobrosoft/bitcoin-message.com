@@ -15,9 +15,10 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
-    "build-js": "react-scripts-ts build",
+    "build-js": "REACT_APP_CONFIG_ENV=prod react-scripts-ts build",
     "start": "npm-run-all -p watch-css start-js",
     "server": "yarn start",
+    "server:prod": "REACT_APP_CONFIG_ENV=prod yarn start",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"

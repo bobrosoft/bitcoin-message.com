@@ -58,7 +58,6 @@ export class SaveMessageFunction extends BaseFunction {
       return Promise.reject(new ApiError('Wrong message format', 'WRONG_MESSAGE_FORMAT'));
     }
 
-    // TODO: extract message.length to config
     const maxLength = sharedConfig.maxMessageLengthInBytes;
     if (new Buffer(payload.message).length > maxLength) {
       return Promise.reject(new ApiError(`Message is too long (max: ${maxLength} bytes)`, 'MESSAGE_TOO_LONG'));
