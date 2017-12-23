@@ -40,6 +40,7 @@ export class App extends React.Component {
                 <div className="text-right">
                   <div><Link to={'/terms-and-conditions#tc'}>Terms and Conditions</Link></div>
                   <div><Link to={'/terms-and-conditions#disclaimer'}>Disclaimer</Link></div>
+                  <div><a href="mailto:support@bitcoin-message.com" target="_blank">Support</a></div>
                   <div><Link to={'/todo'} target="_blank">GitHub</Link></div>
                 </div>
               </div>
