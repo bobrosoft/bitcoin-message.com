@@ -1,5 +1,11 @@
+@import "../../styles/variables";
+
 .App {
-  .header {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+  &--header {
     position: relative;
     margin-bottom: 10px;
     overflow: hidden; // for .bg-body
@@ -27,6 +33,58 @@
       
       .logo {
         max-width: 384px;
+      }
+    }
+  }
+  
+  &--content {
+    flex: 1;
+  }
+  
+  &--footer {
+    $color: white;
+    $background-color: #A8242B;
+    position: relative;
+    margin-top: 10vw;
+    padding: 30px $base-margin 30px;
+    color: $color;
+    background-color: $background-color;
+    z-index: 0;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      left: -5%;
+      width: 105%;
+      height: 100%;
+      content: " ";
+      background-color: $background-color;
+      transform-origin: top left;
+      transform: skewY(-4deg);
+      z-index: -1;
+      box-shadow: inset 0px 10px 15px rgba(0,0,0,0.15);
+    }
+    
+    a {
+      color: $color;
+    }
+    
+    .content {
+      display: flex;
+      justify-content: space-between;
+      margin: auto;
+      max-width: 800px;
+      transform: skewY(-4deg);
+      transform-origin: top left;
+      line-height: 1.3em;
+      
+      & > div {
+        flex: 1;
+      }
+      
+      .title {
+        font-size: 0.9rem;
+        font-weight: bold;
       }
     }
   }

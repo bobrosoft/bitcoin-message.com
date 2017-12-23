@@ -1,6 +1,22 @@
 import * as React from 'react';
 
-export class TermsCondPage extends React.Component {
+interface Props {
+  location: Location;
+}
+
+export class TermsCondPage extends React.Component<Props> {
+  
+  componentDidMount() {
+    const anchor = this.props.location.hash;
+
+    if (anchor) {
+      const domElement = document.querySelector(anchor);
+      if (domElement) {
+        domElement.scrollIntoView();
+      }
+    }
+  }
+  
   render() {
     return (
       <section>

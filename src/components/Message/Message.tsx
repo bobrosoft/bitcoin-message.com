@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './Message.css';
 import {PublishedMessage} from '../../shared/api-models/published-message.model';
+import {MouseEvent} from 'react';
 
 interface Props {
   message: PublishedMessage;
@@ -50,7 +51,9 @@ export class Message extends React.Component<Props> {
     );
   }
   
-  protected handleLinkClick() {
+  protected handleLinkClick(e: MouseEvent<HTMLElement>) {
+    e.preventDefault();
+    
     window.open(this.externalBlockchainUrl, '_blank');
   }
 }

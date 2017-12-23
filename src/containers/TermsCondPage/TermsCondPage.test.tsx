@@ -3,5 +3,5 @@ import {TermsCondPage} from './TermsCondPage';
 import {shallow} from 'enzyme';
 
 it('renders without crashing', () => {
-  shallow(<TermsCondPage />);
+  shallow(<TermsCondPage location={{} as any} />);
 });

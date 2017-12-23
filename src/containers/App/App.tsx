@@ -27,18 +27,34 @@ export class App extends React.Component {
       <Provider messagesStore={new MessagesStore()} spinnerStore={new SpinnerStore()}>
         <Router>
           <div className="App">
-            <div className="header">
+            <div className="App--header">
               <div className="bg-body"/>
               <div className="content">
                 <Link to={''} title="Bitcoin Message"><img className="logo" src="/assets/common/logo.svg" alt="Bitcoin Message"/></Link>
               </div>
             </div>
-            <div>
+            
+            <div className="App--content">
               <Route exact={true} path="/" component={HomePage}/>
               <Route path="/message/:id" component={MessagePage}/>
               <Route path="/published/:id" component={PublishedMessagePage}/>
               <Route path="/terms-and-conditions" component={TermsCondPage}/>
             </div>
+
+            <div className="App--footer">
+              <div className="content">
+                <div>
+                  <div className="title">Idea, Design and Development</div>
+                  <div><Link to="https://github.com/bobrosoft" target="_blank">Vladimir Tolstikov</Link></div>
+                </div>
+                <div className="text-right">
+                  <div><Link to={'/terms-and-conditions#tc'}>Terms and Conditions</Link></div>
+                  <div><Link to={'/terms-and-conditions#disclaimer'}>Disclaimer</Link></div>
+                  <div><Link to={'/todo'} target="_blank">GitHub</Link></div>
+                </div>
+              </div>
+            </div>
+            
             <Spinner/>
           </div>
         </Router>
