@@ -24,6 +24,12 @@ const baseConfig: AppConfig = {
     minDonationCurrency: sharedConfig.minDonationCurrency,
     minDonationAmountRU: 80, // TODO: rewrite that to exchange rates service
     minDonationCurrencyRU: 'RUB'
+  },
+  
+  analytics: {
+    ga: {
+      trackingId: 'UA-6315511-13'
+    }
   }
 };
 

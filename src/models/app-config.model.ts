@@ -19,5 +19,11 @@ export interface AppConfig {
     minDonationCurrency: string;
     minDonationAmountRU: number;
     minDonationCurrencyRU: 'RUB';
+  },
+  
+  analytics: {
+    ga: {
+      trackingId: string;
+    }
   }
 }

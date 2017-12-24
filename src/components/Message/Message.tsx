@@ -2,18 +2,23 @@ import * as React from 'react';
 import './Message.css';
 import {PublishedMessage} from '../../shared/api-models/published-message.model';
 import {MouseEvent} from 'react';
+import {inject} from 'mobx-react';
+import {AnalyticsService} from '../../stores/analytics.service';
 
 interface Props {
   message: PublishedMessage;
   noATag?: boolean;
+  analyticsService?: AnalyticsService;
 }
 
+@inject('analyticsService')
 export class Message extends React.Component<Props> {
   
   constructor(props: Props) {
     super(props);
 
-    this.handleLinkClick = this.handleLinkClick.bind(this);
+    this.handleProofLinkClick = this.handleProofLinkClick.bind(this);
+    this.handleSubstitutionProofLinkClick = this.handleSubstitutionProofLinkClick.bind(this);
   }
   
   get date() {
@@ -37,11 +42,11 @@ export class Message extends React.Component<Props> {
         <div className="txid text-66 text-misc">
           <abbr title="Bitcoin Transaction ID">Proof</abbr>:&nbsp;
           {this.props.noATag ?
-            <span className="text-misc link" onClick={this.handleLinkClick}>
+            <span className="text-misc link" onClick={this.handleSubstitutionProofLinkClick}>
               <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
             </span>
             :
-            <a href={this.externalBlockchainUrl} className="text-misc link" target="_blank">
+            <a href={this.externalBlockchainUrl} className="text-misc link" target="_blank" onClick={this.handleProofLinkClick}>
               <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
             </a>
           }
@@ -51,8 +56,17 @@ export class Message extends React.Component<Props> {
     );
   }
   
-  protected handleLinkClick(e: MouseEvent<HTMLElement>) {
+  protected handleProofLinkClick(e: MouseEvent<HTMLElement>) {
+    if (this.props.analyticsService) {
+      this.props.analyticsService.trackComponentEvent(this, 'proof-link-click', {label: this.props.message.blockchainTxId});
+    }
+  }
+  
+  protected handleSubstitutionProofLinkClick(e: MouseEvent<HTMLElement>) {
     e.preventDefault();
+    if (this.props.analyticsService) {
+      this.props.analyticsService.trackComponentEvent(this, 'proof-link-click', {label: this.props.message.blockchainTxId});
+    }
     
     window.open(this.externalBlockchainUrl, '_blank');
   }

@@ -7,10 +7,12 @@ import {PublishedMessage} from '../../shared/api-models/published-message.model'
 import {Message} from '../../components/Message/Message';
 import {Link} from 'react-router-dom';
 import {ShareButtons} from '../../components/ShareButtons/ShareButtons';
+import {AnalyticsService} from '../../stores/analytics.service';
 
 interface Props {
   match: match<{id: string}>;
   location: Location;
+  analyticsService: AnalyticsService;
   messagesStore: MessagesStore;
 }
 
@@ -18,8 +20,19 @@ interface State {
   publishedMessage?: PublishedMessage;
 }
 
-@inject('messagesStore')
+@inject('messagesStore', 'analyticsService')
 export class PublishedMessagePage extends React.Component<Props, State> {
+
+  get blockchainTxId(): string {
+    return this.props.match.params.id;
+  }
+  
+  get isJustPublished(): boolean {
+    return this.props.messagesStore.lastPublishedMessage!
+      && this.blockchainTxId === this.props.messagesStore.lastPublishedMessage!.blockchainTxId
+      ;
+  }
+  
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -27,12 +40,14 @@ export class PublishedMessagePage extends React.Component<Props, State> {
     this.retrievePublishedMessageInfo();
   }
   
-  get isJustPublished(): boolean {
-    return this.state.publishedMessage! && this.props.messagesStore.lastPublishedMessage!
-      && this.state.publishedMessage!.blockchainTxId === this.props.messagesStore.lastPublishedMessage!.blockchainTxId
-    ;
+  componentDidMount() {
+    this.props.analyticsService.trackComponentEvent(this, 'view', {label: this.blockchainTxId});
+    
+    if (this.isJustPublished) {
+      this.props.analyticsService.trackComponentEvent(this, 'view-just-published', {label: this.blockchainTxId});
+    }
   }
-
+  
   render() {
     if (!this.state.publishedMessage) {
       return '';

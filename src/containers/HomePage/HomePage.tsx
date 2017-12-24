@@ -9,17 +9,20 @@ import {Message} from '../../shared/api-models/message.model';
 import {Redirect} from 'react-router';
 import {PublishedMessages} from '../../components/PublishedMessages/PublishedMessages';
 import {SpinnerStore} from '../../stores/spinner.store';
+import {AnalyticsService} from '../../stores/analytics.service';
+import {PublishedMessage} from '../../shared/api-models/published-message.model';
 
 interface Props {
   messagesStore: MessagesStore;
   spinnerStore: SpinnerStore;
+  analyticsService: AnalyticsService;
 }
 
 interface State {
   createdMessage?: Message;
 }
 
-@inject('messagesStore', 'spinnerStore')
+@inject('messagesStore', 'spinnerStore', 'analyticsService')
 export class HomePage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -27,25 +30,7 @@ export class HomePage extends React.Component<Props, State> {
     
     this.handleMessageSend = this.handleMessageSend.bind(this);
     this.handleMessageValidationError = this.handleMessageValidationError.bind(this);
-  }
-  
-  handleMessageSend(message: string) {
-    this.props.spinnerStore.setShownState(true);
-    
-    this.props.messagesStore.saveMessage({
-      message: message,
-    }).then((data) => {
-      this.setState({
-        createdMessage: data.createdMessage
-      });
-    }, (error: AppError) => {
-      this.props.spinnerStore.setShownState(false);
-      alert(error.message);
-    });
-  }
-
-  handleMessageValidationError(error: AppError) {
-    alert(error.message);
+    this.handlePublishedMessageClick = this.handlePublishedMessageClick.bind(this);
   }
   
   render() {
@@ -74,11 +59,39 @@ export class HomePage extends React.Component<Props, State> {
         <section>
           <div className="section-content">
             <h2>Recent messages</h2>
-            <PublishedMessages messagesStore={this.props.messagesStore} itemsPerPortion={15}/>
+            <PublishedMessages messagesStore={this.props.messagesStore} itemsPerPortion={15} onMessageClick={this.handlePublishedMessageClick}/>
           </div>
         </section>
         
       </div>
     );
+  }
+
+  protected handleMessageSend(message: string) {
+    this.props.spinnerStore.setShownState(true);
+
+    this.props.messagesStore.saveMessage({
+      message: message, 
+    }).then((data) => {
+      this.props.analyticsService.trackComponentEvent(this, 'save-message-success');
+
+      this.setState({
+        createdMessage: data.createdMessage
+      });
+    }, (error: AppError) => {
+      this.props.analyticsService.trackComponentEvent(this, 'save-message-error', {label: error.name});
+      this.props.spinnerStore.setShownState(false);
+
+      alert(error.message);
+    });
+  }
+
+  protected handleMessageValidationError(error: AppError) {
+    this.props.analyticsService.trackComponentEvent(this, 'validation-error', {label: error.name});
+    alert(error.message);
+  }
+  
+  protected handlePublishedMessageClick(message: PublishedMessage) {
+    this.props.analyticsService.trackComponentEvent(this, 'published-message-click', {label: message.blockchainTxId});
   }
 }

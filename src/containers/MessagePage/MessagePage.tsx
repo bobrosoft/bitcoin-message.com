@@ -9,11 +9,13 @@ import {Message as MessageComp} from '../../components/Message/Message';
 import {Message} from '../../shared/api-models/message.model';
 import {appConfig} from '../../config';
 import {SpinnerStore} from '../../stores/spinner.store';
+import {AnalyticsService} from '../../stores/analytics.service';
 
 interface Props {
   match: match<{id: string}>;
   messagesStore: MessagesStore;
   spinnerStore: SpinnerStore;
+  analyticsService: AnalyticsService;
 }
 
 interface State {
@@ -115,21 +117,23 @@ export class MessagePage extends React.Component<Props, State> {
   /**
    * Loads info about current message from server and store it to state
    */
-  protected retrieveMessageInfo() {
+  protected retrieveMessageInfo(): Promise<Message | void> {
     this.setState({isRetrieveMessageInfoInProgress: true});
     
-    this.props.messagesStore
+    return this.props.messagesStore
       .getMessageById(this.props.match.params.id)
       .then((message) => {
-          this.setState({
-            message: message,
-            isRetrieveMessageInfoInProgress: false
-          });
-        }, (error) => {
-          this.setState({isRetrieveMessageInfoInProgress: false});
-          alert(error.message);
-        }
-      );
+        this.setState({
+          message: message,
+          isRetrieveMessageInfoInProgress: false
+        });
+        
+        return message;
+      })
+      .catch((error) => {
+        this.setState({isRetrieveMessageInfoInProgress: false});
+        alert(error.message);
+      });
   }
 
   /**
@@ -150,14 +154,23 @@ export class MessagePage extends React.Component<Props, State> {
         // Check if donation processed with error
         if (response.donation.errorMessage) {
           if (!isSilent) {
+            this.props.analyticsService.trackComponentEvent(this, 'donation-error', {label: response.donation.errorCode});
+            
             alert(response.donation.errorMessage);
           }
         } else {
           // Update info about message to find out txID
-          this.retrieveMessageInfo();
+          this.retrieveMessageInfo().then((message: Message) => {
+            // Track successful donation
+            if (!isSilent) {
+              this.props.analyticsService.trackComponentEvent(this, 'donation-success', {label: message.blockchainTxId});
+            }
+          });
         }
       } else {
         if (!isSilent) {
+          this.props.analyticsService.trackComponentEvent(this, 'donation-success');
+          
           alert(`Hmm, can't find your donation. Check if email is correct (should be your PayPal email used for donation).`);
         }
       }
@@ -181,6 +194,8 @@ export class MessagePage extends React.Component<Props, State> {
   }
 
   protected handleSubmitDonate(email: string) {
+    this.props.analyticsService.trackComponentEvent(this, 'donate-btn-click');
+    
     this.setState({donorEmail: email}, () => {
       this.checkDonationStatus(true); // that's just in case to save email
     });
@@ -190,6 +205,8 @@ export class MessagePage extends React.Component<Props, State> {
   }
   
   protected handleCheckDonationStatusClick() {
+    this.props.analyticsService.trackComponentEvent(this, 'check-status-click');
+    
     this.checkDonationStatus();
   }
 }

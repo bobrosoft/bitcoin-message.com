@@ -3,6 +3,7 @@ import './App.css';
 import {Provider} from 'mobx-react';
 import {BrowserRouter as Router, Link} from 'react-router-dom';
 import {Route} from 'react-router';
+import {AnalyticsService} from '../../stores/analytics.service';
 import {MessagesStore} from '../../stores/messages.store';
 import {HomePage} from '../HomePage/HomePage';
 import {MessagePage} from '../MessagePage/MessagePage';
@@ -10,11 +11,18 @@ import {PublishedMessagePage} from '../PublishedMessagePage/PublishedMessagePage
 import {Spinner} from '../../components/Spinner/Spinner';
 import {SpinnerStore} from '../../stores/spinner.store';
 import {TermsCondPage} from '../TermsCondPage/TermsCondPage';
+import {TrackPageview} from '../../components/TrackPageview/TrackPageview';
 
-export class App extends React.Component {
+interface Props {
+  messagesStore: MessagesStore;
+  spinnerStore: SpinnerStore;
+  analyticsService: AnalyticsService;
+}
+
+export class App extends React.Component<Props> {
   render() {
     return (
-      <Provider messagesStore={new MessagesStore()} spinnerStore={new SpinnerStore()}>
+      <Provider messagesStore={this.props.messagesStore} spinnerStore={this.props.spinnerStore} analyticsService={this.props.analyticsService}>
         <Router>
           <div className="App">
             <div className="App--header">
@@ -25,6 +33,7 @@ export class App extends React.Component {
             </div>
             
             <div className="App--content">
+              <Route path="/" component={TrackPageview} />
               <Route exact={true} path="/" component={HomePage}/>
               <Route path="/message/:id" component={MessagePage}/>
               <Route path="/published/:id" component={PublishedMessagePage}/>

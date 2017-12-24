@@ -5,6 +5,9 @@ import registerServiceWorker from './registerServiceWorker';
 import './styles/styles.css';
 import {useStrict} from 'mobx'; useStrict(true);
 import {appConfig} from './config';
+import {MessagesStore} from './stores/messages.store';
+import {AnalyticsService} from './stores/analytics.service';
+import {SpinnerStore} from './stores/spinner.store';
 import {App} from './containers/App/App';
 
 // Setup Firebase
@@ -16,7 +19,7 @@ firebase.initializeApp({
 });
 
 ReactDOM.render(
-  <App />,
+  <App messagesStore={new MessagesStore()} spinnerStore={new SpinnerStore()} analyticsService={new AnalyticsService()} />,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
