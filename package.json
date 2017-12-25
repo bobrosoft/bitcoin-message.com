@@ -18,8 +18,9 @@
     "start-js": "react-scripts-ts start",
     "build-js": "REACT_APP_CONFIG_ENV=prod react-scripts-ts build",
     "start": "npm-run-all -p watch-css start-js",
-    "server": "yarn start",
+    "server": "npm-run-all -p start server:api",
     "server:prod": "REACT_APP_CONFIG_ENV=prod yarn start",
+    "server:api": "(cd ./functions && yarn server)",
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"

@@ -2,10 +2,10 @@
 
 ### Dev things I wanted to achieve in that project:
 
- - try React for frontend (despite the fact that I prefer Angular 2/4+ and @ngrx/store)
+ - use React for frontend (despite the fact that I prefer Angular 2/4+ and @ngrx)
  - try MobX for state management (as I found it looks really cool OOP-wise, near the same as services in Angular+RxJS)
  - try Firebase for backend (and some frontend parts)
- - write serverless app (I mean with backend, but without classic server)
+ - write serverless app (I mean: with backend, but without classic server)
  - write beautiful backend implementation
  - write beautiful frontend implementation (of course!)
  - try to use async/await more widely
@@ -43,3 +43,5 @@ You need to set next Firebase Environment Variables:
 Then export it to .runtimeconfig.json for it can be used locally:
 
 `firebase functions:config:get > ./functions/.runtimeconfig.json`
+
+Then execute `yarn server`
