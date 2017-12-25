@@ -27,7 +27,7 @@ interface State {
   donorEmail?: string;
 }
 
-@inject('messagesStore', 'spinnerStore')
+@inject('messagesStore', 'spinnerStore', 'analyticsService')
 export class MessagePage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);

@@ -21,6 +21,19 @@
       box-shadow: inset 0px -10px 20px rgba(0,0,0,0.2);
       transform-origin: bottom left;
       transform: skewY(-4deg);
+      
+      .image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.1;
+        background: url('/assets/common/header-bg.jpg');
+        background-size: 200%;
+
+        @media (min-width: 500px) {
+          background-size: cover;
+        }
+      }
     }
     
     .content {
