@@ -27,7 +27,7 @@ export class App extends React.Component<Props> {
           <div className="App">
             <div className="App--header">
               <div className="bg-body">
-                <div className="image"></div>
+                <div className="image"/>
               </div>
               <div className="content">
                 <Link to={''} title="Bitcoin Message"><img className="logo" src="/assets/common/logo.svg" alt="Bitcoin Message"/></Link>
