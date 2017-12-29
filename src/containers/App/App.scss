@@ -48,6 +48,24 @@
         max-width: 384px;
       }
     }
+    
+    .github {
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 0;
+      width: 50px;
+      opacity: 0.6;
+      transition: opacity 0.6s;
+
+      @media (min-width: 500px) {
+        width: 80px;
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
   
   &--content {

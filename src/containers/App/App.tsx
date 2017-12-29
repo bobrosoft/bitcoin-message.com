@@ -32,6 +32,9 @@ export class App extends React.Component<Props> {
               <div className="content">
                 <Link to={''} title="Bitcoin Message"><img className="logo" src="/assets/common/logo.svg" alt="Bitcoin Message"/></Link>
               </div>
+              <Link className="github" to={'https://github.com/bobrosoft/bitcoin-message.com'} title="Fork me on GitHub" target="_blank">
+                <img src="/assets/common/github-ribbon.svg" alt="Fork me on GitHub"/>
+              </Link>
             </div>
             
             <div className="App--content">
@@ -52,7 +55,7 @@ export class App extends React.Component<Props> {
                   <div><Link to={'/terms-and-conditions#tc'}>Terms and Conditions</Link></div>
                   <div><Link to={'/terms-and-conditions#disclaimer'}>Disclaimer</Link></div>
                   <div><a href="mailto:support@bitcoin-message.com" target="_blank">Support</a></div>
-                  <div><Link to={'/todo'} target="_blank">GitHub</Link></div>
+                  <div><Link to={'https://github.com/bobrosoft/bitcoin-message.com'} target="_blank">GitHub</Link></div>
                 </div>
               </div>
             </div>
