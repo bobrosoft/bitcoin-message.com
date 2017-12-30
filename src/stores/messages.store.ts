@@ -2,12 +2,12 @@ import {action, observable} from 'mobx';
 import * as firebase from 'firebase';
 import {BaseApiStore} from './base-api.store';
 import {AppError} from '../models/app-error.model';
-import {Message} from '../shared/api-models/message.model';
-import {SaveMessageFunctionResponse} from '../shared/api-models/save-message-function-response.model';
-import {SaveMessageFunctionPayload} from '../shared/api-models/save-message-function-payload.model';
-import {CheckDonationsFunctionPayload} from '../shared/api-models/check-donations-function-payload.model';
-import {CheckDonationsFunctionResponse} from '../shared/api-models/check-donations-function-response.model';
-import {PublishedMessage} from '../shared/api-models/published-message.model';
+import {Message} from '../models/shared/message.model';
+import {SaveMessageFunctionResponse} from '../models/shared/save-message-function-response.model';
+import {SaveMessageFunctionPayload} from '../models/shared/save-message-function-payload.model';
+import {CheckDonationsFunctionPayload} from '../models/shared/check-donations-function-payload.model';
+import {CheckDonationsFunctionResponse} from '../models/shared/check-donations-function-response.model';
+import {PublishedMessage} from '../models/shared/published-message.model';
 
 export class MessagesStore extends BaseApiStore {
   readonly ERROR_NO_ENTRY = 'MessagesStore.ERROR_NO_ENTRY';

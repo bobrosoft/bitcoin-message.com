@@ -1,9 +1,9 @@
 import {BaseFunction} from './shared/base.function';
 import {Request, Response} from 'express';
 import {ApiError} from '../models/api-error.model';
-import {SaveMessageFunctionPayload} from '../models/save-message-function-payload.model';
+import {SaveMessageFunctionPayload} from '../models/shared/save-message-function-payload.model';
 import {MessagesService} from '../services/messages.service';
-import {SaveMessageFunctionResponse} from '../models/save-message-function-response.model';
+import {SaveMessageFunctionResponse} from '../models/shared/save-message-function-response.model';
 import {sharedConfig} from '../shared-config';
 
 export class SaveMessageFunction extends BaseFunction {

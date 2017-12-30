@@ -1,8 +1,9 @@
 // import {config} from 'firebase-functions';
 // import Config = config.Config;
-import {BlockchainNetwork} from './blockchain-network.model';
 
 // Firebase allows only underscores :'(
+import {BlockchainNetwork} from './shared/blockchain-network.model';
+
 export interface ProjectConfig {
   firebase: any;
   

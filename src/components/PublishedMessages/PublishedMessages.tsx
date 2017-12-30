@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './PublishedMessages.css';
 import {MessagesStore} from '../../stores/messages.store';
-import {PublishedMessage} from '../../shared/api-models/published-message.model';
+import {PublishedMessage} from '../../models/shared/published-message.model';
 import {Message} from '../Message/Message';
 import {Link} from 'react-router-dom';
 

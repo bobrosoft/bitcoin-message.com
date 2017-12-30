@@ -3,9 +3,9 @@ import {MessagePage} from './MessagePage';
 import {MessagesStore} from '../../stores/messages.store';
 import {match} from 'react-router';
 import {shallow} from 'enzyme';
-import {Message} from '../../shared/api-models/message.model';
-import {CheckDonationsFunctionResponse} from '../../shared/api-models/check-donations-function-response.model';
-import {CheckDonationsFunctionPayload} from '../../shared/api-models/check-donations-function-payload.model';
+import {Message} from '../../models/shared/message.model';
+import {CheckDonationsFunctionResponse} from '../../models/shared/check-donations-function-response.model';
+import {CheckDonationsFunctionPayload} from '../../models/shared/check-donations-function-payload.model';
 import {SpinnerStore} from '../../stores/spinner.store';
 import {AnalyticsService} from '../../stores/analytics.service';
 

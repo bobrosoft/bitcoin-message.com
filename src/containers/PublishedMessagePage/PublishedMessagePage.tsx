@@ -3,7 +3,7 @@ import {inject} from 'mobx-react';
 import {match} from 'react-router';
 import './PublishedMessagePage.css';
 import {MessagesStore} from '../../stores/messages.store';
-import {PublishedMessage} from '../../shared/api-models/published-message.model';
+import {PublishedMessage} from '../../models/shared/published-message.model';
 import {Message} from '../../components/Message/Message';
 import {Link} from 'react-router-dom';
 import {ShareButtons} from '../../components/ShareButtons/ShareButtons';

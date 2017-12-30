@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 import * as imap from 'imap-simple';
 import {ProjectConfig} from '../models/project-config.model';
-import {Donation} from '../models/donation.model';
+import {Donation} from '../models/shared/donation.model';
 import {FetchOptions} from 'imap';
 import {ApiError} from '../models/api-error.model';
 import {ExchangeRatesService} from './exchange-rates.service';

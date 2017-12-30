@@ -2,9 +2,9 @@ import * as React from 'react';
 import {PublishedMessages} from './PublishedMessages';
 import {shallow} from 'enzyme';
 import {MessagesStore} from '../../stores/messages.store';
-import {PublishedMessage} from '../../shared/api-models/published-message.model';
+import {PublishedMessage} from '../../models/shared/published-message.model';
 import createSpy = jasmine.createSpy;
-import {BlockchainNetwork} from '../../shared/api-models/blockchain-network.model';
+import {BlockchainNetwork} from '../../models/shared/blockchain-network.model';
 
 it('renders without crashing', () => {
   shallow(<PublishedMessages itemsPerPortion={15} messagesStore={mockMessagesStore()} />);

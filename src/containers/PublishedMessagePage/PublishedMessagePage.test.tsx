@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {PublishedMessagePage} from './PublishedMessagePage';
 import {MessagesStore} from '../../stores/messages.store';
-import {PublishedMessage} from '../../shared/api-models/published-message.model';
+import {PublishedMessage} from '../../models/shared/published-message.model';
 import {shallow} from 'enzyme';
 import {AnalyticsService} from '../../stores/analytics.service';
 

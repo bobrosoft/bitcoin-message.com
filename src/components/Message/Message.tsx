@@ -1,11 +1,11 @@
 import * as React from 'react';
 import './Message.css';
-import {PublishedMessage} from '../../shared/api-models/published-message.model';
+import {PublishedMessage} from '../../models/shared/published-message.model';
 import {MouseEvent} from 'react';
 import {inject} from 'mobx-react';
 import {AnalyticsService} from '../../stores/analytics.service';
 import {AppError} from '../../models/app-error.model';
-import {BlockchainNetwork} from '../../shared/api-models/blockchain-network.model';
+import {BlockchainNetwork} from '../../models/shared/blockchain-network.model';
 
 interface Props {
   message: PublishedMessage;

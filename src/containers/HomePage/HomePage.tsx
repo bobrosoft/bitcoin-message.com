@@ -5,12 +5,12 @@ import {sharedConfig} from '../../shared/shared-config';
 import {AppError} from '../../models/app-error.model';
 import {inject} from 'mobx-react';
 import {MessagesStore} from '../../stores/messages.store';
-import {Message} from '../../shared/api-models/message.model';
+import {Message} from '../../models/shared/message.model';
 import {Redirect} from 'react-router';
 import {PublishedMessages} from '../../components/PublishedMessages/PublishedMessages';
 import {SpinnerStore} from '../../stores/spinner.store';
 import {AnalyticsService} from '../../stores/analytics.service';
-import {PublishedMessage} from '../../shared/api-models/published-message.model';
+import {PublishedMessage} from '../../models/shared/published-message.model';
 
 interface Props {
   messagesStore: MessagesStore;

@@ -2,8 +2,8 @@ import * as functions from 'firebase-functions';
 import {HttpsFunction} from 'firebase-functions';
 import * as cors from 'cors';
 import {Request, Response} from 'express-serve-static-core';
-import {ErrorResponse} from '../../models/error-response.model';
-import {SuccessResponse} from '../../models/success-response.model';
+import {ErrorResponse} from '../../models/shared/error-response.model';
+import {SuccessResponse} from '../../models/shared/success-response.model';
 import {ApiError} from '../../models/api-error.model';
 
 export abstract class BaseFunction {

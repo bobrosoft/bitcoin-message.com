@@ -4,8 +4,8 @@ import {ECPair} from 'bitcoinjs-lib';
 import {ProjectConfig} from '../models/project-config.model';
 import {UnspentTransaction} from '../models/unspent-transaction.model';
 import {ApiError} from '../models/api-error.model';
-import {BlockchainNetwork} from '../models/blockchain-network.model';
-import {BlockchainTransaction} from '../models/blockchain-transaction.model';
+import {BlockchainTransaction} from '../models/shared/blockchain-transaction.model';
+import {BlockchainNetwork} from '../models/shared/blockchain-network.model';
 
 export class BlockchainService {
   protected basePath: string;

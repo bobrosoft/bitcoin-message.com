@@ -2,9 +2,9 @@ import {BaseFunction} from './shared/base.function';
 import {Request, Response} from 'express';
 import {MessagesService} from '../services/messages.service';
 import {DonationsService} from '../services/donations.service';
-import {Donation} from '../models/donation.model';
-import {CheckDonationsFunctionPayload} from '../models/check-donations-function-payload.model';
-import {CheckDonationsFunctionResponse} from '../models/check-donations-function-response.model';
+import {Donation} from '../models/shared/donation.model';
+import {CheckDonationsFunctionPayload} from '../models/shared/check-donations-function-payload.model';
+import {CheckDonationsFunctionResponse} from '../models/shared/check-donations-function-response.model';
 
 export class CheckDonationsFunction extends BaseFunction {
   constructor(

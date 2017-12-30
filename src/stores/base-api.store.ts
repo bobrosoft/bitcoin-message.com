@@ -1,5 +1,5 @@
-import {SuccessResponse} from '../shared/api-models/success-response.model';
-import {ErrorResponse} from '../shared/api-models/error-response.model';
+import {SuccessResponse} from '../models/shared/success-response.model';
+import {ErrorResponse} from '../models/shared/error-response.model';
 import {AppError} from '../models/app-error.model';
 import {appConfig} from '../config';
 

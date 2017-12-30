@@ -6,11 +6,11 @@ import {match, Redirect} from 'react-router';
 import './MessagePage.css';
 import {DonationForm} from '../../components/DonationForm/DonationForm';
 import {Message as MessageComp} from '../../components/Message/Message';
-import {Message} from '../../shared/api-models/message.model';
+import {Message} from '../../models/shared/message.model';
 import {appConfig} from '../../config';
 import {SpinnerStore} from '../../stores/spinner.store';
 import {AnalyticsService} from '../../stores/analytics.service';
-import {BlockchainNetwork} from '../../shared/api-models/blockchain-network.model';
+import {BlockchainNetwork} from '../../models/shared/blockchain-network.model';
 
 interface Props {
   match: match<{id: string}>;
