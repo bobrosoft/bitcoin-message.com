@@ -4,6 +4,7 @@ import {shallow} from 'enzyme';
 import {MessagesStore} from '../../stores/messages.store';
 import {PublishedMessage} from '../../shared/api-models/published-message.model';
 import createSpy = jasmine.createSpy;
+import {BlockchainNetwork} from '../../shared/api-models/blockchain-network.model';
 
 it('renders without crashing', () => {
   shallow(<PublishedMessages itemsPerPortion={15} messagesStore={mockMessagesStore()} />);
@@ -63,16 +64,19 @@ function mockMessagesStore(): MessagesStore {
     messages = [
       {
         message: 'Test 1',
+        blockchainNetwork: BlockchainNetwork.btc,
         blockchainTxId: 'id1',
         createdTimestamp: 1513012883543
       },
       {
         message: 'Test 2',
+        blockchainNetwork: BlockchainNetwork.btc,
         blockchainTxId: 'id2',
         createdTimestamp: 1513012883544
       },
       {
         message: 'Test 3',
+        blockchainNetwork: BlockchainNetwork.btc,
         blockchainTxId: 'id3',
         createdTimestamp: 1513012883545
       }

@@ -83,17 +83,19 @@ export class MessagesService {
    * @returns {Promise<Message>}
    */
   async publishMessageInBlockchain(message: Message): Promise<Message> {
-    const transaction = await this.blockchainService.buildOpReturnTransaction(message.message);
-    const transactionId = await this.blockchainService.pushTransaction(transaction);
+    const transactionPayload = await this.blockchainService.buildOpReturnTransaction(message.message);
+    const transaction = await this.blockchainService.pushTransaction(transactionPayload);
 
     // Update message with transactionId
     message.isPublished = true;
-    message.blockchainTxId = transactionId;
+    message.blockchainNetwork = transaction.network;
+    message.blockchainTxId = transaction.txId;
     await this.dbMessages.child(message.id).set(message);
     
     // Add to published messages
     const publishedMessage: PublishedMessage = {
       message: message.message,
+      blockchainNetwork: transaction.network,
       blockchainTxId: message.blockchainTxId,
       createdTimestamp: Date.now()
     };

@@ -22,6 +22,9 @@
         "isPublished": {
           ".validate": "newData.isBoolean()"
         },
+        "blockchainNetwork": {
+          ".validate": "newData.isString()"
+        },
         "blockchainTxId": {
           ".validate": "newData.isString()"
         },
@@ -42,6 +45,9 @@
         ".validate": "newData.hasChildren(['message', 'createdTimestamp', 'blockchainTxId'])",
         
         "message": {
+          ".validate": "newData.isString()"
+        },
+        "blockchainNetwork": {
           ".validate": "newData.isString()"
         },
         "blockchainTxId": {

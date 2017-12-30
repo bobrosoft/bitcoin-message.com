@@ -4,6 +4,8 @@ import {PublishedMessage} from '../../shared/api-models/published-message.model'
 import {MouseEvent} from 'react';
 import {inject} from 'mobx-react';
 import {AnalyticsService} from '../../stores/analytics.service';
+import {AppError} from '../../models/app-error.model';
+import {BlockchainNetwork} from '../../shared/api-models/blockchain-network.model';
 
 interface Props {
   message: PublishedMessage;
@@ -30,7 +32,22 @@ export class Message extends React.Component<Props> {
   }
   
   get externalBlockchainUrl(): string {
-    return `https://www.blocktrail.com/BTC/tx/${this.props.message.blockchainTxId}#tx_messages`;
+    let network: string;
+    
+    switch (this.props.message.blockchainNetwork) {
+      case BlockchainNetwork.btc:
+        network = 'BTC';
+        break;
+        
+      case BlockchainNetwork.tbtc:
+        network = 'tBTC';
+        break;
+        
+      default:
+        throw new AppError(`Can't recognize network (${this.props.message.blockchainNetwork})`);
+    }
+    
+    return `https://www.blocktrail.com/${network!}/tx/${this.props.message.blockchainTxId}#tx_messages`;
   }
   
   render() {

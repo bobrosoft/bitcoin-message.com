@@ -1,12 +1,13 @@
 // import {config} from 'firebase-functions';
 // import Config = config.Config;
+import {BlockchainNetwork} from './blockchain-network.model';
 
 // Firebase allows only underscores :'(
 export interface ProjectConfig {
   firebase: any;
   
   blockchain: {
-    network: ('bitcoin' | 'testnet');
+    network: BlockchainNetwork;
     wallet_wif: string;
     fee_satoshis_per_byte: string; // usual transaction is between 200 and 300 bytes
   };

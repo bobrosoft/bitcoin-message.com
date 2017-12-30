@@ -22,7 +22,7 @@
 
 You need to set next Firebase Environment Variables:
 
-`firebase functions:config:set blockchain.network="testnet or bitcoin"`
+`firebase functions:config:set blockchain.network="btc or tbtc"`
 
 `firebase functions:config:set blockchain.wallet_wif="your wallet WIF here"`
 

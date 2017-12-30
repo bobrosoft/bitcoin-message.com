@@ -10,6 +10,7 @@ import {Message} from '../../shared/api-models/message.model';
 import {appConfig} from '../../config';
 import {SpinnerStore} from '../../stores/spinner.store';
 import {AnalyticsService} from '../../stores/analytics.service';
+import {BlockchainNetwork} from '../../shared/api-models/blockchain-network.model';
 
 interface Props {
   match: match<{id: string}>;
@@ -74,7 +75,7 @@ export class MessagePage extends React.Component<Props, State> {
             <h2>Your message:</h2>
             <div className="p">
               {this.state.message &&
-              <MessageComp message={{message: this.state.message.message, createdTimestamp: this.state.message.createdTimestamp, blockchainTxId: ''}} />
+              <MessageComp message={{message: this.state.message.message, createdTimestamp: this.state.message.createdTimestamp, blockchainNetwork: BlockchainNetwork.btc, blockchainTxId: ''}} />
               }
             </div>
             <p className="text-center">

@@ -4,6 +4,8 @@ import {ECPair} from 'bitcoinjs-lib';
 import {ProjectConfig} from '../models/project-config.model';
 import {UnspentTransaction} from '../models/unspent-transaction.model';
 import {ApiError} from '../models/api-error.model';
+import {BlockchainNetwork} from '../models/blockchain-network.model';
+import {BlockchainTransaction} from '../models/blockchain-transaction.model';
 
 export class BlockchainService {
   protected basePath: string;
@@ -16,7 +18,7 @@ export class BlockchainService {
   ) {
     // Choose network
     switch (config.blockchain.network) {
-      case 'bitcoin':
+      case BlockchainNetwork.btc:
         this.basePath = 'https://api.smartbit.com.au/v1';
         this.network = bitcoin.networks.bitcoin;
         break;
@@ -66,16 +68,19 @@ export class BlockchainService {
   /**
    * Pushes transaction to the blockchain
    * @param {Transaction} transaction
-   * @returns {Promise<TransactionId>}
+   * @returns {Promise<BlockchainTransaction>}
    */
-  pushTransaction(transaction: bitcoin.Transaction): Promise<TransactionId> {
+  pushTransaction(transaction: bitcoin.Transaction): Promise<BlockchainTransaction> {
     return fetch(`${this.basePath}/blockchain/pushtx`, {
       method: 'POST',
       body: JSON.stringify({hex: transaction.toHex()})
     })
       .then(r => r.json())
       .then((data: any) => {
-        return data.txid as TransactionId;
+        return {
+          network: this.config.blockchain.network,
+          txId: data.txid
+        };
       });
   }
 
@@ -109,5 +114,3 @@ export class BlockchainService {
       });
   }
 }
-
-export type TransactionId = string;
