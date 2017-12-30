@@ -3,6 +3,7 @@ import {Message} from './Message';
 import {PublishedMessage} from '../../models/shared/published-message.model';
 import {mount, shallow} from 'enzyme';
 import {AnalyticsService} from '../../stores/analytics.service';
+import {BlockchainNetwork} from '../../models/shared/blockchain-network.model';
 
 it('renders without crashing', () => {
   shallow(<Message message={{} as PublishedMessage} analyticsService={stubAnalyticsService()} />);
@@ -12,7 +13,7 @@ it('should display message', () => {
   const date = new Date();
 
   const component = mount(<Message message={{
-    blockchainNetwork: 'btc',
+    blockchainNetwork: BlockchainNetwork.btc,
     blockchainTxId: 'blockchainTxId',
     message: 'message',
     createdTimestamp: date.getTime()
@@ -27,7 +28,7 @@ it('should not display blockchainTxId if it\'s empty', () => {
   const date = new Date();
 
   const component = shallow(<Message message={{
-    blockchainNetwork: 'btc',
+    blockchainNetwork: BlockchainNetwork.btc,
     blockchainTxId: '',
     message: 'message',
     createdTimestamp: date.getTime()
@@ -40,7 +41,7 @@ it(`should not display <a> tag if noATag passed`, () => {
   const date = new Date();
 
   const component = mount(<Message message={{
-    blockchainNetwork: 'btc',
+    blockchainNetwork: BlockchainNetwork.btc,
     blockchainTxId: 'blockchainTxId',
     message: 'message',
     createdTimestamp: date.getTime()
@@ -49,7 +50,7 @@ it(`should not display <a> tag if noATag passed`, () => {
   expect(component.find('a.link').exists()).toBe(true);
 
   const component2 = mount(<Message message={{
-    blockchainNetwork: 'btc',
+    blockchainNetwork: BlockchainNetwork.btc,
     blockchainTxId: 'blockchainTxId',
     message: 'message',
     createdTimestamp: date.getTime()
