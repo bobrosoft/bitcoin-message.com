@@ -5,7 +5,7 @@ import {BlockchainService} from './services/blockchain.service';
 import {MessagesService} from './services/messages.service';
 import {ExchangeRatesService} from './services/exchange-rates.service';
 import {DonationsService} from './services/donations.service';
-import {TestFunction} from './functions/test.function';
+// import {TestFunction} from './functions/test.function';
 import {SaveMessageFunction} from './functions/save-message.function';
 import {CheckDonationsFunction} from './functions/check-donations.function';
 

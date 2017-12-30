@@ -22,7 +22,7 @@ export abstract class BaseFunction {
    * @param {Request} req
    * @param {Response} res
    */
-  protected abstract handleRequest(req: Request, res: Response);
+  protected abstract handleRequest(req: Request, res: Response): void;
 
   /**
    * Creates common error response.
@@ -43,7 +43,7 @@ export abstract class BaseFunction {
    * @param data
    * @returns {SuccessResponse}
    */
-  protected createSuccessResponse<T>(data?: T): SuccessResponse<T> {
+  protected createSuccessResponse<T>(data?: T): SuccessResponse<T | undefined> {
     return {
       success: true,
       data: data

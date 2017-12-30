@@ -65,7 +65,7 @@ export class DonationsService {
       .then((messages) => {
         return messages
           .map(this.parseAndExtractDonations)
-          .filter(v => !!v) // drop undefined
+          .filter(v => !!v) as Donation[] // drop undefined
         ;
       })
     ;
@@ -99,7 +99,7 @@ export class DonationsService {
 
       // Exit, if transaction wasn't committed (i.e. if already processed)
       if (!transaction.committed) {
-        return transaction.snapshot.val();
+        return transaction.snapshot!.val();
       }
 
       /// Process donation
@@ -154,7 +154,7 @@ export class DonationsService {
    * @returns {Donation}
    */
   parseAndExtractDonations(message: imap.Message): Donation | undefined {
-    const body = new Buffer(message.parts.find(p => p.which === 'TEXT').body, 'base64').toString('utf8');
+    const body = new Buffer(message.parts.find(p => p.which === 'TEXT')!.body, 'base64').toString('utf8');
     const matches = body.match(/donation of\s?(.*?)\s+(.*?)\s+from.*?>(.*?)(&nbsp;)*?\s+<.*?You can/);
 
     if (!matches) {

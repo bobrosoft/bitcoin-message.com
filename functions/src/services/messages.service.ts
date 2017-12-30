@@ -21,7 +21,7 @@ export class MessagesService {
    * @returns {Promise<void>} Created message
    */
   addMessage(message: Message): Promise<Message> {
-    message.id = this.dbMessages.push().key;
+    message.id = this.dbMessages.push().key as string;
     
     return this.dbMessages.child(message.id)
       .set(message)
@@ -90,7 +90,7 @@ export class MessagesService {
     message.isPublished = true;
     message.blockchainNetwork = transaction.network;
     message.blockchainTxId = transaction.txId;
-    await this.dbMessages.child(message.id).set(message);
+    await this.dbMessages.child(message.id!).set(message);
     
     // Add to published messages
     const publishedMessage: PublishedMessage = {
