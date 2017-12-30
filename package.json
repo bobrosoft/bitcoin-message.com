@@ -16,14 +16,18 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
-    "build-js": "REACT_APP_CONFIG_ENV=prod react-scripts-ts build",
+    "build-js": "react-scripts-ts build",
     "start": "npm-run-all -p watch-css start-js",
     "server": "npm-run-all -p start server:api",
-    "server:prod": "REACT_APP_CONFIG_ENV=prod yarn start",
+    "server:staging": "REACT_APP_CONFIG_ENV=staging yarn start",
+    "server:live": "REACT_APP_CONFIG_ENV=live yarn start",
     "server:api": "(cd ./functions && yarn server)",
     "build": "npm-run-all build-css build-js",
+    "build:staging": "REACT_APP_CONFIG_ENV=staging yarn build",
+    "build:live": "REACT_APP_CONFIG_ENV=live yarn build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "deploy:staging": "(cd ./functions && yarn build) && yarn build:staging && firebase deploy"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.5",

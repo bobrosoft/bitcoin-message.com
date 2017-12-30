@@ -33,6 +33,13 @@ const baseConfig: AppConfig = {
   }
 };
 
+// Staging config
+const stagingConfigOverride: Partial<AppConfig> = {
+  api: {
+    baseUrl: 'https://us-central1-bitcoin-message-dev.cloudfunctions.net',
+  },
+};
+
 // Live config (overrides)
 const liveConfigOverride: Partial<AppConfig> = {
   firebase: {
@@ -45,11 +52,16 @@ const liveConfigOverride: Partial<AppConfig> = {
 
 // Combined result config
 const appConfig: AppConfig = (() => {
-  if (process.env.REACT_APP_CONFIG_ENV === 'prod') {
-    return mergeDeep(baseConfig, liveConfigOverride);
+  switch (process.env.REACT_APP_CONFIG_ENV) {
+    case 'live':
+      return mergeDeep(baseConfig, liveConfigOverride);
+      
+    case 'staging':
+      return mergeDeep(baseConfig, stagingConfigOverride);
+      
+    default:
+      return baseConfig;
   }
-  
-  return baseConfig;
 })();
 
 export {appConfig};

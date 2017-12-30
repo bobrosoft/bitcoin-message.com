@@ -1,6 +1,7 @@
 {
   "projects": {
-    "prod": "bitcoin-message",
-    "dev": "bitcoin-message-dev"
+    "live": "bitcoin-message",
+    "staging": "bitcoin-message-dev",
+    "default": "bitcoin-message-dev"
   }
 }
