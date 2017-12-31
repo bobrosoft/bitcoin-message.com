@@ -46,7 +46,7 @@ export class DonationsService {
         ];
         
         // Add some security
-        if (!this.config.donations.disable_security_check) {
+        if (this.config.donations.disable_security_check !== 'true') {
           searchCriteria = [
             ...searchCriteria,
             ['FROM', 'service@paypal.com'],

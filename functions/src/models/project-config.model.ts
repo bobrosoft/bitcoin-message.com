@@ -23,6 +23,6 @@ export interface ProjectConfig {
     imap_mailbox_name?: string; // mailbox to check. Default is 'INBOX'
     min_donation_amount: string;
     min_donation_currency: string;
-    disable_security_check: boolean; // for testing
+    disable_security_check: 'true' | 'false'; // for testing
   };
 }
