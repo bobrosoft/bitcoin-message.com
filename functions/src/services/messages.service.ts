@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
+import {BlockchainService} from '../models/blockchain-service.model';
 import {Message} from '../models/shared/message.model';
-import {BlockchainService} from './blockchain.service';
 import {PublishedMessage} from '../models/shared/published-message.model';
 import {ApiError} from '../models/api-error.model';
 

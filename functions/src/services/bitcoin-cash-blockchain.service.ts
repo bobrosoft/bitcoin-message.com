@@ -1,13 +1,15 @@
 import fetch from 'node-fetch';
 import * as bitcoin from 'bitcoinjs-lib';
+import {BlockchainService} from '../models/blockchain-service.model';
 import {ECPair} from 'bitcoinjs-lib';
 import {ProjectConfig} from '../models/project-config.model';
 import {UnspentTransaction} from '../models/unspent-transaction.model';
 import {ApiError} from '../models/api-error.model';
 import {BlockchainTransaction} from '../models/shared/blockchain-transaction.model';
 import {BlockchainNetwork} from '../models/shared/blockchain-network.model';
+import {RawTransaction} from '../models/raw-transaction.model';
 
-export class BlockchainService {
+export class BitcoinCashBlockchainService extends BlockchainService {
   protected basePath: string;
   protected network: bitcoin.Network;
   protected wallet: ECPair;
@@ -16,17 +18,22 @@ export class BlockchainService {
   constructor(
     protected config: ProjectConfig
   ) {
+    super(config);
+    
     // Choose network
     switch (config.blockchain.network) {
-      case BlockchainNetwork.btc:
-        this.basePath = 'https://api.smartbit.com.au/v1';
+      case BlockchainNetwork.bch:
+        this.basePath = 'https://blockdozer.com/insight-api'; // Docs: https://github.com/bitpay/insight-api
         this.network = bitcoin.networks.bitcoin;
+        break;
+
+      case BlockchainNetwork.tbch:
+        this.basePath = 'http://tbcc.blockdozer.com/insight-api';
+        this.network = bitcoin.networks.testnet;
         break;
         
       default:
-        this.basePath = 'https://testnet-api.smartbit.com.au/v1';
-        this.network = bitcoin.networks.testnet;
-        break;
+        throw new ApiError('Wrong blockchain network passed: ' + config.blockchain.network);
     }
     
     // Create wallet
@@ -36,10 +43,10 @@ export class BlockchainService {
   /**
    * Creates OP_RETURN transaction
    * @param {string} message
-   * @param {number} fee
-   * @returns {Promise<Transaction>}
+   * @param {number} fee (in Satoshis)
+   * @returns {Promise<RawTransaction>}
    */
-  buildOpReturnTransaction(message: string, fee: number = this.getRecommendedFee(message)): Promise<bitcoin.Transaction> {
+  buildOpReturnTransaction(message: string, fee: number = this.getRecommendedFee(message)): Promise<RawTransaction> {
     return this.getUnspentTransactions()
       .then((unspentTransactions) => {
         if (!unspentTransactions.length) {
@@ -55,27 +62,36 @@ export class BlockchainService {
         
         const opReturnScript = bitcoin.script.nullData.output.encode(Buffer.from(message) as any);
         const tx = new bitcoin.TransactionBuilder(this.network);
-        tx.addInput(unspent.txid, unspent.n);
+        tx.addInput(unspent.txid, unspent.vout);
         tx.addOutput(opReturnScript, 0);
-        tx.addOutput(this.wallet.getAddress() as any, change);
-        tx.sign(0, this.wallet);
+        tx.addOutput(this.wallet.getAddress(), change);
+        (tx as any).enableBitcoinCash(true);
+        tx.setVersion(2);
 
-        return tx.build();
+        // tslint:disable
+        const hashType = bitcoin.Transaction.SIGHASH_ALL | (bitcoin.Transaction as any).SIGHASH_BITCOINCASHBIP143;
+        // tslint:enable
+        tx.sign(0, this.wallet, null, hashType, unspent.value_int);
+
+        return tx.build().toHex();
       })
     ;
   }
 
   /**
    * Pushes transaction to the blockchain
-   * @param {Transaction} transaction
+   * @param {RawTransaction} transaction
    * @returns {Promise<BlockchainTransaction>}
    */
-  pushTransaction(transaction: bitcoin.Transaction): Promise<BlockchainTransaction> {
-    return fetch(`${this.basePath}/blockchain/pushtx`, {
+  pushTransaction(transaction: RawTransaction): Promise<BlockchainTransaction> {
+    return fetch(`${this.basePath}/tx/send`, {
       method: 'POST',
-      body: JSON.stringify({hex: transaction.toHex()})
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({'rawtx': transaction})
     })
-      .then(r => r.json())
+      .then(r => {
+        return r.json();
+      })
       .then((data: any) => {
         return {
           network: this.config.blockchain.network,
@@ -93,7 +109,7 @@ export class BlockchainService {
   }
 
   /**
-   * Returns recommended fee based on message length
+   * Returns recommended fee (in Satoshis) based on message length
    * @param {string} message
    * @returns {number}
    */
@@ -107,10 +123,18 @@ export class BlockchainService {
    * @returns {Promise<UnspentTransaction[]>}
    */
   protected getUnspentTransactionsForAddress(address: string): Promise<UnspentTransaction[]> {
-    return fetch(`${this.basePath}/blockchain/address/${address}/unspent?limit=100`)
+    return fetch(`${this.basePath}/addr/${address}/utxo`)
       .then(r => r.json())
-      .then((data: any) => {
-        return data.unspent;
+      .then((data: any[]) => {
+        return data.map(t => {
+          return {
+            txid: t.txid,
+            vout: t.vout,
+            value: String(t.amount),
+            value_int: t.satoshis,
+            confirmations: t.confirmations
+          } as UnspentTransaction;
+        });
       });
   }
 }

@@ -19,7 +19,7 @@ export class ExchangeRatesService {
     // TODO: need to change that to proper implementation
     switch (pair) {
       case 'USD/RUB':
-        rate = 60;
+        rate = 59;
         break;
         
       default:

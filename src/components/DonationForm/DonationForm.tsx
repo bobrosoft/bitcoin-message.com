@@ -23,14 +23,14 @@ export class DonationForm extends React.Component<Props, State> {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  currencyCodeToSymbol(code: string) {
-    switch (code) {
+  
+  get amountWithCurrency(): string {
+    switch (this.props.donationCurrency) {
       case 'USD':
-        return '$';
+        return '$' + this.props.donationAmount;
 
       default:
-        return code + ' ';
+        return this.props.donationCurrency + ' ' + this.props.donationAmount.toFixed(2);
     }
   }
 
@@ -41,8 +41,8 @@ export class DonationForm extends React.Component<Props, State> {
           <input placeholder="Donor's email (to find your donation)" value={this.state.email} onChange={this.handleChange} />
         </div>
         <p className="buttons text-center">
-          <button className="primary  spec-send" onClick={this.handleSubmit}>
-            Donate {this.currencyCodeToSymbol(this.props.donationCurrency)}{this.props.donationAmount.toFixed(2)}
+          <button className="primary spec-send" onClick={this.handleSubmit}>
+            Donate {this.amountWithCurrency}
           </button>
         </p>
       </div>

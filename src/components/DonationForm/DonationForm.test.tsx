@@ -9,10 +9,8 @@ it('renders without crashing', () => {
 
 it('should properly display currency symbol', () => {
   const component = shallow(<DonationForm donationAmount={1.2} donationCurrency={'USD'} onSubmit={() => {}} />);
-  const componentInstance = component.instance() as DonationForm;
-  
-  expect(componentInstance.currencyCodeToSymbol('USD')).toBe('$');
-  expect(componentInstance.currencyCodeToSymbol('RUB')).toBe('RUB ');
+
+  expect(component.find('.spec-send').text()).toMatch('$');
 });
 
 it('should validate email input', () => {

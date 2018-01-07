@@ -22,7 +22,7 @@ const baseConfig: AppConfig = {
   donations: {
     minDonationAmount: sharedConfig.minDonationAmount,
     minDonationCurrency: sharedConfig.minDonationCurrency,
-    minDonationAmountRU: 80, // TODO: rewrite that to exchange rates service
+    minDonationAmountRU: 60, // TODO: rewrite that to exchange rates service
     minDonationCurrencyRU: 'RUB'
   },
   

@@ -27,7 +27,8 @@
     "build:live": "REACT_APP_CONFIG_ENV=live yarn build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "deploy:staging": "(cd ./functions && yarn build) && yarn build:staging && firebase deploy"
+    "deploy:staging": "firebase use staging && (cd ./functions && yarn build) && yarn build:staging && firebase deploy",
+    "deploy:live": "firebase use live && (cd ./functions && yarn build) && yarn build:live && firebase deploy"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.5",

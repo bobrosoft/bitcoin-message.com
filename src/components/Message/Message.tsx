@@ -43,6 +43,14 @@ export class Message extends React.Component<Props> {
         network = 'tBTC';
         break;
         
+      case BlockchainNetwork.bch:
+        network = 'BCC';
+        break;
+        
+      case BlockchainNetwork.tbch:
+        network = 'tBCC';
+        break;
+        
       default:
         throw new AppError(`Can't recognize network (${this.props.message.blockchainNetwork})`);
     }

@@ -4,11 +4,11 @@
     
     "messages": {
       ".read": false,
+      ".indexOn": ["email"],
       
       "$messageId": {
         ".read": true,
         ".validate": "newData.hasChildren(['id', 'message', 'createdTimestamp'])",
-        ".indexOn": ["email"],
         
         "id": {
           ".validate": "newData.val() === $messageId"
