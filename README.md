@@ -1,14 +1,26 @@
-## About
+# bitcoin-message.com
+
+[bitcoin-message.com](https://bitcoin-message.com) — Leave your mark on cryptocurrency world!
+Save your message in Bitcoin blockchain. Forever! 🚀
+
+With Bitcoin you can not only pay for things, but also store data in its blockchain which will be saved
+forever on thousand of blockchain-nodes across the world. So why not use it for something fun? 😉
+
 
 ### Dev things I wanted to achieve in that project:
 
+ - try to use blockchain technologies for something fun
  - use React for frontend (despite the fact that I prefer Angular 2/4+ and @ngrx)
- - try MobX for state management (as I found it looks really cool OOP-wise, near the same as services in Angular+RxJS)
  - try Firebase for backend (and some frontend parts)
+ - try MobX for state management (as I found it looks really cool OOP-wise, near the same as services in Angular+RxJS)
  - write serverless app (I mean: with backend, but without classic server)
  - write beautiful backend implementation
  - write beautiful frontend implementation (of course!)
  - try to use async/await more widely
+
+## Prerequisites
+
+Node 6+
 
 ## Install
 
@@ -18,11 +30,13 @@
 
 `cd ../`
 
+`yarn`
+
 ## Run locally
 
 You need to set next Firebase Environment Variables:
 
-`firebase functions:config:set blockchain.network="btc or tbtc"`
+`firebase functions:config:set blockchain.network="btc or tbtc or bch or tbch"`
 
 `firebase functions:config:set blockchain.wallet_wif="your wallet WIF here"`
 
