@@ -2,7 +2,7 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "dependencies": {
-    "bitcoinjs-lib": "git://github.com/bitcoinjs/bitcoinjs-lib.git#40edca4be2099eb1654a7cd0d61bb41e82bf52f8",
+    "bitcoinjs-lib": "git://github.com/bobrosoft/bitcoinjs-lib.git#77d7780534c4159ada2d03010b487373db02f150",
     "cors": "^2.8.4",
     "firebase-admin": "~4.2.1",
     "firebase-functions": "^0.5.7",
