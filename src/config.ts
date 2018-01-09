@@ -48,6 +48,10 @@ const liveConfigOverride: Partial<AppConfig> = {
     databaseURL: 'https://bitcoin-message.firebaseio.com',
     storageBucket: 'bitcoin-message.appspot.com',
   },
+
+  api: {
+    baseUrl: 'https://us-central1-bitcoin-message.cloudfunctions.net',
+  },
 };
 
 // Combined result config
