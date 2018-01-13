@@ -55,7 +55,7 @@ export class Message extends React.Component<Props> {
         throw new AppError(`Can't recognize network (${this.props.message.blockchainNetwork})`);
     }
     
-    return `https://www.blocktrail.com/${network!}/tx/${this.props.message.blockchainTxId}#tx_messages`;
+    return `https://www.blocktrail.com/${network!}/tx/${this.props.message.blockchainTxId}`;
   }
   
   render() {
