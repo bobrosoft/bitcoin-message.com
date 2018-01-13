@@ -15,23 +15,28 @@ export class CheckDonationsFunction extends BaseFunction {
   }
 
   protected async handleRequest(req: Request, res: Response) {
-    const payload: CheckDonationsFunctionPayload = req.body;
-    
-    // Need to update email for message
-    if (payload.messageId) {
-      await this.messagesService.updateEmailForMessageId(payload.messageId, payload.email);
+    try {
+      const payload: CheckDonationsFunctionPayload = req.body;
+
+      // Need to update email for message
+      if (payload.messageId) {
+        await this.messagesService.updateEmailForMessageId(payload.messageId, payload.email);
+      }
+
+      // Process donations (I use classic "for" here because of await)
+      const donations = await this.donationsService.retrieveRecentDonations();
+      const processedDonations: Donation[] = [];
+      for (const donation of donations) {
+        processedDonations.push(await this.donationsService.processDonation(donation));
+      }
+
+      // Let's find donation for that request
+      const requestedDonation = processedDonations.find(d => d.messageId && d.messageId === payload.messageId);
+
+      res.send(this.createSuccessResponse<CheckDonationsFunctionResponse>({donation: requestedDonation}));
+    } catch (e) {
+      console.log(e);
+      res.status(400).send(this.createErrorResponse(e));
     }
-    
-    // Process donations (we use classic "for" here because of await)
-    const donations = await this.donationsService.retrieveRecentDonations();
-    const processedDonations: Donation[] = [];
-    for (const donation of donations) {
-      processedDonations.push(await this.donationsService.processDonation(donation));
-    }
-    
-    // Let's find donation for that request
-    const requestedDonation = processedDonations.find(d => d.messageId === payload.messageId);
-    
-    res.send(this.createSuccessResponse<CheckDonationsFunctionResponse>({donation: requestedDonation}));
   }
 }

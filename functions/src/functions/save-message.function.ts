@@ -1,6 +1,6 @@
 import {BaseFunction} from './shared/base.function';
 import {Request, Response} from 'express';
-import {ApiError} from '../models/api-error.model';
+import {ApiError, ApiErrorCode} from '../models/api-error.model';
 import {SaveMessageFunctionPayload} from '../models/shared/save-message-function-payload.model';
 import {MessagesService} from '../services/messages.service';
 import {SaveMessageFunctionResponse} from '../models/shared/save-message-function-response.model';
@@ -55,12 +55,12 @@ export class SaveMessageFunction extends BaseFunction {
     // }
 
     if (!payload.message || !payload.message.length) {
-      return Promise.reject(new ApiError('Wrong message format', 'WRONG_MESSAGE_FORMAT'));
+      return Promise.reject(new ApiError('Wrong message format', ApiErrorCode.MESSAGE_WRONG_FORMAT));
     }
 
     const maxLength = sharedConfig.maxMessageLengthInBytes;
     if (new Buffer(payload.message).length > maxLength) {
-      return Promise.reject(new ApiError(`Message is too long (max: ${maxLength} bytes)`, 'MESSAGE_TOO_LONG'));
+      return Promise.reject(new ApiError(`Message is too long (max: ${maxLength} bytes)`, ApiErrorCode.MESSAGE_TOO_LONG));
     }
     
     return Promise.resolve(true);

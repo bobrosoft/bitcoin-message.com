@@ -2,12 +2,9 @@ import * as admin from 'firebase-admin';
 import {BlockchainService} from '../models/blockchain-service.model';
 import {Message} from '../models/shared/message.model';
 import {PublishedMessage} from '../models/shared/published-message.model';
-import {ApiError} from '../models/api-error.model';
+import {ApiError, ApiErrorCode} from '../models/api-error.model';
 
 export class MessagesService {
-  readonly ERROR_NO_ENTRY = 'MessagesService.ERROR_NO_ENTRY';
-  readonly ERROR_ALREADY_PUBLISHED = 'MessagesService.ERROR_ALREADY_PUBLISHED';
-  
   constructor(
     protected blockchainService: BlockchainService,
     protected dbMessages: admin.database.Reference = admin.database().ref('messages'),
@@ -41,11 +38,11 @@ export class MessagesService {
     const currentValue: admin.database.DataSnapshot = await this.dbMessages.child(messageId).once('value');
     
     if (!currentValue.exists()) {
-      throw new ApiError('No entry found', this.ERROR_NO_ENTRY);
+      throw new ApiError('No entry found', ApiErrorCode.MESSAGE_NOT_FOUND);
     }
     
     if ((currentValue.val() as Message).isPublished) {
-      throw new ApiError('Entry is already published', this.ERROR_ALREADY_PUBLISHED);
+      throw new ApiError('Entry is already published', ApiErrorCode.MESSAGE_ALREADY_PUBLISHED);
     }
     
     return currentValue.ref.child('email').set(email);

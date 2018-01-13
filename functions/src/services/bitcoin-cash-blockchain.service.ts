@@ -4,7 +4,7 @@ import {BlockchainService} from '../models/blockchain-service.model';
 import {ECPair} from 'bitcoinjs-lib';
 import {ProjectConfig} from '../models/project-config.model';
 import {UnspentTransaction} from '../models/unspent-transaction.model';
-import {ApiError} from '../models/api-error.model';
+import {ApiError, ApiErrorCode} from '../models/api-error.model';
 import {BlockchainTransaction} from '../models/shared/blockchain-transaction.model';
 import {BlockchainNetwork} from '../models/shared/blockchain-network.model';
 import {RawTransaction} from '../models/raw-transaction.model';
@@ -50,14 +50,14 @@ export class BitcoinCashBlockchainService extends BlockchainService {
     return this.getUnspentTransactions()
       .then((unspentTransactions) => {
         if (!unspentTransactions.length) {
-          throw new ApiError('No unspent transactions found', 'BLOCKCHAIN_NO_UNSPENT_TRANSACTIONS');
+          throw new ApiError('No unspent transactions found', ApiErrorCode.BLOCKCHAIN_NO_UNSPENT_TRANSACTIONS);
         }
       
         const unspent = unspentTransactions[0];
         const change = unspent.value_int - fee;
         
         if (change < 0) {
-          throw new ApiError(`Not enough funds in unspent (required ${fee} Satoshis)`, 'BLOCKCHAIN_NOT_ENOUGH_FUNDS');
+          throw new ApiError(`Not enough funds in unspent (required ${fee} Satoshis)`, ApiErrorCode.BLOCKCHAIN_NOT_ENOUGH_FUNDS);
         }
         
         const opReturnScript = bitcoin.script.nullData.output.encode(Buffer.from(message) as any);

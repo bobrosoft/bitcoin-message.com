@@ -3,7 +3,7 @@ import * as imap from 'imap-simple';
 import {ProjectConfig} from '../models/project-config.model';
 import {Donation} from '../models/shared/donation.model';
 import {FetchOptions} from 'imap';
-import {ApiError} from '../models/api-error.model';
+import {ApiError, ApiErrorCode} from '../models/api-error.model';
 import {ExchangeRatesService} from './exchange-rates.service';
 import {MessagesService} from './messages.service';
 
@@ -107,7 +107,7 @@ export class DonationsService {
       
       // Check if donation has insufficient amount
       if (Number(this.exchangeRatesService.convert(donation.amount, donation.currency, this.config.donations.min_donation_currency)) < Number(this.config.donations.min_donation_amount)) {
-        throw new ApiError(`Donation has insufficient amount. Minimal amount is ${this.config.donations.min_donation_amount} ${this.config.donations.min_donation_currency}`, 'INSUFFICIENT_AMOUNT');
+        throw new ApiError(`Donation has insufficient amount. Minimal amount is ${this.config.donations.min_donation_amount} ${this.config.donations.min_donation_currency}`, ApiErrorCode.DONATION_INSUFFICIENT_AMOUNT);
       }
 
       // Find message
@@ -125,12 +125,12 @@ export class DonationsService {
         // Skipping, that was a donation without linked message
       }
     } catch (e) {
-      const err: ApiError = e;
+      const err = e as ApiError;
       console.error(err);
 
-      switch (err.name) {
-        case 'BLOCKCHAIN_NO_UNSPENT_TRANSACTIONS':
-        case 'BLOCKCHAIN_NOT_ENOUGH_FUNDS':
+      switch (err.code) {
+        case ApiErrorCode.BLOCKCHAIN_NO_UNSPENT_TRANSACTIONS:
+        case ApiErrorCode.BLOCKCHAIN_NOT_ENOUGH_FUNDS:
           // Delete donation from processed so we can retry it
           await this.dbDonations.child(donation.id).remove();
           break;
