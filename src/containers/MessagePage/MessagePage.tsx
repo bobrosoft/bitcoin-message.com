@@ -172,7 +172,7 @@ export class MessagePage extends React.Component<Props, State> {
         if (!isSilent) {
           this.props.analyticsService.trackComponentEvent(this, 'donation-success');
           
-          alert(`Hmm, can't find your donation. Check if email is correct (should be your PayPal email used for donation).`);
+          alert(`Hmm, can't find your donation, wait a bit. Also check that email is correct (should be your PayPal email used for donation).`);
         }
       }
     }, (e) => {
@@ -186,8 +186,12 @@ export class MessagePage extends React.Component<Props, State> {
    * @returns {string}
    */
   protected getDonationUrl(): string {
-    return `https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bobrosoft@yandex.ru&item_name=bitcoin-message.com&item_number=Cover+transaction+fee&`
-      + `currency_code=${this.state.donationCurrency}&amount=${this.state.donationAmount}`;
+    const returnUrl = window.location.href;
+    
+    return `https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bobrosoft@yandex.ru&item_name=bitcoin-message.com&item_number=Cover+transaction+fee`
+      + `&currency_code=${this.state.donationCurrency}&amount=${this.state.donationAmount}`
+      + `&return=${encodeURIComponent(returnUrl)}&cancel_return=${encodeURIComponent(returnUrl)}`
+    ;
   }
 
   protected handleDonateValidationError(error: AppError) {

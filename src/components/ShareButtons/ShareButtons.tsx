@@ -32,9 +32,9 @@ export class ShareButtons extends React.Component<Props> {
   render() {
     return (
       <p className="ShareButtons">
-        <a target="_blank" title="Facebook" href={`https://www.facebook.com/sharer/sharer.php?u=${this.encodedUrl}&title=${this.encodedTitle}&description=${this.encodedDescription}`}><i className="fa fa-facebook-official"/></a>
-        <a target="_blank" title="Twitter" href={`https://twitter.com/intent/tweet?url=${this.encodedUrl}&text=${this.encodedTitle}&via=BitcoinMessage`}><i className="fa fa-twitter"/></a>
-        <a target="_blank" title="Vkontakte" href={`https://vk.com/share.php?url=${this.encodedUrl}&title=${this.encodedTitle}&description=${this.encodedDescription}&image=${this.encodedImage}&noparse=true`}><i className="fa fa-vk"/></a>
+        <a target="_blank" rel="noopener" title="Facebook" href={`https://www.facebook.com/sharer/sharer.php?u=${this.encodedUrl}&title=${this.encodedTitle}&description=${this.encodedDescription}`}><i className="fa fa-facebook-official"/></a>
+        <a target="_blank" rel="noopener" title="Twitter" href={`https://twitter.com/intent/tweet?url=${this.encodedUrl}&text=${this.encodedTitle}&via=BitcoinMessage`}><i className="fa fa-twitter"/></a>
+        <a target="_blank" rel="noopener" title="Vkontakte" href={`https://vk.com/share.php?url=${this.encodedUrl}&title=${this.encodedTitle}&description=${this.encodedDescription}&image=${this.encodedImage}&noparse=true`}><i className="fa fa-vk"/></a>
       </p>
     );
   }

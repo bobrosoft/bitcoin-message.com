@@ -71,7 +71,7 @@ export class Message extends React.Component<Props> {
               <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
             </span>
             :
-            <a href={this.externalBlockchainUrl} className="text-misc link" target="_blank" onClick={this.handleProofLinkClick}>
+            <a href={this.externalBlockchainUrl} className="text-misc link" target="_blank" rel="noopener" onClick={this.handleProofLinkClick}>
               <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
             </a>
           }

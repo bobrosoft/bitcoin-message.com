@@ -18,9 +18,74 @@
   
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-  <link rel="preload" href="https://fonts.googleapis.com/css?family=Lato:400,700" as="style">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Lato:400,700" as="style" onload="this.rel='stylesheet'">
+  <link rel="preload" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" as="style" onload="this.rel='stylesheet'">
+  
+  <style>
+    /* Extracted from compiled DOM */
+    .Spinner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.4);
+      opacity: 1;
+      -webkit-transition-property: opacity;
+      -o-transition-property: opacity;
+      transition-property: opacity;
+      -webkit-transition-duration: 0.5s;
+      -o-transition-duration: 0.5s;
+      transition-duration: 0.5s; }
+    .Spinner.hidden {
+      opacity: 0;
+      pointer-events: none; }
+    .Spinner .spinner {
+      border-radius: 50%;
+      width: 8em;
+      height: 8em;
+      position: relative;
+      border-top: 0.7em solid transparent;
+      border-right: 0.7em solid transparent;
+      border-bottom: 0.7em solid transparent;
+      border-left: 0.7em solid #ffbb00;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation: index-load 1.8s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      animation: index-load 1.8s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+
+    @-webkit-keyframes index-load {
+      0% {
+        border-left-color: #ffbb00;
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg); }
+      50% {
+        border-left-color: #ff8514; }
+      70% {
+        border-left-color: #ffbb00; }
+      100% {
+        -webkit-transform: rotate(630deg);
+        transform: rotate(630deg); } }
+
+    @keyframes index-load {
+      0% {
+        border-left-color: #ffbb00;
+        -webkit-transform: rotate(-90deg);
+        transform: rotate(-90deg); }
+      50% {
+        border-left-color: #ff8514; }
+      70% {
+        border-left-color: #ffbb00; }
+      100% {
+        -webkit-transform: rotate(630deg);
+        transform: rotate(630deg); } }
+  </style>
 </head>
 
 <body>
@@ -28,7 +93,11 @@
   You need to enable JavaScript to run this app.
 </noscript>
 
-<div id="root"></div>
-
+<div id="root">
+  <div class="Spinner">
+    <div class="spinner"></div>
+  </div>
+</div>
+  
 </body>
 </html>

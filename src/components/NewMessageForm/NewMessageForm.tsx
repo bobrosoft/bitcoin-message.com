@@ -40,7 +40,13 @@ export class NewMessageForm extends React.Component<Props, State> {
     return (
       <div className="NewMessageForm">
         <div className="message">
-          <textarea placeholder="Your timeless message... (Emoji supported)" value={this.state.message} onChange={this.handleChange} rows={2} />
+          <textarea
+            placeholder="Your timeless message... (Emoji supported)"
+            aria-label="Type your timeless message here"
+            value={this.state.message}
+            onChange={this.handleChange}
+            rows={2}
+          />
           <div className="textarea-footer">
             <div className="text-disclaimer tc">
               By clicking "Send" you agree with our <Link to={'/terms-and-conditions'}>T&C's</Link>

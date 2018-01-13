@@ -32,7 +32,7 @@ export class App extends React.Component<Props> {
               <div className="content">
                 <Link to={''} title="Bitcoin Message"><img className="logo" src="/assets/common/logo.svg" alt="Bitcoin Message"/></Link>
               </div>
-              <Link className="github" to={'https://github.com/bobrosoft/bitcoin-message.com'} title="Fork me on GitHub" target="_blank">
+              <Link className="github" to={'https://github.com/bobrosoft/bitcoin-message.com'} title="Fork me on GitHub" target="_blank" rel="noopener">
                 <img src="/assets/common/github-ribbon.svg" alt="Fork me on GitHub"/>
               </Link>
             </div>
@@ -49,13 +49,13 @@ export class App extends React.Component<Props> {
               <div className="content">
                 <div>
                   <div className="title">Idea, Design and Development</div>
-                  <div><Link to="https://github.com/bobrosoft" target="_blank">Vladimir Tolstikov</Link></div>
+                  <div><Link to="https://github.com/bobrosoft" target="_blank" rel="noopener">Vladimir Tolstikov</Link></div>
                 </div>
                 <div className="text-right">
                   <div><Link to={'/terms-and-conditions#tc'}>Terms and Conditions</Link></div>
                   <div><Link to={'/terms-and-conditions#disclaimer'}>Disclaimer</Link></div>
-                  <div><a href="mailto:support@bitcoin-message.com" target="_blank">Support</a></div>
-                  <div><Link to={'https://github.com/bobrosoft/bitcoin-message.com'} target="_blank">GitHub</Link></div>
+                  <div><a href="mailto:support@bitcoin-message.com" target="_blank" rel="noopener">Support</a></div>
+                  <div><Link to={'https://github.com/bobrosoft/bitcoin-message.com'} target="_blank" rel="noopener">GitHub</Link></div>
                 </div>
               </div>
             </div>
