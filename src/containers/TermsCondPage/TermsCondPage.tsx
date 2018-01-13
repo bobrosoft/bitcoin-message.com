@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './TermsCondPage.css';
 
 interface Props {
   location: Location;
@@ -19,7 +20,7 @@ export class TermsCondPage extends React.Component<Props> {
   
   render() {
     return (
-      <section>
+      <section className="TermsCondPage">
         <div className="section-content">
           <h1 className="text-center" id="tc">Terms and Conditions</h1>
           <p>
