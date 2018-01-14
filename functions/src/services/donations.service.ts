@@ -111,16 +111,16 @@ export class DonationsService {
       }
 
       // Find message
-      let message = await this.messagesService.getLastUnpublishedMessageForEmail(donation.email);
+      const message = await this.messagesService.getLastUnpublishedMessageForEmail(donation.email);
 
       if (message) {
-        // Publish message
-        console.info('Publishing message', message);
-        message = await this.messagesService.publishMessageInBlockchain(message);
-        
-        // Save lined message id in donation (just in case we need it)
+        // Save messageId in donation
         donation.messageId = message.id;
         await this.dbDonations.child(donation.id).set(donation);
+        
+        // Publish message
+        console.info('Publishing message', message);
+        await this.messagesService.publishMessageInBlockchain(message);
       } else {
         // Skipping, that was a donation without linked message
       }
