@@ -54,6 +54,7 @@ export class BitcoinCashBlockchainService extends BlockchainService {
       
         const unspent = unspentTransactions[0];
         const change = unspent.value_int - fee;
+        console.info(`buildOpReturnTransaction: fee = ${fee} Satoshis`);
         
         if (change < 0) {
           throw new ApiError(`Not enough funds in unspent (required ${fee} Satoshis)`, ApiErrorCode.BLOCKCHAIN_NOT_ENOUGH_FUNDS);
