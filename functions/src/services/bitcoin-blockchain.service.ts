@@ -13,7 +13,6 @@ export class BitcoinBlockchainService extends BlockchainService {
   protected basePath: string;
   protected network: bitcoin.Network;
   protected wallet: ECPair;
-  protected baseTransactionSize: number = 200;
   
   constructor(
     protected config: ProjectConfig
@@ -97,15 +96,6 @@ export class BitcoinBlockchainService extends BlockchainService {
    */
   getUnspentTransactions(): Promise<UnspentTransaction[]> {
     return this.getUnspentTransactionsForAddress(this.wallet.getAddress());
-  }
-
-  /**
-   * Returns recommended fee (in Satoshis) based on message length
-   * @param {string} message
-   * @returns {number}
-   */
-  getRecommendedFee(message: string): number {
-    return Number(this.config.blockchain.fee_satoshis_per_byte) * (this.baseTransactionSize + Buffer.from(message).length);
   }
 
   /**

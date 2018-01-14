@@ -13,7 +13,6 @@ export class BitcoinCashBlockchainService extends BlockchainService {
   protected basePath: string;
   protected network: bitcoin.Network;
   protected wallet: ECPair;
-  protected baseTransactionSize: number = 200;
   
   constructor(
     protected config: ProjectConfig
@@ -90,7 +89,11 @@ export class BitcoinCashBlockchainService extends BlockchainService {
       body: JSON.stringify({'rawtx': transaction})
     })
       .then(r => {
-        return r.json();
+        return r.text();
+      })
+      .then(t => {
+        console.log(t);
+        return JSON.parse(t);
       })
       .then((data: any) => {
         return {
@@ -106,15 +109,6 @@ export class BitcoinCashBlockchainService extends BlockchainService {
    */
   getUnspentTransactions(): Promise<UnspentTransaction[]> {
     return this.getUnspentTransactionsForAddress(this.wallet.getAddress());
-  }
-
-  /**
-   * Returns recommended fee (in Satoshis) based on message length
-   * @param {string} message
-   * @returns {number}
-   */
-  getRecommendedFee(message: string): number {
-    return Number(this.config.blockchain.fee_satoshis_per_byte) * (this.baseTransactionSize + Buffer.from(message).length);
   }
 
   /**

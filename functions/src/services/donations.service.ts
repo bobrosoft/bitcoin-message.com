@@ -29,9 +29,9 @@ export class DonationsService {
           user: this.config.donations.imap_user,
           password: this.config.donations.imap_password,
           host: this.config.donations.imap_host,
-          port: this.config.donations.imap_port || 993,
-          tls: this.config.donations.imap_use_tls || true,
-          authTimeout: this.config.donations.imap_auth_time || 3000
+          port: this.config.donations.imap_port ? Number(this.config.donations.imap_port) : 993,
+          tls: this.config.donations.imap_use_tls ? this.config.donations.imap_use_tls === 'true' : true,
+          authTimeout: this.config.donations.imap_auth_time ? Number(this.config.donations.imap_auth_time) : 3000
         }
       })
       .then((c) => {

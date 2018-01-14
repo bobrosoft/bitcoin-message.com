@@ -9,6 +9,19 @@ export abstract class BlockchainService {
     protected config: ProjectConfig
   ) {
   }
+
+  /**
+   * Returns recommended fee (in Satoshis) based on message length
+   * @param {string} message
+   * @returns {number}
+   */
+  getRecommendedFee(message: string): number {
+    const baseTransactionSize = 200;
+    return Math.max(
+      Number(this.config.blockchain.fee_satoshis_per_byte) * (baseTransactionSize + Buffer.from(message).length),
+      Number(this.config.blockchain.minimum_total_fee_satoshis)
+    );
+  }
   
   /**
    * Creates OP_RETURN transaction
@@ -30,11 +43,4 @@ export abstract class BlockchainService {
    * @returns {Promise<UnspentTransaction[]>}
    */
   abstract getUnspentTransactions(): Promise<UnspentTransaction[]>;
-
-  /**
-   * Returns recommended fee (in Satoshis) based on message length
-   * @param {string} message
-   * @returns {number}
-   */
-  abstract getRecommendedFee(message: string): number;
 }
