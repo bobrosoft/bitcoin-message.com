@@ -25,6 +25,8 @@ export class CheckDonationsFunction extends BaseFunction {
 
       // Process donations (I use classic "for" here because of await)
       const donations = await this.donationsService.retrieveRecentDonations();
+      console.info('Recent donations', donations);
+      
       const processedDonations: Donation[] = [];
       for (const donation of donations) {
         processedDonations.push(await this.donationsService.processDonation(donation));

@@ -105,11 +105,6 @@ export class DonationsService {
       /// Process donation
       console.info('Processing new donation', donation);
       
-      // Check if donation has insufficient amount
-      if (Number(this.exchangeRatesService.convert(donation.amount, donation.currency, this.config.donations.min_donation_currency)) < Number(this.config.donations.min_donation_amount)) {
-        throw new ApiError(`Donation has insufficient amount. Minimal amount is ${this.config.donations.min_donation_amount} ${this.config.donations.min_donation_currency}`, ApiErrorCode.DONATION_INSUFFICIENT_AMOUNT);
-      }
-
       // Find message
       const message = await this.messagesService.getLastUnpublishedMessageForEmail(donation.email);
 
@@ -117,6 +112,11 @@ export class DonationsService {
         // Save messageId in donation
         donation.messageId = message.id;
         await this.dbDonations.child(donation.id).set(donation);
+        
+        // Check if donation has insufficient amount
+        if (Number(this.exchangeRatesService.convert(donation.amount, donation.currency, this.config.donations.min_donation_currency)) < Number(this.config.donations.min_donation_amount)) {
+          throw new ApiError(`Donation has insufficient amount. Minimal amount is ${this.config.donations.min_donation_amount} ${this.config.donations.min_donation_currency}`, ApiErrorCode.DONATION_INSUFFICIENT_AMOUNT);
+        }
         
         // Publish message
         console.info('Publishing message', message);
@@ -128,9 +128,13 @@ export class DonationsService {
       const err = e as ApiError;
       console.error(err);
 
+      donation.errorCode = err.name;
+      donation.errorMessage = err.message;
+
       switch (err.code) {
         case ApiErrorCode.BLOCKCHAIN_NO_UNSPENT_TRANSACTIONS:
         case ApiErrorCode.BLOCKCHAIN_NOT_ENOUGH_FUNDS:
+        case ApiErrorCode.HTTP_REQUEST_ERROR:
           // Delete donation from processed so we can retry it
           await this.dbDonations.child(donation.id).remove();
           break;
@@ -138,14 +142,13 @@ export class DonationsService {
         default:
           // Donation processing can't be retried
           // Save info about error so we don't need to process that donation again
-          donation.errorCode = err.name;
-          donation.errorMessage = err.message;
           await this.dbDonations.child(donation.id).set(donation);
+          break;
       }
     }
 
     // Always return latest from DB
-    return await this.dbDonations.child(donation.id).once('value').then(s => s.val());
+    return donation;
   }
 
   /**

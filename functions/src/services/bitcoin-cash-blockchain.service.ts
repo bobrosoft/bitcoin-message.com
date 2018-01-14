@@ -90,18 +90,33 @@ export class BitcoinCashBlockchainService extends BlockchainService {
       body: JSON.stringify({'rawtx': transaction})
     })
       .then(r => {
-        return r.text();
+        return r.text().then(text => ({code: r.status, body: text}));
       })
-      .then(t => {
-        console.log(t);
-        return JSON.parse(t);
+      .then(r => {
+        try {
+          if (r.code < 200 || r.code > 299) {
+            throw new Error(r.body);
+          }
+          
+          return JSON.parse(r.body);
+        } catch (e) {
+          throw new Error(r.body);
+        }
+      })
+      .catch((e: Error) => {
+        throw new ApiError(e.message, ApiErrorCode.HTTP_REQUEST_ERROR);
       })
       .then((data: any) => {
+        if (!data.txid) {
+          throw new ApiError(JSON.stringify(data), ApiErrorCode.HTTP_REQUEST_ERROR);
+        }
+      
         return {
           network: this.config.blockchain.network,
           txId: data.txid
         };
-      });
+      })
+    ;
   }
 
   /**
