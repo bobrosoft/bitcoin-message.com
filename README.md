@@ -1,5 +1,7 @@
 # bitcoin-message.com
 
+[![React](https://img.shields.io/badge/React-v16.1.1-28defe.svg)]() [![Firebase](https://img.shields.io/badge/Firebase-v3.13-ffcf00.svg)]() [![GitHub top language](https://img.shields.io/github/languages/top/bobrosoft/bitcoin-message.com.svg)]() [![license](https://img.shields.io/github/license/bobrosoft/bitcoin-message.com.svg)]()
+
 [bitcoin-message.com](https://bitcoin-message.com) — Leave your mark on cryptocurrency world!
 Save your message in Bitcoin blockchain. Forever! 🚀
 
