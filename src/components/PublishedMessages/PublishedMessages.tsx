@@ -4,6 +4,7 @@ import {MessagesStore} from '../../stores/messages.store';
 import {PublishedMessage} from '../../models/shared/published-message.model';
 import {Message} from '../Message/Message';
 import {Link} from 'react-router-dom';
+import {LocalSpinner} from '../LocalSpinner/LocalSpinner';
 
 interface Props {
   messagesStore: MessagesStore;
@@ -13,6 +14,7 @@ interface Props {
 
 interface State {
   messages: PublishedMessage[];
+  isLoading: boolean;
   isNoMessagesLeft: boolean;
 }
 
@@ -21,6 +23,7 @@ export class PublishedMessages extends React.Component<Props, State> {
     super(props);
     this.state = {
       messages: [],
+      isLoading: false,
       isNoMessagesLeft: false
     };
     
@@ -33,6 +36,10 @@ export class PublishedMessages extends React.Component<Props, State> {
   }
   
   getNextPortion() {
+    this.setState({
+      isLoading: true
+    });
+    
     this.props.messagesStore.getRecentPublishedMessages(
       this.state.messages.length ? this.state.messages[this.state.messages.length - 1].createdTimestamp - 1 : undefined,
       this.props.itemsPerPortion
@@ -43,7 +50,13 @@ export class PublishedMessages extends React.Component<Props, State> {
             ...this.state.messages,
             ...messages
           ],
+          isLoading: false,
           isNoMessagesLeft: messages.length < this.props.itemsPerPortion,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          isLoading: false
         });
       })
     ;
@@ -59,7 +72,12 @@ export class PublishedMessages extends React.Component<Props, State> {
             </Link>
           ))}
         </div>
-        {!this.state.isNoMessagesLeft &&
+        {this.state.isLoading &&
+        <p className="text-center">
+          <LocalSpinner/>
+        </p>
+        }
+        {!this.state.isNoMessagesLeft && !this.state.isLoading &&
         <p className="text-center">
           <button className="spec-more-btn" onClick={this.handleLoadMoreClick}>Load more</button>
         </p>

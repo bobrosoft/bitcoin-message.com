@@ -24,6 +24,14 @@ it('should render proper number of messages based on itemsPerPortion', async () 
   expect(component.find('.item').length).toBe(2);
 });
 
+// That test is shaky
+it('should show loading spinner', async () => {
+  const component = shallow(<PublishedMessages itemsPerPortion={2} messagesStore={mockMessagesStore()} />);
+  
+  component.update();
+  expect(component.find('LocalSpinner').length).toBe(1);
+});
+
 it('should load next portion on "Load more" button click', async () => {
   const component = await shallow(<PublishedMessages itemsPerPortion={2} messagesStore={mockMessagesStore()}/>);
 

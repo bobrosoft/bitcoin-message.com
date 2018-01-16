@@ -1,0 +1,39 @@
+@import "../../styles/variables";
+
+$spinner-width: 3em;
+$spinner-thickness: 0.2em;
+$spinner-color: #ffbb00;
+$spinner-color-2: #ff8514;
+
+.LocalSpinner {
+  display: inline-block;
+  border-radius: 50%;
+  width: $spinner-width;
+  height: $spinner-width;
+  position: relative;
+  border-top: $spinner-thickness solid transparent;
+  border-right: $spinner-thickness solid transparent;
+  border-bottom: $spinner-thickness solid transparent;
+  border-left: $spinner-thickness solid $spinner-color;
+  transform: translateZ(0);
+  animation: LocalSpinner 1.3s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  @keyframes LocalSpinner {
+    0% {
+      border-left-color: $spinner-color;
+      transform: rotate(-90deg);
+    }
+
+    50% {
+      border-left-color: $spinner-color-2;
+    }
+
+    70% {
+      border-left-color: $spinner-color;
+    }
+
+    100% {
+      transform: rotate(630deg);
+    }
+  }
+}
