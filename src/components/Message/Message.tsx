@@ -4,7 +4,6 @@ import {PublishedMessage} from '../../models/shared/published-message.model';
 import {MouseEvent} from 'react';
 import {inject} from 'mobx-react';
 import {AnalyticsService} from '../../stores/analytics.service';
-import {AppError} from '../../models/app-error.model';
 import {BlockchainNetwork} from '../../models/shared/blockchain-network.model';
 
 interface Props {
@@ -31,6 +30,25 @@ export class Message extends React.Component<Props> {
     }
   }
   
+  get networkName(): string {
+    switch (this.props.message.blockchainNetwork) {
+      case BlockchainNetwork.btc:
+        return 'Bitcoin';
+
+      case BlockchainNetwork.tbtc:
+        return 'Bitcoin Testnet';
+
+      case BlockchainNetwork.bch:
+        return 'Bitcoin Cash';
+
+      case BlockchainNetwork.tbch:
+        return 'Bitcoin Cash Testnet';
+
+      default:
+        return 'Unknown';
+    }
+  }
+  
   get externalBlockchainUrl(): string {
     let network: string;
     
@@ -52,7 +70,7 @@ export class Message extends React.Component<Props> {
         break;
         
       default:
-        throw new AppError(`Can't recognize network (${this.props.message.blockchainNetwork})`);
+        break;
     }
     
     return `https://www.blocktrail.com/${network!}/tx/${this.props.message.blockchainTxId}`;
@@ -65,7 +83,7 @@ export class Message extends React.Component<Props> {
         <div className="body">{this.props.message.message}</div>
         {this.props.message.blockchainTxId &&
         <div className="txid text-66 text-misc">
-          <abbr title="Bitcoin Transaction ID">Proof</abbr>:&nbsp;
+          <abbr title={`${this.networkName} Transaction ID`}>Proof</abbr>:&nbsp;
           {this.props.noATag ?
             <span className="text-misc link" onClick={this.handleSubstitutionProofLinkClick}>
               <span className="spec-txid">{this.props.message.blockchainTxId}</span><i className="fa fa-external-link"/>
