@@ -41,7 +41,7 @@ export class DonationsService {
       .then(() => {
         // Let's find our donation messages
         let searchCriteria = [
-          ['SINCE', (new Date(Date.now() - 7 * 86400 * 1000)).toISOString()],
+          ['SINCE', (new Date(Date.now() - 31 * 86400 * 1000)).toISOString()],
           ['SUBJECT', 'Donation'],
         ];
         
@@ -64,7 +64,7 @@ export class DonationsService {
       })
       .then((messages) => {
         return messages
-          .map(this.parseAndExtractDonations)
+          .map(this.parseAndExtractDonation)
           .filter(v => !!v) as Donation[] // drop undefined
         ;
       })
@@ -152,11 +152,11 @@ export class DonationsService {
   }
 
   /**
-   * Returns donations from parsed body
+   * Returns donation from parsed body
    * @param message
    * @returns {Donation}
    */
-  parseAndExtractDonations(message: imap.Message): Donation | undefined {
+  parseAndExtractDonation(message: imap.Message): Donation | undefined {
     const body = new Buffer(message.parts.find(p => p.which === 'TEXT')!.body, 'base64').toString('utf8');
     const matches = body.match(/donation of\s?(.*?)\s+(.*?)\s+from.*?>(.*?)(&nbsp;)*?\s+<.*?You can/);
 

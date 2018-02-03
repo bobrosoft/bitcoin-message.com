@@ -14,7 +14,10 @@
     "@types/cors": "^2.8.3",
     "@types/express": "^4.0.37",
     "@types/imap-simple": "^3.1.1",
+    "@types/jasmine": "^2.8.6",
     "@types/node-fetch": "^1.6.7",
+    "jasmine": "^2.9.0",
+    "nodemon": "^1.14.12",
     "tslint": "^5.8.0",
     "typescript": "^2.3.2"
   },
@@ -22,6 +25,7 @@
     "build": "tsc -p ./tsconfig.json",
     "server": "tsc -p ./tsconfig.json --watch & firebase serve --only functions",
     "lint": "tslint \"src/**/*.ts\" -e \"**/*.spec.ts\"",
+    "test": "tsc -p ./tsconfig.json --watch & nodemon -w build --exec jasmine JASMINE_CONFIG_PATH=jasmine.json",
     "deploy": "yarn lint && tsc && firebase deploy --only functions"
   },
   "main": "build/index.js",
