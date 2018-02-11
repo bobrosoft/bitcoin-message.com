@@ -22,7 +22,7 @@ export abstract class BaseFunction {
    * @param {Request} req
    * @param {Response} res
    */
-  protected abstract handleRequest(req: Request, res: Response): void;
+  abstract handleRequest(req: Request, res: Response): void;
 
   /**
    * Creates common error response.

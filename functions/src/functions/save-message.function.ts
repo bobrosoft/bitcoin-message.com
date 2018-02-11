@@ -13,7 +13,7 @@ export class SaveMessageFunction extends BaseFunction {
     super();
   }
   
-  protected handleRequest(req: Request, res: Response) {
+  handleRequest(req: Request, res: Response) {
     let payload: SaveMessageFunctionPayload;
     
     Promise.resolve(true)
@@ -26,11 +26,7 @@ export class SaveMessageFunction extends BaseFunction {
       })
       .then(() => {
         // Save message
-        return this.messagesService.addMessage({
-          message: payload.message,
-          isPublished: false,
-          createdTimestamp: Date.now(),
-        });
+        return this.messagesService.addMessage(payload.message);
       })
       .then((createdMessage) => {
         res.send(this.createSuccessResponse<SaveMessageFunctionResponse>({
@@ -38,7 +34,6 @@ export class SaveMessageFunction extends BaseFunction {
         }));
       })
       .catch((err: ApiError) => {
-        console.log(err);
         res.status(400).send(this.createErrorResponse(err));
       })
     ;

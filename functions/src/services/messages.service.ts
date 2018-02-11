@@ -14,11 +14,16 @@ export class MessagesService {
 
   /**
    * Adds a new message to the DB
-   * @param {Message} message
-   * @returns {Promise<void>} Created message
+   * @param {string} text
+   * @returns {Promise<Message>} Created message
    */
-  addMessage(message: Message): Promise<Message> {
-    message.id = this.dbMessages.push().key as string;
+  addMessage(text: string): Promise<Message> {
+    const message: Message = {
+      id: this.dbMessages.push().key as string,
+      message: text,
+      isPublished: false,
+      createdTimestamp: Date.now(),
+    };
     
     return this.dbMessages.child(message.id)
       .set(message)

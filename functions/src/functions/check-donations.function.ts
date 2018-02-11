@@ -14,7 +14,7 @@ export class CheckDonationsFunction extends BaseFunction {
     super();
   }
 
-  protected async handleRequest(req: Request, res: Response) {
+  async handleRequest(req: Request, res: Response) {
     try {
       const payload: CheckDonationsFunctionPayload = req.body;
 
