@@ -4,7 +4,7 @@
     
     "messages": {
       ".read": false,
-      ".indexOn": ["email"],
+      ".indexOn": ["email", "createdTimestamp"],
       
       "$messageId": {
         ".read": true,
@@ -22,14 +22,17 @@
         "isPublished": {
           ".validate": "newData.isBoolean()"
         },
+        "createdTimestamp": {
+          ".validate": "newData.val() <= now"
+        },
         "blockchainNetwork": {
           ".validate": "newData.isString()"
         },
         "blockchainTxId": {
           ".validate": "newData.isString()"
         },
-        "createdTimestamp": {
-          ".validate": "newData.val() <= now"
+        "clientIp": {
+          ".validate": "newData.isString()"
         },
         "$other": {
           ".validate": false

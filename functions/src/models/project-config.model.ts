@@ -25,5 +25,6 @@ export interface ProjectConfig {
     min_donation_amount: string;
     min_donation_currency: string;
     disable_security_check: 'true' | 'false'; // for testing
+    free_messages_limit?: string; // limit of free messages per day
   };
 }

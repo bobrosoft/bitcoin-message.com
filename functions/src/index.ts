@@ -23,5 +23,5 @@ const donationsService = new DonationsService(config, exchangeRatesService, mess
 
 // Register and bootstrap functions (manual DI)
 // export let test = new TestFunction(blockchainService).handler;
-export let saveMessage = new SaveMessageFunction(messagesService).handler;
+export let saveMessage = new SaveMessageFunction(config, messagesService).handler;
 export let checkDonations = new CheckDonationsFunction(messagesService, donationsService).handler;

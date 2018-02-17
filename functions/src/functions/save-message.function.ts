@@ -5,38 +5,62 @@ import {SaveMessageFunctionPayload} from '../models/shared/save-message-function
 import {MessagesService} from '../services/messages.service';
 import {SaveMessageFunctionResponse} from '../models/shared/save-message-function-response.model';
 import {sharedConfig} from '../shared-config';
+import {ProjectConfig} from '../models/project-config.model';
 
 export class SaveMessageFunction extends BaseFunction {
   constructor(
+    protected config: ProjectConfig,
     protected messagesService: MessagesService
   ) {
     super();
   }
   
-  handleRequest(req: Request, res: Response) {
-    let payload: SaveMessageFunctionPayload;
-    
-    Promise.resolve(true)
-      .then(() => {
-        payload = req.body;
-      })
-      .then(() => {
-        // Validating payload
-        return this.validatePayload(payload);
-      })
-      .then(() => {
-        // Save message
-        return this.messagesService.addMessage(payload.message);
-      })
-      .then((createdMessage) => {
-        res.send(this.createSuccessResponse<SaveMessageFunctionResponse>({
-          createdMessage: createdMessage
-        }));
-      })
-      .catch((err: ApiError) => {
-        res.status(400).send(this.createErrorResponse(err));
-      })
-    ;
+  async handleRequest(req: Request, res: Response) {
+    try {
+      const payload: SaveMessageFunctionPayload = req.body;
+      const currentIp = this.getIpFromRequest(req);
+      
+      // Validate payload
+      await this.validatePayload(payload);
+
+      // Save message
+      let createdMessage = await this.messagesService.addMessage(payload.message, currentIp);
+
+      // Check if "free messages" allowed
+      if (Number(this.config.donations.free_messages_limit)) {
+        // Check how much messages sent today
+        let publishedCount = 0;
+        let isPublishedWithCurrentIp = false;
+        const messages = await this.messagesService.getPublishedMessagesForDay();
+        messages.forEach((m) => {
+          if (m.isPublished) {
+            publishedCount++;
+            isPublishedWithCurrentIp = isPublishedWithCurrentIp || (m.clientIp && m.clientIp === currentIp);
+          }
+        });
+
+        // Check if that IP already sent that message
+        if (publishedCount < Number(this.config.donations.free_messages_limit) && !isPublishedWithCurrentIp) {
+          createdMessage = await this.messagesService.publishMessageInBlockchain(createdMessage);
+        }
+      }
+
+      res.send(this.createSuccessResponse<SaveMessageFunctionResponse>({
+        createdMessage: createdMessage
+      }));
+    } catch (e) {
+      res.status(400).send(this.createErrorResponse(e));
+    }
+  }
+
+  /**
+   * Returns IP from request
+   * @param req
+   * @returns
+   */
+  getIpFromRequest(req: Request): string | undefined {
+    const matches = (req.headers && req.headers['x-forwarded-for'] || '').match(/(\d+.\d+.\d+.\d+)$/);
+    return matches && matches[1] || undefined;
   }
 
   /**

@@ -5,7 +5,8 @@ export interface Message {
   message: string;
   email?: string;
   isPublished: boolean;
+  createdTimestamp: number;
   blockchainNetwork?: BlockchainNetwork;
   blockchainTxId?: string;
-  createdTimestamp: number;
+  clientIp?: string;
 }

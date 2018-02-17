@@ -14,15 +14,17 @@ export class MessagesService {
 
   /**
    * Adds a new message to the DB
-   * @param {string} text
+   * @param text
+   * @param clientIp
    * @returns {Promise<Message>} Created message
    */
-  addMessage(text: string): Promise<Message> {
+  addMessage(text: string, clientIp: string = null): Promise<Message> {
     const message: Message = {
       id: this.dbMessages.push().key as string,
       message: text,
       isPublished: false,
       createdTimestamp: Date.now(),
+      clientIp: clientIp
     };
     
     return this.dbMessages.child(message.id)
@@ -104,5 +106,26 @@ export class MessagesService {
     await this.dbPublishedMessages.child(message.blockchainTxId).set(publishedMessage);
     
     return message;
+  }
+
+  /**
+   * Returns messages published on the day passed
+   * @param {Date} day
+   * @returns {Promise<number>}
+   */
+  getPublishedMessagesForDay(day: Date = new Date()): Promise<Message[]> {
+    return this.dbMessages
+      .orderByChild('createdTimestamp')
+      .startAt(day.setHours(0, 0, 0))
+      .endAt(day.setHours(24, 0, 0))
+      .limitToLast(100)
+      .once('value')
+      .then((s) => {
+        // Convert snapshot to array
+        return Object.keys(s.val() || {})
+          .map(k => s.val()[k])
+          ;
+      })
+    ;
   }
 }
