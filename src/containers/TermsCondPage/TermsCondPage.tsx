@@ -28,6 +28,10 @@ export class TermsCondPage extends React.Component<Props> {
             shall take full responsibility and liability for such content.
           </p>
           <p>
+            Messages which considered as SPAM, advertisements or another kind of abuse can be deleted (unlisted) from this website
+            permanently (but not from the blockchain) without notice.
+          </p>
+          <p>
             By using this website author of a message agrees to indemnify and hold bitcoin-message.com,
             its officers, officials, employees and/or volunteers harmless of and from any and all claims,
             demands, losses, causes of action, damage, lawsuits, judgments, including attorneys'
@@ -49,7 +53,7 @@ export class TermsCondPage extends React.Component<Props> {
           </p>
           <p>
             If any of the messages, published by visitors on this website, brings any harm to you personally 
-            or to property/company you're legally presenting, it can be deleted from this website (but not from blockchain).
+            or to property/company you're legally presenting, it can be deleted from this website (but not from the blockchain).
             You can write such request to our support.
           </p>
           
