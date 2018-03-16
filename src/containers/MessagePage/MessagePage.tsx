@@ -188,7 +188,7 @@ export class MessagePage extends React.Component<Props, State> {
   protected getDonationUrl(): string {
     const returnUrl = window.location.href;
     
-    return `https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bobrosoft@yandex.ru&item_name=bitcoin-message.com&item_number=Cover+transaction+fee`
+    return `https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=bobrosoft@yandex.ru&item_name=Donation`
       + `&currency_code=${this.state.donationCurrency}&amount=${this.state.donationAmount}`
       + `&return=${encodeURIComponent(returnUrl)}&cancel_return=${encodeURIComponent(returnUrl)}`
     ;
