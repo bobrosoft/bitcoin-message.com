@@ -1,3 +1,4 @@
+import './polyfills.es6.js';
 import * as firebase from 'firebase';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
