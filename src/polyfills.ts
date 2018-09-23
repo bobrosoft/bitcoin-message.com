@@ -1,8 +1,8 @@
-'use strict';
+/* tslint:disable */
 
 if (!Array.prototype.find) {
   Object.defineProperty(Array.prototype, 'find', {
-    value: function(predicate) {
+    value: function(predicate: Function) {
       // 1. Let O be ? ToObject(this value).
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
@@ -48,7 +48,7 @@ if (!Array.prototype.find) {
 
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, 'findIndex', {
-    value: function(predicate) {
+    value: function(predicate: Function) {
       // 1. Let O be ? ToObject(this value).
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
