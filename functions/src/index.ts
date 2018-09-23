@@ -22,6 +22,6 @@ const exchangeRatesService = new ExchangeRatesService();
 const donationsService = new DonationsService(config, exchangeRatesService, messagesService);
 
 // Register and bootstrap functions (manual DI)
-// export let test = new TestFunction(blockchainService).handler;
-export let saveMessage = new SaveMessageFunction(config, messagesService).handler;
-export let checkDonations = new CheckDonationsFunction(messagesService, donationsService).handler;
+// export const test = new TestFunction(blockchainService).handler;
+export const saveMessage = new SaveMessageFunction(config, messagesService).handler;
+export const checkDonations = new CheckDonationsFunction(messagesService, donationsService).handler;
