@@ -27,7 +27,7 @@ export class BitcoinCashBlockchainService extends BlockchainService {
         break;
 
       case BlockchainNetwork.tbch:
-        this.basePath = 'https://tbcc.blockdozer.com/insight-api';
+        this.basePath = 'https://tbch.blockdozer.com/insight-api';
         this.network = bitcoin.networks.testnet;
         break;
         
@@ -113,7 +113,7 @@ export class BitcoinCashBlockchainService extends BlockchainService {
       
         return {
           network: this.config.blockchain.network,
-          txId: data.txid
+          txId: data.txid.result
         };
       })
     ;
