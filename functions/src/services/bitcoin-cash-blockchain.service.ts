@@ -107,13 +107,15 @@ export class BitcoinCashBlockchainService extends BlockchainService {
         throw new ApiError(e.message, ApiErrorCode.HTTP_REQUEST_ERROR);
       })
       .then((data: any) => {
+        console.log('pushTransaction response:', data);
+        
         if (!data.txid) {
           throw new ApiError(JSON.stringify(data), ApiErrorCode.HTTP_REQUEST_ERROR);
         }
       
         return {
           network: this.config.blockchain.network,
-          txId: data.txid.result
+          txId: data.txid
         };
       })
     ;

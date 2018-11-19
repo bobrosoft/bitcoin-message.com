@@ -1,5 +1,6 @@
 import {action, observable} from 'mobx';
-import * as firebase from 'firebase';
+import firebase from '@firebase/app';
+import {DataSnapshot} from '@firebase/database';
 import {BaseApiStore} from './base-api.store';
 import {AppError} from '../models/app-error.model';
 import {Message} from '../models/shared/message.model';
@@ -14,8 +15,8 @@ export class MessagesStore extends BaseApiStore {
   
   @observable lastPublishedMessage?: Message;
   
-  protected dbMessages: firebase.database.Reference = firebase.database().ref('messages');
-  protected dbPublishedMessages: firebase.database.Reference = firebase.database().ref('publishedMessages');
+  protected dbMessages = firebase.database!().ref('messages');
+  protected dbPublishedMessages = firebase.database!().ref('publishedMessages');
 
   /**
    * Returns actual info about message by ID
@@ -64,7 +65,7 @@ export class MessagesStore extends BaseApiStore {
       .endAt(startFromTimestamp)
       .limitToLast(limit)
       .once('value')
-      .then((s: firebase.database.DataSnapshot) => {
+      .then((s: DataSnapshot) => {
         const result: PublishedMessage[] = [];
         s.forEach((v) => {
           result.push(v.val());

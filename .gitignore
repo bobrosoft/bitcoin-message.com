@@ -51,6 +51,7 @@ functions/**/*.js.map
 # dotenv environment variables file
 .env
 
+.firebase
 .runtimeconfig.json
 
 ## React

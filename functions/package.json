@@ -4,8 +4,8 @@
   "dependencies": {
     "bitcoinjs-lib": "git://github.com/bobrosoft/bitcoinjs-lib.git#77d7780534c4159ada2d03010b487373db02f150",
     "cors": "^2.8.4",
-    "firebase-admin": "~4.2.1",
-    "firebase-functions": "^0.5.7",
+    "firebase-admin": "~6.1.0",
+    "firebase-functions": "^2.1.0",
     "imap-simple": "^3.2.0",
     "node-fetch": "^1.7.3"
   },

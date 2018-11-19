@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "firebase": "^4.7.0",
+    "@firebase/app": "^0.3.4",
+    "@firebase/database": "^0.3.6",
     "mobx": "^3.3.1",
     "mobx-react": "^4.3.4",
     "react": "^16.1.1",
@@ -27,8 +28,8 @@
     "build:live": "REACT_APP_CONFIG_ENV=live yarn build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "deploy:staging": "firebase use staging && (cd ./functions && yarn build) && yarn build:staging && firebase deploy && yarn postdeploy",
-    "deploy:live": "firebase use live && (cd ./functions && yarn build) && yarn build:live && firebase deploy && yarn postdeploy",
+    "deploy:staging": "firebase use staging && (cd ./functions && yarn build) && yarn build:staging && firebase deploy; yarn postdeploy",
+    "deploy:live": "firebase use live && (cd ./functions && yarn build) && yarn build:live && firebase deploy; yarn postdeploy",
     "postdeploy": "firebase use staging"
   },
   "devDependencies": {
