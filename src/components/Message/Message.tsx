@@ -54,7 +54,7 @@ export class Message extends React.Component<Props> {
     
     switch (this.props.message.blockchainNetwork) {
       case BlockchainNetwork.btc:
-        network = 'BTC';
+        network = 'bitcoin';
         break;
         
       case BlockchainNetwork.tbtc:
@@ -62,7 +62,7 @@ export class Message extends React.Component<Props> {
         break;
         
       case BlockchainNetwork.bch:
-        network = 'BCC';
+        network = 'bitcoin-cash';
         break;
         
       case BlockchainNetwork.tbch:
@@ -73,7 +73,7 @@ export class Message extends React.Component<Props> {
         break;
     }
     
-    return `https://www.blocktrail.com/${network!}/tx/${this.props.message.blockchainTxId}`;
+    return `https://blockchair.com/${network!}/transaction/${this.props.message.blockchainTxId}`;
   }
   
   render() {
