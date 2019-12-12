@@ -22,12 +22,12 @@ export class BitcoinCashBlockchainService extends BlockchainService {
     // Choose network
     switch (config.blockchain.network) {
       case BlockchainNetwork.bch:
-        this.basePath = 'https://blockdozer.com/insight-api'; // Docs: https://github.com/bitpay/insight-api
+        this.basePath = 'https://rest.bitcoin.com/v2'; // Docs: https://github.com/bitpay/insight-api
         this.network = bitcoin.networks.bitcoin;
         break;
 
       case BlockchainNetwork.tbch:
-        this.basePath = 'https://tbch.blockdozer.com/insight-api';
+        this.basePath = 'https://trest.bitcoin.com/v2';
         this.network = bitcoin.networks.testnet;
         break;
         
@@ -84,10 +84,10 @@ export class BitcoinCashBlockchainService extends BlockchainService {
    * @returns {Promise<BlockchainTransaction>}
    */
   pushTransaction(transaction: RawTransaction): Promise<BlockchainTransaction> {
-    return fetch(`${this.basePath}/tx/send`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({'rawtx': transaction})
+    return fetch(`${this.basePath}/rawtransactions/sendRawTransaction/${transaction}`, {
+      method: 'GET',
+      // headers: {'Content-Type': 'application/json'},
+      // body: JSON.stringify({'rawtx': transaction})
     })
       .then(r => {
         return r.text().then(text => ({code: r.status, body: text}));
@@ -106,16 +106,16 @@ export class BitcoinCashBlockchainService extends BlockchainService {
       .catch((e: Error) => {
         throw new ApiError(e.message, ApiErrorCode.HTTP_REQUEST_ERROR);
       })
-      .then((data: any) => {
+      .then((data: string) => {
         console.log('pushTransaction response:', data);
         
-        if (!data.txid) {
+        if (!data) {
           throw new ApiError(JSON.stringify(data), ApiErrorCode.HTTP_REQUEST_ERROR);
         }
       
         return {
           network: this.config.blockchain.network,
-          txId: data.txid
+          txId: data
         };
       })
     ;
@@ -135,10 +135,10 @@ export class BitcoinCashBlockchainService extends BlockchainService {
    * @returns {Promise<UnspentTransaction[]>}
    */
   protected getUnspentTransactionsForAddress(address: string): Promise<UnspentTransaction[]> {
-    return fetch(`${this.basePath}/addr/${address}/utxo`)
+    return fetch(`${this.basePath}/address/utxo/${address}`)
       .then(r => r.json())
-      .then((data: any[]) => {
-        return data.map(t => {
+      .then((data: {utxos: any[]}) => {
+        return data.utxos.map(t => {
           return {
             txid: t.txid,
             vout: t.vout,

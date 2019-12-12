@@ -49,6 +49,7 @@ export class SaveMessageFunction extends BaseFunction {
         createdMessage: createdMessage
       }));
     } catch (e) {
+      console.error(e);
       res.status(400).send(this.createErrorResponse(e));
     }
   }
