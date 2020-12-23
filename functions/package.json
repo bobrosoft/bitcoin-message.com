@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
-    "server": "GOOGLE_APPLICATION_CREDENTIALS=\"./service-account-creds.json\" tsc -p ./tsconfig.json --watch & firebase emulators:start --only functions",
+    "server": "tsc -p ./tsconfig.json --watch & firebase emulators:start --only functions",
     "lint": "tslint \"src/**/*.ts\" -e \"**/*.spec.ts\"",
     "test": "tsc -p ./tsconfig.json --watch & nodemon -w build --exec jasmine JASMINE_CONFIG_PATH=jasmine.json",
     "deploy": "yarn lint && tsc && firebase deploy --only functions"
