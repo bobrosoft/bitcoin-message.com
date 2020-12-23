@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
-    "server": "tsc -p ./tsconfig.json --watch & firebase emulators:start --only functions",
+    "server": "tsc -p ./tsconfig.json --watch & sleep 5 && firebase emulators:start --only functions",
     "lint": "tslint \"src/**/*.ts\" -e \"**/*.spec.ts\"",
     "test": "tsc -p ./tsconfig.json --watch & nodemon -w build --exec jasmine JASMINE_CONFIG_PATH=jasmine.json",
     "deploy": "yarn lint && tsc && firebase deploy --only functions"
@@ -32,6 +32,6 @@
   "engines": {
     "node": "10"
   },
-  "main": "lib/index.js",
+  "main": "build/index.js",
   "private": true
 }

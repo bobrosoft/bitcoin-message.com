@@ -32,10 +32,6 @@ bower_components
 # Dependency directories
 node_modules/
 
-## ignore generated JavaScript files
-functions/**/*.js
-functions/**/*.js.map
-
 # Optional eslint cache
 .eslintcache
 
@@ -51,12 +47,14 @@ functions/**/*.js.map
 # dotenv environment variables file
 .env
 
-.firebase
-.runtimeconfig.json
-functions/service-account-creds.json
+## Cloud Functions
+/functions/.runtimeconfig.json
+/functions/build
+/functions/service-account-creds.json
 
 ## React
 # production
+.firebase
 /build
 /src/**/*.css
 

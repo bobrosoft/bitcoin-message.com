@@ -3,7 +3,7 @@
     "lib": ["es6", "es2015", "dom"],
     "module": "commonjs",
     "noImplicitAny": false,
-    "outDir": "lib",
+    "outDir": "build",
     "sourceMap": true,
     "target": "es6",
     "rootDir" : "src",
