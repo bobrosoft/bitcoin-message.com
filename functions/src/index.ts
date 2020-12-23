@@ -10,7 +10,7 @@ import {CheckDonationsFunction} from './functions/check-donations.function';
 import {BlockchainServiceFactory} from './services/blockchain-service.factory';
 
 // Init Firebase Admin SDK
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp();
 
 // Create project's config
 const config = functions.config() as ProjectConfig;

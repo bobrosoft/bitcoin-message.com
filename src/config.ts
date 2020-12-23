@@ -12,7 +12,7 @@ const baseConfig: AppConfig = {
   },
   
   api: {
-    baseUrl: 'http://localhost:5000/bitcoin-message-dev/us-central1',
+    baseUrl: 'http://localhost:5001/bitcoin-message-dev/us-central1',
   },
   
   messages: {

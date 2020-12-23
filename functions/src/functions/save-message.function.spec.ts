@@ -113,7 +113,7 @@ describe('SaveMessageFunction', () => {
     func.handleRequest(req as any, res as any);
     await res.isSent;
 
-    expect(messageService.addMessage).toHaveBeenCalledWith(req.body.message, undefined);
+    expect(messageService.addMessage).toHaveBeenCalledWith(req.body.message);
     expect(res.resultData).toBeDefined();
     expect(res.resultData.errorMessage).toBeUndefined();
     expect(res.resultData.success).toBe(true);
@@ -147,7 +147,7 @@ describe('SaveMessageFunction', () => {
     expect(res.resultData.errorMessage).toBeUndefined();
     expect(res.resultData.success).toBe(true);
     expect(res.resultStatus).toBe(200);
-    expect(messageService.addMessage).toHaveBeenCalledWith(req.body.message, undefined);
+    expect(messageService.addMessage).toHaveBeenCalledWith(req.body.message);
     expect(messageService.publishMessageInBlockchain).toHaveBeenCalled();
   });
 
@@ -177,7 +177,7 @@ describe('SaveMessageFunction', () => {
     expect(res.resultData.errorMessage).toBeUndefined();
     expect(res.resultData.success).toBe(true);
     expect(res.resultStatus).toBe(200);
-    expect(messageService.addMessage).toHaveBeenCalledWith(req.body.message, undefined);
+    expect(messageService.addMessage).toHaveBeenCalledWith(req.body.message);
     expect(messageService.publishMessageInBlockchain).not.toHaveBeenCalled();
   });
 
@@ -207,7 +207,7 @@ describe('SaveMessageFunction', () => {
     expect(res.resultData.errorMessage).toBeUndefined();
     expect(res.resultData.success).toBe(true);
     expect(res.resultStatus).toBe(200);
-    expect(messageService.addMessage).toHaveBeenCalledWith(req.body.message, '6.7.8.9');
+    expect(messageService.addMessage).toHaveBeenCalledWith(req.body.message);
     expect(messageService.publishMessageInBlockchain).not.toHaveBeenCalled();
   });
 

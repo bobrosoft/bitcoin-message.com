@@ -60,7 +60,7 @@ export class SaveMessageFunction extends BaseFunction {
    * @returns
    */
   getIpFromRequest(req: Request): string | undefined {
-    const matches = (req.headers && req.headers['x-forwarded-for'] || '').match(/(\d+.\d+.\d+.\d+)$/);
+    const matches = (req.headers && req.headers['x-forwarded-for'] as string || '').match(/(\d+.\d+.\d+.\d+)$/);
     return matches && matches[1] || undefined;
   }
 

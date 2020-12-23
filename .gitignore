@@ -53,6 +53,7 @@ functions/**/*.js.map
 
 .firebase
 .runtimeconfig.json
+functions/service-account-creds.json
 
 ## React
 # production
