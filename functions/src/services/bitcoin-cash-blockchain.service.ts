@@ -52,17 +52,21 @@ export class BitcoinCashBlockchainService extends BlockchainService {
           throw new ApiError('No unspent transactions found', ApiErrorCode.BLOCKCHAIN_NO_UNSPENT_TRANSACTIONS);
         }
       
-        const unspent = unspentTransactions[0];
-        const change = unspent.value_int - fee;
+        const unspents = unspentTransactions;
+        const unspentsTotal = unspents.map(u => u.value_int).reduce((v, cv) => v + cv);
+        const change = unspentsTotal - fee;
+        console.info(`unspentsTotal: ${unspentsTotal} Satoshis`);
         console.info(`buildOpReturnTransaction: fee = ${fee} Satoshis`);
+        console.info(`change: ${change} Satoshis`);
         
         if (change < 0) {
           throw new ApiError(`Not enough funds in unspent (required ${fee} Satoshis)`, ApiErrorCode.BLOCKCHAIN_NOT_ENOUGH_FUNDS);
         }
         
+        // Create transaction
         const opReturnScript = bitcoin.script.nullData.output.encode(Buffer.from(message) as any);
         const tx = new bitcoin.TransactionBuilder(this.network);
-        tx.addInput(unspent.txid, unspent.vout);
+        unspents.forEach(u => tx.addInput(u.txid, u.vout));
         tx.addOutput(opReturnScript, 0);
         tx.addOutput(this.wallet.getAddress(), change);
         (tx as any).enableBitcoinCash(true);
@@ -71,7 +75,11 @@ export class BitcoinCashBlockchainService extends BlockchainService {
         // tslint:disable
         const hashType = bitcoin.Transaction.SIGHASH_ALL | (bitcoin.Transaction as any).SIGHASH_BITCOINCASHBIP143;
         // tslint:enable
-        tx.sign(0, this.wallet, null, hashType, unspent.value_int);
+        
+        // Sign transaction with all inputs
+        unspents.forEach((u, index) => {
+          tx.sign(index, this.wallet, null, hashType, u.value_int);
+        });
 
         return tx.build().toHex();
       })
