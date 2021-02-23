@@ -146,15 +146,23 @@ export class BitcoinCashBlockchainService extends BlockchainService {
     return fetch(`${this.basePath}/address/utxo/${address}`)
       .then(r => r.json())
       .then((data: {utxos: any[]}) => {
-        return data.utxos.map(t => {
-          return {
-            txid: t.txid,
-            vout: t.vout,
-            value: String(t.amount),
-            value_int: t.satoshis,
-            confirmations: t.confirmations
-          } as UnspentTransaction;
-        });
+        const vouts: number[] = [];
+        
+        return data.utxos
+          .filter(t => {
+            const isDuplicate = vouts.indexOf(t.vout) !== -1;
+            vouts.push(t.vout);
+            return !isDuplicate;
+          })
+          .map(t => {
+            return {
+              txid: t.txid,
+              vout: t.vout,
+              value: String(t.amount),
+              value_int: t.satoshis,
+              confirmations: t.confirmations
+            } as UnspentTransaction;
+          });
       });
   }
 }
