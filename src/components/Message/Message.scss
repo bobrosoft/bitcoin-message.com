@@ -7,6 +7,7 @@
   box-shadow: 0 10px 40px 0 rgba(62,57,107,0.07), 0 2px 9px 0 rgba(62,57,107,0.06); // 0 0 10px rgba(0,0,0,0.1);
   word-wrap: break-word;
   overflow-wrap: break-word;
+  will-change: transform; // fixing Chrome flickering https://stackoverflow.com/questions/43453966/why-does-my-transform-translatey-flicker-in-chrome
 
   .body {
     margin: 5px 0 8px;
