@@ -22,12 +22,12 @@ export class BitcoinCashBlockchainService extends BlockchainService {
     // Choose network
     switch (config.blockchain.network) {
       case BlockchainNetwork.bch:
-        this.basePath = 'https://rest.bitcoin.com/v2'; // Docs: https://github.com/bitpay/insight-api
+        this.basePath = 'https://api.fullstack.cash/v5'; // Docs: https://api.fullstack.cash/docs/
         this.network = bitcoin.networks.bitcoin;
         break;
 
       case BlockchainNetwork.tbch:
-        this.basePath = 'https://trest.bitcoin.com/v2';
+        this.basePath = 'https://api.fullstack.cash/v5'; // NOTE: there's no testnet for this API endpoint :(
         this.network = bitcoin.networks.testnet;
         break;
         
@@ -101,6 +101,8 @@ export class BitcoinCashBlockchainService extends BlockchainService {
         return r.text().then(text => ({code: r.status, body: text}));
       })
       .then(r => {
+        console.log('pushTransaction response: ', r.body);
+        
         try {
           if (r.code < 200 || r.code > 299) {
             throw new Error(r.body);
@@ -115,8 +117,6 @@ export class BitcoinCashBlockchainService extends BlockchainService {
         throw new ApiError(e.message, ApiErrorCode.HTTP_REQUEST_ERROR);
       })
       .then((data: string) => {
-        console.log('pushTransaction response:', data);
-        
         if (!data) {
           throw new ApiError(JSON.stringify(data), ApiErrorCode.HTTP_REQUEST_ERROR);
         }
@@ -143,24 +143,24 @@ export class BitcoinCashBlockchainService extends BlockchainService {
    * @returns {Promise<UnspentTransaction[]>}
    */
   protected getUnspentTransactionsForAddress(address: string): Promise<UnspentTransaction[]> {
-    return fetch(`${this.basePath}/address/utxo/${address}`)
+    return fetch(`${this.basePath}/electrumx/utxos/${address}`)
       .then(r => r.json())
       .then((data: {utxos: any[]}) => {
         const vouts: number[] = [];
         
         return data.utxos
           .filter(t => {
-            const isDuplicate = vouts.indexOf(t.vout) !== -1;
+            const isDuplicate = vouts.indexOf(t.tx_pos) !== -1;
             vouts.push(t.vout);
             return !isDuplicate;
           })
           .map(t => {
             return {
-              txid: t.txid,
-              vout: t.vout,
-              value: String(t.amount),
-              value_int: t.satoshis,
-              confirmations: t.confirmations
+              txid: t.tx_hash,
+              vout: t.tx_pos,
+              value: String(t.amount / 100000000),
+              value_int: t.value,
+              confirmations: 1, // not returned in that API
             } as UnspentTransaction;
           });
       });
