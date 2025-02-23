@@ -22,6 +22,7 @@
     "server": "npm-run-all -p start server:api",
     "server:staging": "REACT_APP_CONFIG_ENV=staging yarn start",
     "server:live": "REACT_APP_CONFIG_ENV=live yarn start",
+    "server:local:live": "REACT_APP_CONFIG_ENV=local-live yarn server",
     "server:api": "(cd ./functions && yarn server)",
     "build": "npm-run-all build-css build-js",
     "build:staging": "REACT_APP_CONFIG_ENV=staging yarn build",

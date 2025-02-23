@@ -54,11 +54,21 @@ const liveConfigOverride: Partial<AppConfig> = {
   },
 };
 
+// Override for live config to run it locally
+const localLiveConfigOverride: Partial<AppConfig> = {
+  api: {
+    baseUrl: 'http://localhost:5001/bitcoin-message/us-central1',
+  },
+};
+
 // Combined result config
 const appConfig: AppConfig = (() => {
   switch (process.env.REACT_APP_CONFIG_ENV) {
     case 'live':
       return mergeDeep(baseConfig, liveConfigOverride);
+
+    case 'local-live':
+      return mergeDeep(baseConfig, liveConfigOverride, localLiveConfigOverride);
       
     case 'staging':
       return mergeDeep(baseConfig, stagingConfigOverride);
